@@ -3,6 +3,10 @@ practice.html
         perhaps make gpt problems into a queue
     keep track of problems and the user's answers
 
+    Generate New Problems:
+        Please select the difficulty of these problems:
+            Too easy, Perfect, Too hard
+
     Current issues:
         Math text/formatting
         Only 2 problems, not 3
