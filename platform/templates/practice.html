@@ -35,14 +35,23 @@
                     </div>
 
                     <div id="result-{{ i }}" style="margin-top: 10px;"></div>
+
+                    {% if i < problems|length - 1 %}
+                        <button id="next-button-{{ i }}" onclick="showNextProblem({{ i }})">Next Problem</button>
+                    {% else %}
+                        <!-- Display new problems button only if there are no more problems -->
+                        <button id="new-problems-button" onclick="generateNewProblems()">Generate New Problems</button>
+                    {% endif %}
                 </div>
             {% endfor %}
         </div>
-        
-        <button id="next-button" onclick="showNextProblem(0)">Next Problem</button>
     {% else %}
         <p>No problems generated.</p>
+        <button id="new-problems-button" onclick="generateNewProblems()">Generate New Problems</button>
     {% endif %}
+
+
+
 
     <script>
         let currentProblemIndex = 0;
@@ -130,11 +139,16 @@
             if (currentIndex < problems.length - 1) {
                 problems[currentIndex].style.display = 'none'; // Hide current problem
                 problems[currentIndex + 1].style.display = 'block'; // Show next problem
-                currentProblemIndex++;
             } else {
                 alert('You have completed all the problems!');
-                document.getElementById('next-button').style.display = 'none'; // Hide the Next button
+                document.getElementById(`next-button-${currentIndex}`).style.display = 'none'; // Hide the Next button
             }
         }
+        
+        function generateNewProblems() {
+            window.location.href = '/practice'; // Redirect to the practice route to generate new problems
+        }
+
+
     </script>
 {% endblock %}

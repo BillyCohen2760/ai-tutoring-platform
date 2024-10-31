@@ -29,12 +29,14 @@ def practice():
     # Get problems from GPT
     GPT_output = GPT_response(system_msg, user_msg)
     problems = [problem.strip() for problem in GPT_output.splitlines() if problem.strip()]
+    print(problems)
 
     # Use Wolfram Alpha to solve each problem and collect solutions
     solutions = []
     for problem in problems:
         WA_output = WA_response(problem)
         solutions.append(WA_output)
+    print(solutions)
 
     # Pass the problems and solutions to the template
     return render_template('practice.html', problems=problems, solutions=solutions)
