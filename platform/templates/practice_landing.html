@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Practice Problems - My Flask Website{% endblock %}
+
+{% block content %}
+    <h2>Practice Problems</h2>
+    <p>Select a type of problem to practice:</p>
+    
+    <ul>
+        <li>
+            Solving Linear Equations
+            <ul>
+                <li><a href="{{ url_for('generate_problems', problem_type='Solving_Quadratic_Equations', problem_topic = 'Quadratic Equations by Factoring') }}">Standard Form</a></li>
+                <li><a href="{{ url_for('generate_problems', problem_type='Solving', problem_topic = 'Quadratic Equations by Factoring')  }}">Slope-Intercept Form</a></li>
+                <li><a href="{{ url_for('generate_problems', problem_type='Solving', problem_topic = 'Quadratic Equations by Factoring')  }}">Point-Slope Form</a></li>
+            </ul>
+        </li>
+        <li>
+            Solving Quadratic Equations
+            <ul>
+                <li><a href="{{ url_for('generate_problems', problem_type='Solving_Quadratic_Equations', problem_topic = 'Factoring') }}">Factoring</a></li>
+                <li><a href="{{ url_for('generate_problems', problem_type='Solving_Quadratic_Equations', problem_topic = 'Completing_The_Square')  }}">Completing The Square</a></li>
+                <li><a href="{{ url_for('generate_problems', problem_type='Solving_Quadratic_Equations', problem_topic = 'Quadratic_Formula')  }}">Quadratic Formula</a></li>
+            </ul>
+        </li>
+    </ul>
+{% endblock %}

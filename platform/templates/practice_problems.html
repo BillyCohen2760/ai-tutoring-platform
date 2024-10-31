@@ -11,7 +11,7 @@
             {% for i in range(problems|length) %}
                 <div class="problem" style="display: {% if i == 0 %}block{% else %}none{% endif %};">
                     <h3>Problem {{ i + 1 }}:</h3>
-                    <p><strong>{{ problems[i] }}</strong></p>
+                    <p>Solve \( {{ problems[i] }} \) by {{prob_topic}}</p>
                     
                     <h4>Your Answer:</h4>
                     <div id="answer-inputs-{{ i }}">
@@ -146,7 +146,7 @@
         }
         
         function generateNewProblems() {
-            window.location.href = '/practice'; // Redirect to the practice route to generate new problems
+            window.location.href = '/practice_landing'; // Redirect to the practice route to generate new problems
         }
 
 

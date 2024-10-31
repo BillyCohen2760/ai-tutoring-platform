@@ -13,3 +13,14 @@ practice.html
 
     *** Need to think of how to use WA as a checker
     *** Can I upload images?
+
+
+
+WA Notes:
+    WA doesn't do well with text other than "solve" 
+        Ex (not working): Solve for x by completing the square: 2x^2 - 8x + 3 = 0
+
+Checking bad inputs:
+    solve 2x^2 - 8x + 10 = 0 
+    x = 2 - i 
+    x = 2 + i
