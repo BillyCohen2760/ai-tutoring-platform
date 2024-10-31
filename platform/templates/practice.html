@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+
+{% block title %}Practice - My Flask Website{% endblock %}
+
+{% block content %}
+    <h2>Practice Problems</h2>
+    <p>Below is an AI-generated algebra problem. Please type your answers in the input boxes below. You can add more boxes for additional answers.</p>
+
+    {% if problems %}
+        <div id="problems-container">
+            {% for i in range(problems|length) %}
+                <div class="problem" style="display: {% if i == 0 %}block{% else %}none{% endif %};">
+                    <h3>Problem {{ i + 1 }}:</h3>
+                    <p><strong>{{ problems[i] }}</strong></p>
+                    
+                    <h4>Your Answer:</h4>
+                    <div id="answer-inputs-{{ i }}">
+                        <input type="text" placeholder="Type your answer here" />
+                    </div>
+                    <button onclick="addAnswerInput({{ i }})">Add Another Answer</button>
+                    <button onclick="checkAnswer('{{ solutions[i]|join(', ') }}', {{ i }})">Submit Answers</button>
+                    <button onclick="showAnswer('{{ solutions[i]|join(', ') }}', {{ i }})">Show Answer</button>
+                    
+                    <h4>Solution:</h4>
+                    <div class="solution" style="display:none;" id="solution-{{ i }}">
+                        {% if solutions[i] %}
+                            <ul>
+                                {% for answer in solutions[i] %}
+                                    <li>{{ answer }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p>No solution found.</p>
+                        {% endif %}
+                    </div>
+
+                    <div id="result-{{ i }}" style="margin-top: 10px;"></div>
+                </div>
+            {% endfor %}
+        </div>
+        
+        <button id="next-button" onclick="showNextProblem(0)">Next Problem</button>
+    {% else %}
+        <p>No problems generated.</p>
+    {% endif %}
+
+    <script>
+        let currentProblemIndex = 0;
+
+        function addAnswerInput(index) {
+            const answerInputs = document.getElementById(`answer-inputs-${index}`);
+            const newInput = document.createElement('div');
+            newInput.innerHTML = `
+                <input type="text" placeholder="Type another answer here" />
+                <button onclick="removeAnswerInput(this)">Remove</button>
+            `;
+            answerInputs.appendChild(newInput);
+        }
+
+        function removeAnswerInput(button) {
+            const answerInputDiv = button.parentElement;
+            answerInputDiv.remove();
+        }
+
+        function normalizeAnswer(answer) {
+            return answer.replace(/\s+/g, '').toLowerCase(); // Remove whitespace and convert to lowercase
+        }
+
+        function checkAnswer(correctAnswers, index) {
+            const answerInputs = document.getElementById(`answer-inputs-${index}`).getElementsByTagName('input');
+            
+            // Get user answers and normalize them
+            const userAnswers = Array.from(answerInputs)
+                .map(input => input.value.trim().replace(/\s+/g, '')) // Remove all whitespace
+                .filter(answer => answer !== ''); // Filter out empty answers
+            
+            const answersArray = correctAnswers.split(',').map(answer => answer.trim().replace(/\s+/g, '')); // Normalize correct answers
+            const resultDiv = document.getElementById(`result-${index}`);
+            
+            console.log("User Answers:", userAnswers); // Debugging statement
+            console.log("Correct Answers:", answersArray); // Debugging statement
+
+            // Track unique correct answers provided by the user
+            const correctUniqueAnswers = new Set(userAnswers.filter(userAnswer => answersArray.includes(userAnswer)));
+            const providedAnswers = new Set(userAnswers);
+
+            // Debugging statement for correct unique answers
+            console.log("Correct Unique Answers:", Array.from(correctUniqueAnswers)); // Debugging statement
+
+            // Generate feedback
+            const correctCount = correctUniqueAnswers.size;
+            const totalCorrectAnswers = answersArray.length;
+            let tooMany = false
+
+            if (userAnswers.length > totalCorrectAnswers) {
+                resultDiv.innerHTML = '<p style="color: red;">You provided too many solutions.</p>';
+                tooMany = true
+            } else if (correctCount === 0) {
+                resultDiv.innerHTML = '<p style="color: red;">No answers were correct.</p>';
+            } 
+            else if (correctCount < totalCorrectAnswers) {
+                if (correctCount ===  1) {
+                    resultDiv.innerHTML = '<p style="color: orange;">1 Correct Answer.</p>';
+                }
+                else {
+                    resultDiv.innerHTML = '<p style="color: orange;">${correctCount} Correct Answers.</p>';
+                }
+            }
+            else {
+                resultDiv.innerHTML = `<p style="color: green;">Coorect! Nice Job</p>`;
+            }
+
+            // Show the correct answer if all unique answers are correct
+            if (correctCount === totalCorrectAnswers && !tooMany) {
+                const solutionDiv = document.getElementById(`solution-${index}`);
+                solutionDiv.style.display = 'block';
+            }
+        }
+
+
+
+
+        function showAnswer(correctAnswers, index) {
+            const solutionDiv = document.getElementById(`solution-${index}`);
+            solutionDiv.style.display = 'block'; // Show correct answers
+        }
+
+        function showNextProblem(currentIndex) {
+            const problems = document.querySelectorAll('.problem');
+            if (currentIndex < problems.length - 1) {
+                problems[currentIndex].style.display = 'none'; // Hide current problem
+                problems[currentIndex + 1].style.display = 'block'; // Show next problem
+                currentProblemIndex++;
+            } else {
+                alert('You have completed all the problems!');
+                document.getElementById('next-button').style.display = 'none'; // Hide the Next button
+            }
+        }
+    </script>
+{% endblock %}

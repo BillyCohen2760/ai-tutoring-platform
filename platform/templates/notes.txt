@@ -1,0 +1,11 @@
+practice.html
+    if no more answers, when click "Next Problem", resubmit prompt to gpt
+        perhaps make gpt problems into a queue
+    keep track of problems and the user's answers
+
+    Current issues:
+        Math text/formatting
+        Only 2 problems, not 3
+
+    *** Need to think of how to use WA as a checker
+    *** Can I upload images?

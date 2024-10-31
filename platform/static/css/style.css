@@ -1,0 +1,55 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+}
+
+h1 {
+    color: #333;
+}
+
+.logo-image {
+    width: 150px;  /* Adjust width as needed */
+    height: 200px;  /* Maintain aspect ratio */
+}
+
+/* Style for the header */
+header {
+    background-color: #679bf4;  /* Header background color */
+    color: white;               /* Header text color */
+    padding: 20px;              /* Header padding */
+    text-align: center;         /* Center-align the header text */
+    font-family: Arial, sans-serif;
+}
+
+/* Style for the navigation links */
+header nav ul {
+    list-style-type: none;      /* Remove bullet points */
+    padding: 0;                 /* Remove padding */
+}
+
+header nav ul li {
+    display: inline;            /* Display links inline */
+    margin: 0 15px;             /* Space between links */
+}
+
+header nav ul li a {
+    color: white;               /* Link color */
+    text-decoration: none;      /* Remove underline */
+}
+
+header nav ul li a:hover {
+    text-decoration: underline; /* Underline on hover */
+}
+
+/* Style for the main body */
+main {
+    padding: 20px;              /* Main content padding */
+    font-family: Georgia, serif;/* Different font for body */
+    color: #333;                /* Text color for body */
+}
+
+.about-header {
+    background-color: #333;   /* Different background color */
+    color: #f0f0f0;           /* Different text color */
+    padding: 30px;            /* Different padding */
+}
