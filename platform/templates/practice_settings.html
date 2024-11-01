@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Problem Settings - My Flask Website{% endblock %}
+
+{% block content %}
+    <h2>Customize Problem Settings</h2>
+    <p>You selected: {{ prob_type }} by {{prob_topic}}</p>
+
+    <form id="settingsForm" onsubmit="return submitForm()" method="GET">
+        <label for="num_problems">Number of Problems:</label>
+        <select id="num_problems" name="num_problems" required>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+        <button type="submit">Generate Problems</button>    
+    </form>
+
+    <script>
+        function submitForm() {
+            const numProblems = document.getElementById('num_problems').value;
+            const problemType = "{{ problem_type }}";
+            const problemTopic = "{{ problem_topic }}";
+
+            // Construct the URL with problem_type, problem_topic, and num_problems
+            const url = `/generate_problems/${problemType}/${problemTopic}/${numProblems}`;
+            window.location.href = url;
+            return false;  // Prevent form submission to allow JS redirection
+        }
+    </script>
+{% endblock %}

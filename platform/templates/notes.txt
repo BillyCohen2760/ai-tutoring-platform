@@ -4,7 +4,7 @@ practice.html
     keep track of problems and the user's answers
 
     Generate New Problems:
-        Please select the difficulty of these problems:
+        Please rate the difficulty of these problems:
             Too easy, Perfect, Too hard
 
     Current issues:
@@ -24,3 +24,19 @@ Checking bad inputs:
     solve 2x^2 - 8x + 10 = 0 
     x = 2 - i 
     x = 2 + i
+
+    ['x = ± 3']
+
+
+
+
+
+GPT inputs:
+The answer should only be in the following format: [math problem]"
+    Led to ['Solve for x: x^2 + 6x - 7 = 0 by completing the square.']
+
+
+
+Next steps:
+    Fix math formatting ---- but really fix GPT prompt
+    Small: fix the %20 in the URL

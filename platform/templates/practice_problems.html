@@ -5,7 +5,10 @@
 {% block content %}
     <h2>Practice Problems</h2>
     <p>Below is an AI-generated algebra problem. Please type your answers in the input boxes below. You can add more boxes for additional answers.</p>
-
+    <h3>{{prob_topic}}</h3>
+    <h3>{{prob_type}}</h3>
+    <h3>{{problem_topic}}</h3>
+    <h3>{{problem_type}}</h3>
     {% if problems %}
         <div id="problems-container">
             {% for i in range(problems|length) %}
@@ -40,14 +43,14 @@
                         <button id="next-button-{{ i }}" onclick="showNextProblem({{ i }})">Next Problem</button>
                     {% else %}
                         <!-- Display new problems button only if there are no more problems -->
-                        <button id="new-problems-button" onclick="generateNewProblems()">Generate New Problems</button>
+                        <button id="new-problems-button" onclick="generateNewProblems('{{ problem_type }}', '{{ problem_topic }}')">Generate New Problems</button>
                     {% endif %}
                 </div>
             {% endfor %}
         </div>
     {% else %}
         <p>No problems generated.</p>
-        <button id="new-problems-button" onclick="generateNewProblems()">Generate New Problems</button>
+        <button id="new-problems-button" onclick="generateNewProblems('{{ problem_type }}', '{{ problem_topic }}')">Generate New Problems</button>
     {% endif %}
 
 
@@ -145,9 +148,33 @@
             }
         }
         
-        function generateNewProblems() {
-            window.location.href = '/practice_landing'; // Redirect to the practice route to generate new problems
+        function generateNewProblems(problem_type, problem_topic) {
+            const url = `/practice_settings`;
+            
+            // Create a form to submit as a POST request
+            const form = document.createElement("form");
+            form.method = "POST";
+            form.action = url;
+
+            // Add hidden fields for problem_type and problem_topic
+            const problemTypeInput = document.createElement("input");
+            problemTypeInput.type = "hidden";
+            problemTypeInput.name = "problem_type";
+            problemTypeInput.value = problem_type;
+
+            const problemTopicInput = document.createElement("input");
+            problemTopicInput.type = "hidden";
+            problemTopicInput.name = "problem_topic";
+            problemTopicInput.value = problem_topic;
+
+            form.appendChild(problemTypeInput);
+            form.appendChild(problemTopicInput);
+
+            document.body.appendChild(form);
+            form.submit();
         }
+
+
 
 
     </script>
