@@ -14,17 +14,22 @@
             {% for i in range(problems|length) %}
                 <div class="problem" style="display: {% if i == 0 %}block{% else %}none{% endif %};">
                     <h3>Problem {{ i + 1 }}:</h3>
-                    <p>Solve \( {{ problems[i] }} \) by {{prob_topic}}</p>
+                    <p>Solve \( {{ problems[i] }} \) by <span class="problem-topic">{{ prob_topic }}</span></p>
                     
-                    <h4>Your Answer:</h4>
+                    <h4>Your Answer(s):</h4>
+                    <h5>Note: each answer should be in the form: <span class="problem-topic">x = ___</span>
+                        <br>
+                        If there are multiple answers, click "Add Another Answer" below.
+                    </h5>
                     <div id="answer-inputs-{{ i }}">
                         <input type="text" placeholder="Type your answer here" />
                     </div>
                     <button onclick="addAnswerInput({{ i }})">Add Another Answer</button>
                     <button onclick="checkAnswer('{{ solutions[i]|join(', ') }}', {{ i }})">Submit Answers</button>
-                    <button onclick="showAnswer('{{ solutions[i]|join(', ') }}', {{ i }})">Show Answer</button>
                     
-                    <h4>Solution:</h4>
+                    <h4>Solution:
+                        <button onclick="showAnswer('{{ solutions[i]|join(', ') }}', {{ i }})">Show Answer</button>
+                    </h4>
                     <div class="solution" style="display:none;" id="solution-{{ i }}">
                         {% if solutions[i] %}
                             <ul>

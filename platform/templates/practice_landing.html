@@ -7,14 +7,32 @@
     <p>Select a type of problem to practice:</p>
     
     <ul>
-        <!-- <li>
+        <li>
             Solving Linear Equations
             <ul>
-                <li><a href="{{ url_for('generate_problems', problem_type='Solving_Quadratic_Equations', problem_topic='Quadratic Equations by Factoring') }}">Standard Form</a></li>
-                <li><a href="{{ url_for('generate_problems', problem_type='Solving', problem_topic='Quadratic Equations by Factoring') }}">Slope-Intercept Form</a></li>
-                <li><a href="{{ url_for('generate_problems', problem_type='Solving', problem_topic='Quadratic Equations by Factoring') }}">Point-Slope Form</a></li>
+                <li>
+                    <form action="{{ url_for('practice_settings') }}" method="POST" style="display:inline;">
+                        <input type="hidden" name="problem_type" value="Solving_Linear_Equations">
+                        <input type="hidden" name="problem_topic" value="Using Only One Step">
+                        <a href="#" onclick="this.closest('form').submit(); return false;">Using One Step</a>
+                    </form>
+                </li>
+                <li>
+                    <form action="{{ url_for('practice_settings') }}" method="POST" style="display:inline;">
+                        <input type="hidden" name="problem_type" value="Solving_Linear_Equations">
+                        <input type="hidden" name="problem_topic" value="Using Two Steps">
+                        <a href="#" onclick="this.closest('form').submit(); return false;">Using Two Steps</a>
+                    </form>
+                </li>
+                <li>
+                    <form action="{{ url_for('practice_settings') }}" method="POST" style="display:inline;">
+                        <input type="hidden" name="problem_type" value="Solving_Linear_Equations">
+                        <input type="hidden" name="problem_topic" value="Using Multiple Steps">
+                        <a href="#" onclick="this.closest('form').submit(); return false;">Using Multiple Steps</a>
+                    </form>
+                </li>
             </ul>
-        </li> -->
+        </li>
         <li>
             Solving Quadratic Equations
             <ul>

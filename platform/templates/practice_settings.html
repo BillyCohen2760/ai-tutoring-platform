@@ -42,31 +42,42 @@
             <option value="and let c = 0">c=0</option>
         </select>
         <br><br>
-        <button type="submit">Generate Problems</button>    
+        <!-- <button type="submit">Generate Problems</button>     -->
     </form>
     {% endif %}
+    
+    <form id="Final" onsubmit="return submitForm()" method="GET">
+        <button type="submit">Generate Problems</button>    
+    </form>
 
     <script>
         function submitForm() {
             const numProblems = document.getElementById('num_problems').value;
-            const a = document.getElementById('a').value;
-            const b = document.getElementById('b').value;
-            const c = document.getElementById('c').value;
-            const details = a + b + c;
             const problemType = "{{ problem_type }}";
             const problemTopic = "{{ problem_topic }}";
-    
+
+            // Only execute logic for 'a', 'b', and 'c' if the problem type is 'Solving Quadratic Equations'
+            let details = "In the problem, ";
+
+            console.log(problemType);
+            if (problemType === "Solving_Quadratic_Equations") {
+                const a = document.getElementById('a').value; // Default to an empty string if no value
+                const b = document.getElementById('b').value; // Default to an empty string if no value
+                const c = document.getElementById('c').value; // Default to an empty string if no value
+                details += a + b + c; // Concatenate values
+            }
+
+
             // Create a form dynamically
             const form = document.createElement("form");
             form.method = "POST";
             form.action = `/generate_problems/${problemType}/${problemTopic}`; // Action URL without num_problems and details
-    
+
             // Add hidden inputs to the form
             const inputs = [
-                { name: "details", value: details },
+                { name: "details", value: details }, // Include 'details' regardless of whether it's empty or not
                 { name: "num_problems", value: numProblems } // Send num_problems via POST
-            ];
-            inputs.forEach(inputData => {
+            ];            inputs.forEach(inputData => {
                 const input = document.createElement("input");
                 input.type = "hidden";
                 input.name = inputData.name;

@@ -124,4 +124,6 @@ def clean_gpt_output(gpt_output):
 
     # print(final_equations)
 
+    print(final_equations)
+    print(list(set(final_equations)))
     return list(set(final_equations))

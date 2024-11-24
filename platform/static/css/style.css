@@ -53,3 +53,7 @@ main {
     color: #f0f0f0;           /* Different text color */
     padding: 30px;            /* Different padding */
 }
+
+.problem-topic {
+    color: rgb(237, 71, 71);  /* You can change this to any color you'd like */
+}
