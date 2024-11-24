@@ -40,14 +40,14 @@
                         <button id="next-button-{{ i }}" onclick="showNextProblem({{ i }})">Next Problem</button>
                     {% else %}
                         <!-- Display new problems button only if there are no more problems -->
-                        <button id="new-problems-button" onclick="generateNewProblems()">Generate New Problems</button>
+                        <button id="new-problems-button" onclick="generateNewProblems(problem_type, problem_topic)">Generate New Problems</button>
                     {% endif %}
                 </div>
             {% endfor %}
         </div>
     {% else %}
         <p>No problems generated.</p>
-        <button id="new-problems-button" onclick="generateNewProblems()">Generate New Problems</button>
+        <button id="new-problems-button" onclick="generateNewProblems(problem_type, problem_topic)">Generate New Problems</button>
     {% endif %}
 
 
