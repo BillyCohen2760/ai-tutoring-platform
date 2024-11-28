@@ -65,8 +65,14 @@
                 const b = document.getElementById('b').value; // Default to an empty string if no value
                 const c = document.getElementById('c').value; // Default to an empty string if no value
                 details += a + b + c; // Concatenate values
+                details += " The variable should be x. Change the coefficients from last iteration"
             }
-
+            else if (problemType === "Evaluating_Fractions") {
+                details += "there should be no variables, only fractions that have numbers"
+            }
+            else if (problemType === "Evaluating_Decimals") {
+                details += "there should be no variables, only fractions that have numbers"
+            }
 
             // Create a form dynamically
             const form = document.createElement("form");

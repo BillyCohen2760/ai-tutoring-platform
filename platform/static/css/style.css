@@ -57,3 +57,53 @@ main {
 .problem-topic {
     color: rgb(237, 71, 71);  /* You can change this to any color you'd like */
 }
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+ul ul {
+    padding-left: 20px; /* Indent nested lists */
+}
+
+li {
+    margin: 0;
+    padding: 0;
+}
+
+li li {
+    margin: 10px;
+    padding: 0;
+}
+
+
+.columns-container {
+    display: flex;
+    justify-content: space-between; /* Ensures even spacing */
+    gap: 20px; /* Space between columns */
+}
+
+.column {
+    flex: 1; /* Allows columns to take up equal width */
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ccc; /* Optional: adds borders around columns */
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: adds shadow for better visibility */
+}
+
+h3 {
+    text-align: left; /* Center-align column headings */
+}
+
+ul {
+    list-style: none; /* Remove bullet points */
+    padding: 0;
+}
+
+ul ul {
+    /* list-style: disc; Add bullet points for nested lists */
+    margin-left: 20px;
+}

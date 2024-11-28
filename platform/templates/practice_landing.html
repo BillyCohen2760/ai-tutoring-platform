@@ -1,63 +1,216 @@
 {% extends "base.html" %}
 
-{% block title %}Practice Problems - My Flask Website{% endblock %}
+{% block title %}Practice Problems{% endblock %}
 
 {% block content %}
     <h2>Practice Problems</h2>
     <p>Select a type of problem to practice:</p>
     
-    <ul>
-        <li>
-            Solving Linear Equations
+    <div class="columns-container">
+        <div class="column">
+        <h3>Arithmetic Problems</h3> 
             <ul>
-                <li>
-                    <form action="{{ url_for('practice_settings') }}" method="POST" style="display:inline;">
-                        <input type="hidden" name="problem_type" value="Solving_Linear_Equations">
-                        <input type="hidden" name="problem_topic" value="Using_Only_One_Step">
-                        <a href="#" onclick="this.closest('form').submit(); return false;">Using One Step</a>
-                    </form>
+                <li> Evaluating Fractions
+                    <ul>
+                        <li>
+                            <form action="{{ url_for('practice_settings') }}" method="POST" style="display:inline;">
+                                <input type="hidden" name="problem_type" value="Evaluating_Fractions">
+                                <input type="hidden" name="problem_topic" value="Using_Addition">
+                                <a href="#" onclick="this.closest('form').submit(); return false;">Addition</a>
+                            </form>
+                        </li>
+                        <li>
+                            <form action="{{ url_for('practice_settings') }}" method="POST" style="display:inline;">
+                                <input type="hidden" name="problem_type" value="Evaluating_Fractions">
+                                <input type="hidden" name="problem_topic" value="Using_Subtraction">
+                                <a href="#" onclick="this.closest('form').submit(); return false;">Subtraction</a>
+                            </form>
+                        </li>
+                        <li>
+                            <form action="{{ url_for('practice_settings') }}" method="POST" style="display:inline;">
+                                <input type="hidden" name="problem_type" value="Evaluating_Fractions">
+                                <input type="hidden" name="problem_topic" value="Using_Multiplication">
+                                <a href="#" onclick="this.closest('form').submit(); return false;">Multiplication</a>
+                            </form>
+                        </li>
+                        <li>
+                            <form action="{{ url_for('practice_settings') }}" method="POST" style="display:inline;">
+                                <input type="hidden" name="problem_type" value="Evaluating_Fractions">
+                                <input type="hidden" name="problem_topic" value="Using_Division">
+                                <a href="#" onclick="this.closest('form').submit(); return false;">Division</a>
+                            </form>
+                        </li>
+                    </ul>
                 </li>
-                <li>
-                    <form action="{{ url_for('practice_settings') }}" method="POST" style="display:inline;">
-                        <input type="hidden" name="problem_type" value="Solving_Linear_Equations">
-                        <input type="hidden" name="problem_topic" value="Using_Two_Steps">
-                        <a href="#" onclick="this.closest('form').submit(); return false;">Using Two Steps</a>
-                    </form>
-                </li>
-                <li>
-                    <form action="{{ url_for('practice_settings') }}" method="POST" style="display:inline;">
-                        <input type="hidden" name="problem_type" value="Solving_Linear_Equations">
-                        <input type="hidden" name="problem_topic" value="Using_Multiple_Steps">
-                        <a href="#" onclick="this.closest('form').submit(); return false;">Using Multiple Steps</a>
-                    </form>
+                <li> Evaluating Decimals
+                    <ul>
+                        <li>
+                            <form action="{{ url_for('practice_settings') }}" method="POST" style="display:inline;">
+                                <input type="hidden" name="problem_type" value="Evaluating_Decimals">
+                                <input type="hidden" name="problem_topic" value="Using_Addition">
+                                <a href="#" onclick="this.closest('form').submit(); return false;">Addition</a>
+                            </form>
+                        </li>
+                        <li>
+                            <form action="{{ url_for('practice_settings') }}" method="POST" style="display:inline;">
+                                <input type="hidden" name="problem_type" value="Evaluating_Decimals">
+                                <input type="hidden" name="problem_topic" value="Using_Subtraction">
+                                <a href="#" onclick="this.closest('form').submit(); return false;">Subtraction</a>
+                            </form>
+                        </li>
+                        <li>
+                            <form action="{{ url_for('practice_settings') }}" method="POST" style="display:inline;">
+                                <input type="hidden" name="problem_type" value="Evaluating_Decimals">
+                                <input type="hidden" name="problem_topic" value="Using_Multiplication">
+                                <a href="#" onclick="this.closest('form').submit(); return false;">Multiplication</a>
+                            </form>
+                        </li>
+                        <li>
+                            <form action="{{ url_for('practice_settings') }}" method="POST" style="display:inline;">
+                                <input type="hidden" name="problem_type" value="Evaluating_Decimals">
+                                <input type="hidden" name="problem_topic" value="Using_Division">
+                                <a href="#" onclick="this.closest('form').submit(); return false;">Division</a>
+                            </form>
+                        </li>
+                    </ul>
                 </li>
             </ul>
-        </li>
-        <li>
-            Solving Quadratic Equations
+        </div>
+        <div class="column">
+            <h3>Simplification Problems</h3>
             <ul>
-                <li>
-                    <form action="{{ url_for('practice_settings') }}" method="POST" style="display:inline;">
-                        <input type="hidden" name="problem_type" value="Solving_Quadratic_Equations">
-                        <input type="hidden" name="problem_topic" value="Factoring">
-                        <a href="#" onclick="this.closest('form').submit(); return false;">Factoring</a>
-                    </form>
+                <li> Simplifying Expressions
+                    <ul>
+                        <li>
+                            <form action="{{ url_for('practice_settings') }}" method="POST" style="display:inline;">
+                                <input type="hidden" name="problem_type" value="Simplifying_Expressions">
+                                <input type="hidden" name="problem_topic" value="Combining_Like_Terms">
+                                <a href="#" onclick="this.closest('form').submit(); return false;">Combining Like Terms</a>
+                            </form>
+                        </li>
+                        <li>
+                            <form action="{{ url_for('practice_settings') }}" method="POST" style="display:inline;">
+                                <input type="hidden" name="problem_type" value="Simplifying_Expressions">
+                                <input type="hidden" name="problem_topic" value="Factoring">
+                                <a href="#" onclick="this.closest('form').submit(); return false;">Factoring</a>
+                            </form>
+                        </li>
+                        <li>
+                            <form action="{{ url_for('practice_settings') }}" method="POST" style="display:inline;">
+                                <input type="hidden" name="problem_type" value="Simplifying_Expressions">
+                                <input type="hidden" name="problem_topic" value="Square Roots">
+                                <a href="#" onclick="this.closest('form').submit(); return false;">Square Roots</a>
+                            </form>
+                        </li>
+                    </ul>
                 </li>
-                <li>
-                    <form action="{{ url_for('practice_settings') }}" method="POST" style="display:inline;">
-                        <input type="hidden" name="problem_type" value="Solving_Quadratic_Equations">
-                        <input type="hidden" name="problem_topic" value="Completing_The_Square">
-                        <a href="#" onclick="this.closest('form').submit(); return false;">Completing The Square</a>
-                    </form>
+                <li> Equations Of A Line
+                    <ul>
+                        <li>
+                            <form action="{{ url_for('practice_settings') }}" method="POST" style="display:inline;">
+                                <input type="hidden" name="problem_type" value="Equations_Of_A_Line">
+                                <input type="hidden" name="problem_topic" value="Standard_Form">
+                                <a href="#" onclick="this.closest('form').submit(); return false;">Standard Form</a>
+                            </form>
+                        </li>
+                        <li>
+                            <form action="{{ url_for('practice_settings') }}" method="POST" style="display:inline;">
+                                <input type="hidden" name="problem_type" value="Equations_Of_A_Line">
+                                <input type="hidden" name="problem_topic" value="Slope_Intercept_Form">
+                                <a href="#" onclick="this.closest('form').submit(); return false;">Slope Intercept Form</a>
+                            </form>
+                        </li>
+                        <li>
+                            <form action="{{ url_for('practice_settings') }}" method="POST" style="display:inline;">
+                                <input type="hidden" name="problem_type" value="Equations_Of_A_Line">
+                                <input type="hidden" name="problem_topic" value="Point_Slope_Form">
+                                <a href="#" onclick="this.closest('form').submit(); return false;">Point Slope Form</a>
+                            </form>
+                        </li>
+                        <li>
+                            <form action="{{ url_for('practice_settings') }}" method="POST" style="display:inline;">
+                                <input type="hidden" name="problem_type" value="Equations_Of_A_Line">
+                                <input type="hidden" name="problem_topic" value="Finding_Slope">
+                                <a href="#" onclick="this.closest('form').submit(); return false;">Finding Slope</a>
+                            </form>
+                        </li>
+                    </ul>
                 </li>
-                <li>
-                    <form action="{{ url_for('practice_settings') }}" method="POST" style="display:inline;">
-                        <input type="hidden" name="problem_type" value="Solving_Quadratic_Equations">
-                        <input type="hidden" name="problem_topic" value="Quadratic_Formula">
-                        <a href="#" onclick="this.closest('form').submit(); return false;">Quadratic Formula</a>
-                    </form>
+                <li> System of Equations
+                    <ul>
+                        <li>
+                            <form action="{{ url_for('practice_settings') }}" method="POST" style="display:inline;">
+                                <input type="hidden" name="problem_type" value="System_Of_Equations">
+                                <input type="hidden" name="problem_topic" value="Substitution">
+                                <a href="#" onclick="this.closest('form').submit(); return false;">Substitution</a>
+                            </form>
+                        </li>
+                        <li>
+                            <form action="{{ url_for('practice_settings') }}" method="POST" style="display:inline;">
+                                <input type="hidden" name="problem_type" value="System_Of_Equations">
+                                <input type="hidden" name="problem_topic" value="Elimination">
+                                <a href="#" onclick="this.closest('form').submit(); return false;">Elimination</a>
+                            </form>
+                        </li>
+                    </ul>
                 </li>
             </ul>
-        </li>
-    </ul>
+        </div>
+        <div class="column">
+            <h3>Solving Problems</h3>
+            <ul>
+                <li> Solving Linear Equations
+                    <ul>
+                        <li>
+                            <form action="{{ url_for('practice_settings') }}" method="POST" style="display:inline;">
+                                <input type="hidden" name="problem_type" value="Solving_Linear_Equations">
+                                <input type="hidden" name="problem_topic" value="Using_Only_One_Step">
+                                <a href="#" onclick="this.closest('form').submit(); return false;">Using One Step</a>
+                            </form>
+                        </li>
+                        <li>
+                            <form action="{{ url_for('practice_settings') }}" method="POST" style="display:inline;">
+                                <input type="hidden" name="problem_type" value="Solving_Linear_Equations">
+                                <input type="hidden" name="problem_topic" value="Using_Two_Steps">
+                                <a href="#" onclick="this.closest('form').submit(); return false;">Using Two Steps</a>
+                            </form>
+                        </li>
+                        <li>
+                            <form action="{{ url_for('practice_settings') }}" method="POST" style="display:inline;">
+                                <input type="hidden" name="problem_type" value="Solving_Linear_Equations">
+                                <input type="hidden" name="problem_topic" value="Using_Multiple_Steps">
+                                <a href="#" onclick="this.closest('form').submit(); return false;">Using Multiple Steps</a>
+                            </form>
+                        </li>
+                    </ul>
+                </li>
+                <li> Solving Quadratic Equations
+                    <ul>
+                        <li>
+                            <form action="{{ url_for('practice_settings') }}" method="POST" style="display:inline;">
+                                <input type="hidden" name="problem_type" value="Solving_Quadratic_Equations">
+                                <input type="hidden" name="problem_topic" value="Factoring">
+                                <a href="#" onclick="this.closest('form').submit(); return false;">Factoring</a>
+                            </form>
+                        </li>
+                        <li>
+                            <form action="{{ url_for('practice_settings') }}" method="POST" style="display:inline;">
+                                <input type="hidden" name="problem_type" value="Solving_Quadratic_Equations">
+                                <input type="hidden" name="problem_topic" value="Completing_The_Square">
+                                <a href="#" onclick="this.closest('form').submit(); return false;">Completing The Square</a>
+                            </form>
+                        </li>
+                        <li>
+                            <form action="{{ url_for('practice_settings') }}" method="POST" style="display:inline;">
+                                <input type="hidden" name="problem_type" value="Solving_Quadratic_Equations">
+                                <input type="hidden" name="problem_topic" value="Quadratic_Formula">
+                                <a href="#" onclick="this.closest('form').submit(); return false;">Quadratic Formula</a>
+                            </form>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        </div>    
 {% endblock %}
+

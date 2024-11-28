@@ -64,7 +64,7 @@ def generate_problems(problem_type, problem_topic): #, num_problems):
     prob_topic = replace_underscores_with_spaces(problem_topic)
 
     system_msg = "You are a math teacher. You answer the question directly without any extra words or responses."
-    user_msg = f"Please generate {int(num_problems) + 2} unique and new algebra problems. DO NOT REPEAT PROBLEMS. Please make sure the problems have not been used before. The topic is {prob_type} by {prob_topic}. {details} The variable should be x. Change the coefficients from last iteration. Please use LaTex formatting."
+    user_msg = f"Please generate {int(num_problems) + 2} unique and new algebra problems. DO NOT REPEAT PROBLEMS. Please make sure the problems have not been used before. The topic is {prob_type} by {prob_topic}. {details}. Please use LaTex formatting."
     print(user_msg)
     GPT_output = GPT_response(system_msg, user_msg)
     problems = clean_gpt_output(GPT_output)

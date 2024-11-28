@@ -17,7 +17,7 @@ def categorize_output(output_list):
     
     for item in output_list:        
         # Check if the item contains any instructional words and process the entire line
-        if any(word in item.lower() for word in ['solve', 'by', 'using', 'the', 'method', 'find', 'solution', 'determine', 'equation', 'expression']) or item == '\[' or item == '\]' or item == '\(' or item == '\)':
+        if any(word in item.lower() for word in ['add', 'addition', 'subtract', 'subtraction', 'multiply', 'multiplication', 'divide', 'division', 'calculate', 'compute', 'what', 'evaluate', 'solve', 'by', 'is', 'using', 'the', 'method', 'find', 'solution', 'determine', 'equation', 'expression', '?']) or item == '\[' or item == '\]' or item == '\(' or item == '\)':
             categories["Includes Instructions"].append(item)
         else:
             categories["Equations Only"].append(item)
