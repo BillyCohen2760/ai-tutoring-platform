@@ -63,6 +63,7 @@ def generate_problems(problem_type, problem_topic): #, num_problems):
     print("Details received (POST):", details)
     print("Number of problems received (POST):", num_problems)
     print("Allow Square Roots received (POST):", allow_square_roots)
+    print("Allow Imaginary Numbers received (POST):", allow_imaginary_numbers)
 
     if num_problems is None:
         num_problems = 3  # Default to 3 problems if num_problems is not specified
