@@ -68,8 +68,8 @@
             {% endfor %}
         </div>
     {% else %}
-        <p>No problems generated.</p>
-        <button id="new-problems-button" onclick="generateNewProblems('{{ problem_type }}', '{{ problem_topic }}')">Generate New Problems</button>
+        <p>Sorry, there was an issue generating problems. Please Try Again.</p>
+        <button id="new-problems-button" onclick="generateNewProblems('{{ problem_type }}', '{{ problem_topic }}')">Try Again</button>
     {% endif %}
 
 
