@@ -56,8 +56,8 @@
     {% if prob_type == "Evaluating Fractions" %}
     <p>Special Customizations for {{prob_type}}</p>
     <form id="SolvingQuadraticEquationsForm" onsubmit="return submitForm()" method="GET">
-        <label for="num_fractions">How many terms would you like there to be in each problem?</label>
-        <select id="num_fractions" name="num_fractions" required>
+        <label for="num_terms">How many terms would you like there to be in each problem?</label>
+        <select id="num_terms" name="num_terms" required>
             <option value="2" selected>2</option>
             <option value="3">3</option>
             <option value="4">4</option>
@@ -70,8 +70,8 @@
     {% if prob_type == "Evaluating Decimals" %}
     <p>Special Customizations for {{prob_type}}</p>
     <form id="SolvingQuadraticEquationsForm" onsubmit="return submitForm()" method="GET">
-        <label for="num_decimals">How many terms would you like there to be in each problem?</label>
-        <select id="num_decimals" name="num_decimals" required>
+        <label for="num_terms">How many terms would you like there to be in each problem?</label>
+        <select id="num_terms" name="num_terms" required>
             <option value="2" selected>2</option>
             <option value="3">3</option>
             <option value="4">4</option>
@@ -116,13 +116,13 @@
                 details += "there should only be one equation"
             }
             else if (problemType === "Evaluating_Fractions") {
-                const num_fractions = document.getElementById('num_fractions').value;
-                details += "there should be " + num_fractions + " total fractions. "
+                const num_terms = document.getElementById('num_terms').value;
+                details += "there should be " + num_terms + " total terms. "
                 details += "Also, there should be no variables, only fractions that have numbers"
             }
             else if (problemType === "Evaluating_Decimals") {
-                const num_decimals = document.getElementById('num_decimals').value;
-                details += "there should be " + num_decimals + " total expressions. "
+                const num_terms = document.getElementById('num_terms').value;
+                details += "there should be " + num_terms + " total terms. "
                 details += "Also, there should be no variables, only decimals that have numbers"
             }
             else if (problemType === "System_Of_Equations") {
