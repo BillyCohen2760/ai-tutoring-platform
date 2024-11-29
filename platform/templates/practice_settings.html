@@ -46,6 +46,36 @@
     </form>
     {% endif %}
     
+    {% if prob_type == "Evaluating Fractions" %}
+    <p>Special Customizations for {{prob_type}}</p>
+    <form id="SolvingQuadraticEquationsForm" onsubmit="return submitForm()" method="GET">
+        <label for="num_fractions">How many terms would you like there to be in each problem?</label>
+        <select id="num_fractions" name="num_fractions" required>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+    </form>
+    <br><br>
+    {% endif %}
+
+    {% if prob_type == "Evaluating Decimals" %}
+    <p>Special Customizations for {{prob_type}}</p>
+    <form id="SolvingQuadraticEquationsForm" onsubmit="return submitForm()" method="GET">
+        <label for="num_decimals">How many terms would you like there to be in each problem?</label>
+        <select id="num_decimals" name="num_decimals" required>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+    </form>
+    <br><br>
+    {% endif %}
+
     <form id="Final" onsubmit="return submitForm()" method="GET">
         <button type="submit">Generate Problems</button>    
     </form>
@@ -64,14 +94,21 @@
                 const a = document.getElementById('a').value; // Default to an empty string if no value
                 const b = document.getElementById('b').value; // Default to an empty string if no value
                 const c = document.getElementById('c').value; // Default to an empty string if no value
-                details += a + b + c; // Concatenate values
+                details += a + b + c +"."; // Concatenate values
                 details += " The variable should be x. Change the coefficients from last iteration"
             }
             else if (problemType === "Evaluating_Fractions") {
-                details += "there should be no variables, only fractions that have numbers"
+                const num_fractions = document.getElementById('num_fractions').value;
+                details += "there should be " + num_fractions + " total fractions. "
+                details += "Also, there should be no variables, only fractions that have numbers"
             }
             else if (problemType === "Evaluating_Decimals") {
-                details += "there should be no variables, only fractions that have numbers"
+                const num_decimals = document.getElementById('num_decimals').value;
+                details += "there should be " + num_decimals + " total expressions. "
+                details += "Also, there should be no variables, only decimals that have numbers"
+            }
+            else if (problemType === "System_Of_Equations") {
+                details += "please separate the two equations with a comma"
             }
 
             // Create a form dynamically

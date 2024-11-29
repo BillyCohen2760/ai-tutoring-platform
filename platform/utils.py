@@ -1,4 +1,8 @@
 import re
+from fractions import Fraction
+
+
+
 def replace_underscores_with_spaces(input_string):
     return input_string.replace('_', ' ')
 
@@ -127,3 +131,42 @@ def clean_gpt_output(gpt_output):
     print(final_equations)
     print(list(set(final_equations)))
     return list(set(final_equations))
+
+def answer_to_coordinates(answer):
+    """
+    Extracts numerical values for x and y from a list containing a string in the format 
+    'x = <value> and y = <value>', where <value> can be an integer or a fraction, 
+    and returns a list with the coordinates as a string "(x, y)".
+    """
+    # Initialize an empty list to store the results
+    result_list = []
+    
+    # Assume the list contains one string element.
+    answer_str = answer[0]  # Extract the string from the list
+    
+    # Split the input string by " and " to separate the x and y parts
+    parts = answer_str.split(' and ')
+    
+    # Extract x and y values by splitting each part by "=" and stripping extra spaces
+    x_value = parts[0].split('=')[1].strip()
+    y_value = parts[1].split('=')[1].strip()
+
+    # Format the result and append it to the list
+    result_list.append(f"({x_value}, {y_value})")
+    
+    # Return the list containing the result
+    return result_list
+
+def string_to_normal(solution):
+    return tuple(solution)
+
+def format_answer(answer, prob_type):
+    if prob_type == "System Of Equations":
+        print(answer)
+        solution = answer_to_coordinates(answer)
+        print(solution)
+        # solution = string_to_normal(solution)
+        print(solution)
+        return solution
+    else:
+        return answer

@@ -50,8 +50,6 @@ def generate_problems(problem_type, problem_topic): #, num_problems):
     # Retrieve num_problems and details from POST form data
     num_problems = request.form.get('num_problems', None)  # Default to None if not provided
     details = request.form.get('details', '')  # Default to an empty string if not provided
-    if details != "In the problem, ":
-        details = details + "."
 
     # Log received values
     print("Details received (POST):", details)
@@ -67,6 +65,7 @@ def generate_problems(problem_type, problem_topic): #, num_problems):
     user_msg = f"Please generate {int(num_problems) + 2} unique and new algebra problems. DO NOT REPEAT PROBLEMS. Please make sure the problems have not been used before. The topic is {prob_type} by {prob_topic}. {details}. Please use LaTex formatting."
     print(user_msg)
     GPT_output = GPT_response(system_msg, user_msg)
+    print(prob_type, prob_topic)
     problems = clean_gpt_output(GPT_output)
     problems = problems[:int(num_problems)]
     print(problems)
@@ -75,7 +74,9 @@ def generate_problems(problem_type, problem_topic): #, num_problems):
     for problem in problems:
         prompt = f"Solve {problem}"
         WA_output = WA_response(prompt)
-        solutions.append(WA_output)
+        print(WA_output)
+        solution = format_answer(WA_output, prob_type)
+        solutions.append(solution)
     print(solutions)
 
     return render_template(

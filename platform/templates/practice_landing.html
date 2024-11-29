@@ -77,7 +77,7 @@
             </ul>
         </div>
         <div class="column">
-            <h3>Simplification Problems</h3>
+            <h3>Simplifying Expressions</h3>
             <ul>
                 <li> Simplifying Expressions
                     <ul>
@@ -136,28 +136,10 @@
                         </li>
                     </ul>
                 </li>
-                <li> System of Equations
-                    <ul>
-                        <li>
-                            <form action="{{ url_for('practice_settings') }}" method="POST" style="display:inline;">
-                                <input type="hidden" name="problem_type" value="System_Of_Equations">
-                                <input type="hidden" name="problem_topic" value="Substitution">
-                                <a href="#" onclick="this.closest('form').submit(); return false;">Substitution</a>
-                            </form>
-                        </li>
-                        <li>
-                            <form action="{{ url_for('practice_settings') }}" method="POST" style="display:inline;">
-                                <input type="hidden" name="problem_type" value="System_Of_Equations">
-                                <input type="hidden" name="problem_topic" value="Elimination">
-                                <a href="#" onclick="this.closest('form').submit(); return false;">Elimination</a>
-                            </form>
-                        </li>
-                    </ul>
-                </li>
             </ul>
         </div>
         <div class="column">
-            <h3>Solving Problems</h3>
+            <h3>Solving Equations</h3>
             <ul>
                 <li> Solving Linear Equations
                     <ul>
@@ -205,6 +187,24 @@
                                 <input type="hidden" name="problem_type" value="Solving_Quadratic_Equations">
                                 <input type="hidden" name="problem_topic" value="Quadratic_Formula">
                                 <a href="#" onclick="this.closest('form').submit(); return false;">Quadratic Formula</a>
+                            </form>
+                        </li>
+                    </ul>
+                </li>
+                <li> System of Equations
+                    <ul>
+                        <li>
+                            <form action="{{ url_for('practice_settings') }}" method="POST" style="display:inline;">
+                                <input type="hidden" name="problem_type" value="System_Of_Equations">
+                                <input type="hidden" name="problem_topic" value="Substitution">
+                                <a href="#" onclick="this.closest('form').submit(); return false;">Substitution</a>
+                            </form>
+                        </li>
+                        <li>
+                            <form action="{{ url_for('practice_settings') }}" method="POST" style="display:inline;">
+                                <input type="hidden" name="problem_type" value="System_Of_Equations">
+                                <input type="hidden" name="problem_topic" value="Elimination">
+                                <a href="#" onclick="this.closest('form').submit(); return false;">Elimination</a>
                             </form>
                         </li>
                     </ul>
