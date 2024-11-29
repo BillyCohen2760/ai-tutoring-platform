@@ -96,7 +96,7 @@ def generate_problems(problem_type, problem_topic): #, num_problems):
     # print('solutions', solutions)
 
     message = 'None'
-    if len(problems) >= int(num_problems):
+    if len(problems) < int(num_problems):
         if str(len(problems)) == 1:
             message = f"Sorry, only " + str(len(problems)) + " problem was created. "
         else:
