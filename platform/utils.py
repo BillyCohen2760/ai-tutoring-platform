@@ -1,5 +1,7 @@
 import re
 from fractions import Fraction
+from decimal import Decimal, ROUND_HALF_UP
+from categories import *
 
 
 
@@ -97,9 +99,6 @@ def find_BAD_answers(problem, solution, customizations):
 
     return solution
 
-
-
-
 def validate(problems, solutions, customizations):
     for i, (problem, solution) in enumerate(zip(problems, solutions)):
         solutions[i] = find_BAD_answers(problem, solution, customizations)
@@ -117,8 +116,6 @@ def validate(problems, solutions, customizations):
     print("Filtered Solutions:", solutions_filtered)
 
     return problems_filtered, solutions_filtered
-
-
 
 # cleans gpt output to take away brackets, enumerations, etc.
 def clean_gpt_output(gpt_output, customizations):
@@ -208,7 +205,6 @@ def answer_to_coordinates(answer):
 def string_to_normal(solution):
     return tuple(solution)
 
-
 def expand_pm(answer):
     """
     Expands expressions with '±' into separate positive and negative values.
@@ -240,17 +236,46 @@ def expand_pm(answer):
         # If no '±', return the input as-is
         return answer
 
+def format_answer(answer, prob_type, num_decimal_places):
+    print("Initial answer:", answer)
 
-def format_answer(answer, prob_type):
+    if "±" in str(answer):
+        solution =  expand_pm(answer)
+    
     if prob_type == "System Of Equations":
-        print(answer)
-        answer = answer_to_coordinates(answer)
-        print(answer)
+        solution = answer_to_coordinates(answer)
         # answer = string_to_normal(answer)
         # print(answer)
-        return answer
+
+    elif prob_type == "Evaluating Decimals":
+        rounded_numbers = []
+
+        for num in answer:
+            try:
+                # Convert to Decimal
+                decimal_value = Decimal(num)
+                
+                # Define the rounding precision
+                precision = Decimal('1.' + '0' * num_decimal_places)
+                
+                # Round the value and append to the result
+                rounded_numbers.append(str(decimal_value.quantize(precision, rounding=ROUND_HALF_UP)))
+            except Exception as e:
+                # Handle any conversion errors
+                print(f"Error processing '{num}': {e}")
+                rounded_numbers.append('Invalid number')
+        solution = rounded_numbers
+
     else:
-        if "±" in str(answer):
-            answer =  expand_pm(answer)
-            print(answer)
-    return answer
+        solution = answer
+    print("Final solution:", solution)
+    return solution
+
+# Create the prompt based on type of problem. Will eb solve or simply type of problem
+def create_prompt(problem, prob_type):
+    if prob_type in simplifying_expressions:
+        prompt = f"Simplify {problem}"
+    else:
+        prompt = f"Solve {problem}"
+    return prompt
+

@@ -79,6 +79,15 @@
         </select>
     </form>
     <br><br>
+    <!-- Number of decimal places -->
+    <label for="num_decimal_places">To how many decimal places would you like to round the answer?</label>
+    <select id="num_decimal_places" name="num_decimal_places" required>
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2" selected>2</option>
+        <option value="3">3</option>
+    </select>
+    <br><br>
     {% endif %}
 
     <form id="Final" onsubmit="return submitForm()" method="GET">
@@ -121,6 +130,7 @@
                 details += "Also, there should be no variables, only fractions that have numbers"
             }
             else if (problemType === "Evaluating_Decimals") {
+                // const num_decimal_places = document.getElementById('num_decimal_places').value;
                 const num_terms = document.getElementById('num_terms').value;
                 details += "there should be " + num_terms + " total terms. "
                 details += "Also, there should be no variables, only decimals that have numbers"
@@ -140,18 +150,28 @@
                 { name: "num_problems", value: numProblems }, // Send num_problems via POST
                 { name: "allow_square_roots", value: allowSquareRoots }, // Send allowSquareRoots via POST
                 { name: "allow_imaginary_numbers", value: allowImaginaryNumbers } // Send allowImaginaryNumbers via POST
-            ];            inputs.forEach(inputData => {
+            ];
+
+            // Conditionally add num_decimal_places for "Evaluating Decimals"
+            if (problemType === "Evaluating_Decimals") {
+                const numDecimalPlaces = document.getElementById('num_decimal_places').value;
+                console.log("Number of Decimal Places:", numDecimalPlaces);
+                inputs.push({ name: "num_decimal_places", value: numDecimalPlaces });
+            }
+
+            // Add inputs to the form
+            inputs.forEach(inputData => {
                 const input = document.createElement("input");
                 input.type = "hidden";
                 input.name = inputData.name;
                 input.value = inputData.value;
                 form.appendChild(input);
             });
-    
+
             // Append the form to the document and submit
             document.body.appendChild(form);
             form.submit();
-    
+
             return false; // Prevent default behavior
         }
     </script>

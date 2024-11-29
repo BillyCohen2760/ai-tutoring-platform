@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 from services.gpt_service import GPT_response
 from services.wa_service import WA_response
 from utils import *
+from categories import *
 from dotenv import load_dotenv
 import os
 
@@ -48,7 +49,7 @@ def practice_settings():
 # @app.route('/generate_problems/<problem_type>/<problem_topic>/<num_problems>', methods=['GET', 'POST'])
 def generate_problems(problem_type, problem_topic): #, num_problems):
     # Retrieve num_problems and details from POST form data
-    num_problems = request.form.get('num_problems', None)  # Default to None if not provided
+    num_problems = request.form.get('num_problems', '3')  # Default to 3 if not provided
     allow_square_roots = request.form.get('allow_square_roots', '')  # Default to None if not provided
     allow_imaginary_numbers = request.form.get('allow_imaginary_numbers', '')  # Default to None if not provided
     details = request.form.get('details', '')  # Default to an empty string if not provided
@@ -65,8 +66,12 @@ def generate_problems(problem_type, problem_topic): #, num_problems):
     print("Allow Square Roots received (POST):", allow_square_roots)
     print("Allow Imaginary Numbers received (POST):", allow_imaginary_numbers)
 
-    if num_problems is None:
-        num_problems = 3  # Default to 3 problems if num_problems is not specified
+    print(problem_type, problem_topic)
+    num_decimal_places = 0
+    if problem_type == "Evaluating_Decimals":
+        num_decimal_places = request.form.get('num_decimal_places', '0') # Default to 0 if not provided
+        num_decimal_places = int(num_decimal_places)
+        print("Number of Decimal Places received (POST):", num_decimal_places)
 
     prob_type = replace_underscores_with_spaces(problem_type)
     prob_topic = replace_underscores_with_spaces(problem_topic)
@@ -82,10 +87,11 @@ def generate_problems(problem_type, problem_topic): #, num_problems):
 
     solutions = []
     for problem in problems:
-        prompt = f"Solve {problem}"
+        prompt = create_prompt(problem, prob_type)
+        print("WA Prompt", prompt)
         WA_output = WA_response(prompt)
         print(WA_output)
-        solution = format_answer(WA_output, prob_type)
+        solution = format_answer(WA_output, prob_type, num_decimal_places)
         solutions.append(solution)
     print(solutions)
 
