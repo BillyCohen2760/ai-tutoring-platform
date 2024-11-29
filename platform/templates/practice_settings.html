@@ -30,8 +30,8 @@
     <form id="SolvingQuadraticEquationsForm" onsubmit="return submitForm()" method="GET">
         <label for="a">What values of a are allowed?</label>
         <select id="a" name="a" required>
-            <option value="let a be any number, ">a can be any number</option>
-            <option value="let a = 1, ">a = 1</option>
+            <option value="Let a be any number, ">a can be any number</option>
+            <option value="Let a = 1, ">a = 1</option>
             <!-- <option value="Let a>=1">a>=1</option> -->
         </select>
         <!-- <button type="submit">Generate Problems</button>     -->
@@ -110,6 +110,7 @@
                 const a = document.getElementById('a').value; // Default to an empty string if no value
                 const b = document.getElementById('b').value; // Default to an empty string if no value
                 const c = document.getElementById('c').value; // Default to an empty string if no value
+                details += "the form is ax^2 + bx + c. "
                 details += a + b + c +"."; // Concatenate values
                 details += " The variable should be x. Change the coefficients from last iteration"
             }
@@ -140,7 +141,7 @@
                 { name: "details", value: details }, // Include 'details' regardless of whether it's empty or not
                 { name: "num_problems", value: numProblems }, // Send num_problems via POST
                 { name: "allow_square_roots", value: allowSquareRoots }, // Send allowSquareRoots via POST
-                { name: "allow_square_roots", value: allowImaginaryNumbers } // Send allowImaginaryNumbers via POST
+                { name: "allow_imaginary_numbers", value: allowImaginaryNumbers } // Send allowImaginaryNumbers via POST
             ];            inputs.forEach(inputData => {
                 const input = document.createElement("input");
                 input.type = "hidden";

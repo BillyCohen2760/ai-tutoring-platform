@@ -75,6 +75,8 @@ def clean(final_equations):
 
 def find_BAD_answers(problem, solution, customizations):
     temp_solution = str(solution)
+    print('temp_solution', temp_solution)
+
 
     # print()
     # print()
@@ -86,7 +88,7 @@ def find_BAD_answers(problem, solution, customizations):
             return 'BAD'
         
     if customizations['i'] == 'false':
-        if re.search(r'i', temp_solution) != None:
+        if 'i' in temp_solution:
             print("IMAGINARY FOUND!")
             return 'BAD'
         
@@ -206,13 +208,49 @@ def answer_to_coordinates(answer):
 def string_to_normal(solution):
     return tuple(solution)
 
+
+def expand_pm(answer):
+    """
+    Expands expressions with '±' into separate positive and negative values.
+    
+    Parameters:
+        expression (list): A list containing a string with a '±' symbol.
+        
+    Returns:
+        list: A list of strings with separate positive and negative values.
+    """
+    # Extract the string from the list
+    input_str = answer[0]
+    
+    # Check if the string contains the '±' symbol
+    if '±' in input_str:
+        # Split the string into the part before and after the '±'
+        before_pm, after_pm = input_str.split('±')
+        before_pm = before_pm.strip()
+        after_pm = after_pm.strip()
+        
+        # Check if the part before ± is just "x =" or has more
+        if before_pm.endswith('='):
+            # If it ends with "=", drop the "+"
+            return [f"{before_pm} {after_pm}", f"{before_pm} -{after_pm}"]
+        else:
+            # Otherwise, include "+" and "-" for the ±
+            return [f"{before_pm} + {after_pm}", f"{before_pm} - {after_pm}"]
+    else:
+        # If no '±', return the input as-is
+        return answer
+
+
 def format_answer(answer, prob_type):
     if prob_type == "System Of Equations":
         print(answer)
-        solution = answer_to_coordinates(answer)
-        print(solution)
-        # solution = string_to_normal(solution)
-        print(solution)
-        return solution
-    else:
+        answer = answer_to_coordinates(answer)
+        print(answer)
+        # answer = string_to_normal(answer)
+        # print(answer)
         return answer
+    else:
+        if "±" in str(answer):
+            answer =  expand_pm(answer)
+            print(answer)
+    return answer
