@@ -73,8 +73,53 @@ def clean(final_equations):
     
     return cleaned_equations   
 
+def find_BAD_answers(problem, solution, customizations):
+    temp_solution = str(solution)
+
+    # print()
+    # print()
+    # print("find_BAD_answers", temp_solution, customizations['sqrt'])
+
+    if customizations['sqrt'] == 'false':
+        if re.search(r'sqrt\([^)]*\)', temp_solution) != None:
+            print("SQRT FOUND!")
+            return 'BAD'
+        
+    if customizations['i'] == 'false':
+        if re.search(r'i', temp_solution) != None:
+            print("IMAGINARY FOUND!")
+            return 'BAD'
+        
+    if temp_solution == '[\'No results found.\']' or temp_solution == '[\'(no solutions exist)\']':
+        return 'BAD'
+
+    return solution
+
+
+
+
+def validate(problems, solutions, customizations):
+    for i, (problem, solution) in enumerate(zip(problems, solutions)):
+        solutions[i] = find_BAD_answers(problem, solution, customizations)
+        
+    # print("bad Problems:", problems)
+    # print("bad Solutions:", solutions)
+
+
+    # filter out bad answers
+    problems_filtered = [problem for problem, solution in zip(problems, solutions) if solution != 'BAD']
+    solutions_filtered = [solution for solution in solutions if solution != 'BAD']
+
+    # Print the filtered arrays
+    print("Filtered Problems:", problems_filtered)
+    print("Filtered Solutions:", solutions_filtered)
+
+    return problems_filtered, solutions_filtered
+
+
+
 # cleans gpt output to take away brackets, enumerations, etc.
-def clean_gpt_output(gpt_output):
+def clean_gpt_output(gpt_output, customizations):
     all_outputs = []
     output_list = [line.strip() for line in gpt_output.split('\n') if line.strip() != '']
     all_outputs.extend(output_list)
@@ -119,7 +164,8 @@ def clean_gpt_output(gpt_output):
     final_equations.extend(categories['Equations Only'])
     final_equations.extend(categories_remedy['Equations Only'])
     # print(final_equations)
-    final_equations = clean(final_equations) # FOCUS ON THIS!!!!!!!!
+    final_equations = clean(final_equations) # FOCUS ON THIS!!!!!!!!    
+    
     # print(final_equations)
     # print()
     # print("FINAL EQUATIONS")

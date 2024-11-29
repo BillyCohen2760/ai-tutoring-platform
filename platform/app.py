@@ -49,11 +49,20 @@ def practice_settings():
 def generate_problems(problem_type, problem_topic): #, num_problems):
     # Retrieve num_problems and details from POST form data
     num_problems = request.form.get('num_problems', None)  # Default to None if not provided
+    allow_square_roots = request.form.get('allow_square_roots', '')  # Default to None if not provided
+    allow_imaginary_numbers = request.form.get('allow_imaginary_numbers', '')  # Default to None if not provided
     details = request.form.get('details', '')  # Default to an empty string if not provided
+
+    customizations = {}
+    if allow_square_roots != '':
+        customizations['sqrt'] = allow_square_roots
+        customizations['i'] = allow_imaginary_numbers
+
 
     # Log received values
     print("Details received (POST):", details)
     print("Number of problems received (POST):", num_problems)
+    print("Allow Square Roots received (POST):", allow_square_roots)
 
     if num_problems is None:
         num_problems = 3  # Default to 3 problems if num_problems is not specified
@@ -62,12 +71,12 @@ def generate_problems(problem_type, problem_topic): #, num_problems):
     prob_topic = replace_underscores_with_spaces(problem_topic)
 
     system_msg = "You are a math teacher. You answer the question directly without any extra words or responses."
-    user_msg = f"Please generate {int(num_problems) + 2} unique and new algebra problems. DO NOT REPEAT PROBLEMS. Please make sure the problems have not been used before. The topic is {prob_type} by {prob_topic}. {details}. Please use LaTex formatting."
+    user_msg = f"Please generate {int(num_problems) + 5} unique and new algebra problems. DO NOT REPEAT PROBLEMS. Please make sure the problems have not been used before. The topic is {prob_type} by {prob_topic}. {details}. Please use LaTex formatting."
     print(user_msg)
     GPT_output = GPT_response(system_msg, user_msg)
     print(prob_type, prob_topic)
-    problems = clean_gpt_output(GPT_output)
-    problems = problems[:int(num_problems)]
+    problems = clean_gpt_output(GPT_output, customizations)
+    # problems = problems[:int(num_problems)] # temporarily commenting out because want to handle this after finding solution
     print(problems)
 
     solutions = []
@@ -79,13 +88,41 @@ def generate_problems(problem_type, problem_topic): #, num_problems):
         solutions.append(solution)
     print(solutions)
 
+    print('problems', problems)
+    print('solutions', solutions)
+
+    problems, solutions = validate(problems, solutions, customizations)
+    # print('problems', problems)
+    # print('solutions', solutions)
+
+    message = 'None'
+    if len(problems) >= int(num_problems):
+        if str(len(problems)) == 1:
+            message = f"Sorry, only " + str(len(problems)) + " problem was created. "
+        else:
+            message = f"Sorry, only " + str(len(problems)) + " problems were created. "
+
+        if str(num_problems) == 1:
+            message += "If you want " + str(num_problems) + " problem, please click the Try Again button"
+        else:
+            message += "If you want " + str(num_problems) + " problems, please click the Try Again button"
+
+
+    # only save num_problems number of problems
+    problems = problems[:int(num_problems)]
+    solutions = solutions[:int(num_problems)]
+    print('problems', problems)
+    print('solutions', solutions)
+
+
     return render_template(
         'practice_problems.html',
         problems=problems,
         solutions=solutions,
         prob_topic=prob_topic,
         problem_type=problem_type,
-        problem_topic=problem_topic
+        problem_topic=problem_topic,
+        message = message
     )
 
 if __name__ == '__main__':
