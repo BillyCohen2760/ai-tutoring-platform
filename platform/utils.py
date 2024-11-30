@@ -23,7 +23,7 @@ def categorize_output(output_list):
     
     for item in output_list:        
         # Check if the item contains any instructional words and process the entire line
-        if any(word in item.lower() for word in ['add', 'addition', 'subtract', 'subtraction', 'multiply', 'multiplication', 'divide', 'division', 'calculate', 'compute', 'what', 'evaluate', 'solve', 'by', 'is', 'using', 'the', 'method', 'find', 'solution', 'determine', 'equation', 'expression', '?']) or item == '\[' or item == '\]' or item == '\(' or item == '\)':
+        if any(word in item.lower() for word in ['add', 'addition', 'subtract', 'subtraction', 'multiply', 'multiplication', 'divide', 'division', 'calculate', 'compute', 'what', 'evaluate', 'by', 'is', 'using', 'the', 'method', 'find', 'solution', 'determine', 'equation', 'expression', '?']) or item == '\[' or item == '\]' or item == '\(' or item == '\)':
             categories["Includes Instructions"].append(item)
         else:
             categories["Equations Only"].append(item)
@@ -60,6 +60,8 @@ def clean(final_equations):
         # Replace all instances of backslash followed by specific characters
         eq = eq.replace(r'\[', '').replace(r'\]', '').replace(r'\(', '').replace(r'\)', '')
         # print(eq)
+        # Replace all instances of simplify:, solve: with space
+        eq = re.sub(r'(?i)(simplify:|simplify|solve:|solve)', '', eq).strip()
 
         # Remove leading enumerations like '1.' or '2.' but NOT '3.2'
         eq = re.sub(r'^\d+\.\s+', '', eq)
