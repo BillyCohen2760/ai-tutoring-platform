@@ -268,6 +268,10 @@ def format_answer(answer, prob_type, num_decimal_places):
 
     else:
         solution = answer
+
+    if prob_type in simplifying_expressions:
+        solution = solution[0]
+        solution = [solution]
     print("Final solution:", solution)
     return solution
 
