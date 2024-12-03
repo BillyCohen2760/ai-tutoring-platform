@@ -23,7 +23,7 @@ def categorize_output(output_list):
     
     for item in output_list:        
         # Check if the item contains any instructional words and process the entire line
-        if any(word in item.lower() for word in ['add', 'addition', 'subtract', 'subtraction', 'multiply', 'multiplication', 'divide', 'division', 'calculate', 'compute', 'what', 'evaluate', 'by', 'is', 'using', 'the', 'method', 'find', 'solution', 'determine', 'equation', 'expression', '?']) or item == '\[' or item == '\]' or item == '\(' or item == '\)':
+        if any(word in item.lower() for word in ['add', 'addition', 'subtract', 'subtraction', 'multiply', 'multiplication', 'divide', 'division', 'calculate', 'compute', 'for', 'what', 'evaluate', 'by', 'is', 'using', 'the', 'method', 'find', 'solution', 'determine', 'equation', 'expression', '?']) or item == '\[' or item == '\]' or item == '\(' or item == '\)':
             categories["Includes Instructions"].append(item)
         else:
             categories["Equations Only"].append(item)
@@ -98,6 +98,13 @@ def find_BAD_answers(problem, solution, customizations):
         
     if temp_solution == '[\'No results found.\']' or temp_solution == '[\'(no solutions exist)\']':
         return 'BAD'
+    
+    if customizations['problem_topic'] == 'Combining_Like_Terms':
+        print("CLT")
+        if '.' in temp_solution:
+            print("DECIMAL FOUND")
+            return 'BAD'
+
 
     return solution
 
@@ -282,8 +289,11 @@ def create_prompt(problem, prob_type):
    
 
     if prob_type in simplifying_expressions or prob_type == 'Simplify:':
-        print("RECEIVED")
         prompt = f"Simplify {problem}"
+        print(prompt)
+
+    elif prob_type == 'Expand:':
+        prompt = f"Expand {problem}"
         print(prompt)
 
     # elif prob_type == 'Equivalence_Test':

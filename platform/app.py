@@ -29,16 +29,31 @@ def simplify_expression():
     if expr.isnumeric():
         return expr
    
-    prompt = create_prompt(expr, 'Simplify:')
+    prompt = create_prompt(expr, 'Expand:') # MIGHT WANT TO DO EXPAND...
 
     # Use the WA_response function to simplify the expression
     result = WA_response(prompt)
     # verdict = equal_or_not(result)
-    print(result, result[0])
+    print('EXPANDED:', result, result[0])
 
     # Ensure the response is correctly formatted as JSON
     if result:
-        return jsonify({"result": result[0]}), 200
+        if result[0] == 'No results found.':
+            return jsonify({"result": expr.replace(" ", "")}), 200
+        else: 
+            expanded = result[0]
+            prompt2 = create_prompt(expanded, 'Simplify:')
+            result2 = WA_response(prompt2)
+            print('SIMPLIFIED', result2, result2[0])
+
+            if result2:
+                if result2[0] == 'No results found.':
+                    print("returning", expanded.replace(" ", ""))
+                    return jsonify({"result": expanded.replace(" ", "")}), 200
+                return jsonify({"result": result2[0].replace(" ", "")}), 200
+                
+            return jsonify({"result": expanded.replace(" ", "")}), 200
+    
     else:
         return jsonify({"error": "Failed to simplify the expression"}), 500 
 
@@ -83,8 +98,11 @@ def generate_problems(problem_type, problem_topic): #, num_problems):
     details = request.form.get('details', '')  # Default to an empty string if not provided
 
     customizations = {}
+    customizations['problem_type'] = problem_type
+    customizations['problem_topic'] = problem_topic
     if allow_square_roots != '':
         customizations['sqrt'] = allow_square_roots
+    if allow_imaginary_numbers != '':
         customizations['i'] = allow_imaginary_numbers
 
 
@@ -132,8 +150,9 @@ def generate_problems(problem_type, problem_topic): #, num_problems):
     # print('solutions', solutions)
 
     message = 'None'
-    if len(problems) < int(num_problems):
-        if str(len(problems)) == '1':
+    if len(problems) < int(num_problems) and len(problems) != 0:
+        print(len(problems))
+        if (len(problems)) == 1:
             message = f"Sorry, only " + str(len(problems)) + " problem was created. "
         else:
             message = f"Sorry, only " + str(len(problems)) + " problems were created. "

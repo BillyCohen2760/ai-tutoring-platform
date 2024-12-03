@@ -17,7 +17,10 @@
         </select>
         <br><br>
         <label for="allow_square_roots">Allow Square Roots in Answers:</label>
-        <input type="checkbox" id="allow_square_roots" name="allow_square_roots">
+        <input type="checkbox" id="allow_square_roots" name="allow_square_roots" 
+        {% if prob_topic == 'Square Roots' %}checked disabled{% endif %} >
+
+
         <br><br>
         <label for="allow_imaginary_numbers">Allow Imaginary Numbers in Answers:</label>
         <input type="checkbox" id="allow_imaginary_numbers" name="allow_imaginary_numbers">
@@ -62,6 +65,22 @@
             <option value="3">3</option>
             <option value="4">4</option>
             <option value="5">5</option>
+        </select>
+    </form>
+    <br><br>
+    {% endif %}
+
+    {% if prob_topic == "Combining Like Terms" %}
+    <p>Special Customizations for {{prob_type}}</p>
+    <form id="CombiningLikeTermsForm" onsubmit="return submitForm()" method="GET">
+        <label for="num_terms">How many terms would you like there to be in each problem?</label>
+        <select id="num_terms" name="num_terms" required>
+            <option value="4" selected>4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
         </select>
     </form>
     <br><br>
@@ -133,6 +152,12 @@
                 // const num_decimal_places = document.getElementById('num_decimal_places').value;
                 const num_terms = document.getElementById('num_terms').value;
                 details += "there should be " + num_terms + " total terms. "
+                details += "Also, there should be no variables, only decimals that have numbers"
+            }
+            else if (problemTopic === "Combining_Like_Terms") {
+                // const num_decimal_places = document.getElementById('num_decimal_places').value;
+                const num_terms = document.getElementById('num_terms').value;
+                details += "there should be " + num_terms + " total terms. The coefficients and constants should be whole numbers. For example, if there are 5 terms, a good problem would be '3x + 5y - 3 - 2x + 4y'. "
                 details += "Also, there should be no variables, only decimals that have numbers"
             }
             else if (problemType === "System_Of_Equations") {
