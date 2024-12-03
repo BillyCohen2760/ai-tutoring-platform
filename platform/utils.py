@@ -145,6 +145,26 @@ def find_BAD_answers(problem, solution, customizations):
         
         if 'c = 0' in customizations['abc'] and c != 0:
             return 'BAD'
+        
+    if customizations['problem_type'] == 'Evaluating_Fractions' or customizations['problem_type'] == 'Evaluating_Decimals':
+        if customizations['problem_topic'] == 'Using_Addition':
+            print("EVALUATING FRACTIONS", temp_problem)
+            if '-' in temp_problem or 'times' in temp_problem or 'div' in temp_problem:
+                return 'BAD'
+        if customizations['problem_topic'] == 'Using_Subtraction':
+            print("EVALUATING FRACTIONS", temp_problem)
+            if '+' in temp_problem or 'times' in temp_problem or 'div' in temp_problem:
+                return 'BAD'
+        if customizations['problem_topic'] == 'Using_Multiplication':
+            print("EVALUATING FRACTIONS", temp_problem)
+            if '-' in temp_problem or '+' in temp_problem or 'div' in temp_problem:
+                return 'BAD'
+        if customizations['problem_topic'] == 'Using_Division':
+            print("EVALUATING FRACTIONS", temp_problem)
+            if '-' in temp_problem or 'times' in temp_problem or '+' in temp_problem:
+                return 'BAD'
+
+
 
 
         # if 'let a be any number' in customizations['abc']:
