@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 from services.gpt_service import GPT_response
 from services.wa_service import WA_response
 from utils import *
@@ -13,6 +13,34 @@ app = Flask(__name__)
 
 load_dotenv()
 app.config['OPEN_AI_KEY'] = os.getenv('OPEN_AI_KEY')
+
+
+
+
+@app.route('/api/simplify_expression', methods=['POST'])
+def simplify_expression():
+    # Get the expression from the request
+    data = request.get_json()
+    expr = data.get('expression', '')
+
+    print("data", data)
+    print("expr", expr)
+
+    if expr.isnumeric():
+        return expr
+   
+    prompt = create_prompt(expr, 'Simplify:')
+
+    # Use the WA_response function to simplify the expression
+    result = WA_response(prompt)
+    # verdict = equal_or_not(result)
+    print(result, result[0])
+
+    # Ensure the response is correctly formatted as JSON
+    if result:
+        return jsonify({"result": result[0]}), 200
+    else:
+        return jsonify({"error": "Failed to simplify the expression"}), 500 
 
 @app.route('/')
 def home():

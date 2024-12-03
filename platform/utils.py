@@ -279,9 +279,26 @@ def format_answer(answer, prob_type, num_decimal_places):
 
 # Create the prompt based on type of problem. Will eb solve or simply type of problem
 def create_prompt(problem, prob_type):
-    if prob_type in simplifying_expressions:
+   
+
+    if prob_type in simplifying_expressions or prob_type == 'Simplify:':
+        print("RECEIVED")
         prompt = f"Simplify {problem}"
+        print(prompt)
+
+    # elif prob_type == 'Equivalence_Test':
+    #     prompt = f"Does {problem[0]} = {problem[1]}"
+
     else:
         prompt = f"Solve {problem}"
     return prompt
+
+# function to check if WA response for two equations indicate that they are equal
+def equal_or_not(result):
+    if "true" in result:
+        return True
+    return False
+
+
+
 

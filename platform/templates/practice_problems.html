@@ -101,7 +101,7 @@
             return answer.replace(/\s+/g, '').toLowerCase(); // Remove whitespace and convert to lowercase
         }
 
-        function checkAnswer(correctAnswers, index) {
+        async function checkAnswer(correctAnswers, index) {
             const answerInputs = document
                 .getElementById(`answer-inputs-${index}`)
                 .getElementsByTagName('input');
@@ -115,10 +115,12 @@
             let processedUserAnswers, processedCorrectAnswers;
             if (problemType === "Simplifying_Expressions") {
                 // Use math.simplify for specific problem types
-                processedUserAnswers = userAnswers.map(answer => simplifyExpression(answer));
-                processedCorrectAnswers = correctAnswers
-                    .split(/,(?![^\(]*\))/) // Split by commas outside parentheses
-                    .map(answer => simplifyExpression(answer.trim()));
+                processedUserAnswers = await Promise.all(userAnswers.map(answer => simplifyExpression(answer)));
+                processedCorrectAnswers = await Promise.all(
+                    correctAnswers
+                        .split(/,(?![^\(]*\))/) // Split by commas outside parentheses
+                        .map(answer => simplifyExpression(answer.trim()))
+                );
             } else {
                 // Use raw answers for other problem types
                 processedUserAnswers = userAnswers;
@@ -138,6 +140,7 @@
             );
 
             const providedAnswers = new Set(processedUserAnswers);
+            console.log("providedAnswers", providedAnswers); // Debugging statement
 
             // Debugging statement for correct unique answers
             console.log("Correct Unique Answers:", Array.from(correctUniqueAnswers)); // Debugging statement
@@ -164,18 +167,36 @@
         }
 
         // Helper function to simplify an expression and ensure term order doesn't affect equality
-        function simplifyExpression(expr) {
-            // Simplify the expression using math.simplify
-            const simplifiedExpr = math.simplify(expr);
+        async function simplifyExpression(expr) {
+            console.log("Expr to sinplify", expr)
 
-            // Convert the simplified expression to a string, split into terms, sort them, and join back
-            const sortedExpr = simplifiedExpr
-                .toString()
-                .split(' ')
-                .sort()
-                .join(' ');
+            try {
+                // Send a POST request to the Flask API
+                const response = await fetch('/api/simplify_expression', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ expression: expr }),
+                });
 
-            return sortedExpr;
+                // Parse the JSON response
+                const data = await response.json();
+                const simplifiedExpression = data.result;
+                console.log('simplifiedExpression', simplifiedExpression)
+                return simplifiedExpression
+                // Handle errors from the server
+                if (!response.ok) {
+                    alert(data.error || "An error occurred while simplifying the expression.");
+                    return;
+                }
+
+                // Display the simplified expression
+                alert(`Simplified Expression: ${simplifiedExpression}`);
+            } catch (error) {
+                console.error("Error:", error);
+                // alert("An error occurred while processing the request.");
+            }
         }
 
 
