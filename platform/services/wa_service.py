@@ -1,6 +1,7 @@
 # services/wolfram_service.py
 import xml.etree.ElementTree as ET
 import requests
+import os
 
 def WA_response(input_message):
     """
@@ -8,7 +9,7 @@ def WA_response(input_message):
     """
     url = "http://api.wolframalpha.com/v2/query"
     params = {
-        "appid": "QEKE9P-9R44U336AX",
+        "appid": os.getenv('WA_KEY'),
         "input": input_message,
         "format": "plaintext"
     }
