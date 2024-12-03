@@ -31,6 +31,8 @@
                     <h5>Note: each answer should be in the form: <span class="problem-topic">x = ___</span>
                         <br>
                         If there are multiple answers, click "Add Another Answer" below.
+                        <br>
+                        Please put a space between every variable.
                     </h5>
                     <div id="answer-inputs-{{ i }}">
                         <input type="text" placeholder="Type your answer here" />
@@ -77,6 +79,8 @@
 
 
     <script>
+        const problemType = "{{ problem_type }}"; // Dynamically injected from Flask
+        
         let currentProblemIndex = 0;
         function addAnswerInput(index) {
             const answerInputs = document.getElementById(`answer-inputs-${index}`);
@@ -98,59 +102,85 @@
         }
 
         function checkAnswer(correctAnswers, index) {
-            const answerInputs = document.getElementById(`answer-inputs-${index}`).getElementsByTagName('input');
-            
-            // Get user answers and normalize them
-            const userAnswers = Array.from(answerInputs)
-                .map(input => input.value.trim().replace(/\s+/g, '')) // Remove all whitespace
-                .filter(answer => answer !== ''); // Filter out empty answers
-            
-            // Split the correct answers using a regex that ignores commas inside parentheses
-            const answersArray = correctAnswers
-                .split(/,(?![^\(]*\))/) // Split by commas outside parentheses
-                .map(answer => answer.trim().replace(/\s+/g, '')); // Normalize correct answers
-            
-            const resultDiv = document.getElementById(`result-${index}`);
-            
-            console.log("User Answers:", userAnswers); // Debugging statement
-            console.log("Correct Answers:", answersArray); // Debugging statement
+            const answerInputs = document
+                .getElementById(`answer-inputs-${index}`)
+                .getElementsByTagName('input');
 
-            // Track unique correct answers provided by the user
-            const correctUniqueAnswers = new Set(userAnswers.filter(userAnswer => answersArray.includes(userAnswer)));
-            const providedAnswers = new Set(userAnswers);
+            // Get user answers
+            const userAnswers = Array.from(answerInputs)
+                .map(input => input.value.trim()) // Trim whitespace
+                .filter(answer => answer !== ''); // Filter out empty answers
+
+            // SIMPLIFY ANSWERS FOR CERTAIN TYPES OF PROBLEMS ONLY (e.g. yes for expressions, no for fractions)
+            let processedUserAnswers, processedCorrectAnswers;
+            if (problemType === "Simplifying_Expressions") {
+                // Use math.simplify for specific problem types
+                processedUserAnswers = userAnswers.map(answer => simplifyExpression(answer));
+                processedCorrectAnswers = correctAnswers
+                    .split(/,(?![^\(]*\))/) // Split by commas outside parentheses
+                    .map(answer => simplifyExpression(answer.trim()));
+            } else {
+                // Use raw answers for other problem types
+                processedUserAnswers = userAnswers;
+                processedCorrectAnswers = correctAnswers
+                    .split(/,(?![^\(]*\))/) // Split by commas outside parentheses
+                    .map(answer => answer.trim());
+            }
+
+            const resultDiv = document.getElementById(`result-${index}`);
+
+            console.log("User Answers (Processed):", processedUserAnswers); // Debugging statement
+            console.log("Correct Answers (Processed):", processedCorrectAnswers); // Debugging statement
+
+            // Check which user answers are correct
+            const correctUniqueAnswers = new Set(
+                processedUserAnswers.filter(userAnswer => processedCorrectAnswers.includes(userAnswer))
+            );
+
+            const providedAnswers = new Set(processedUserAnswers);
 
             // Debugging statement for correct unique answers
             console.log("Correct Unique Answers:", Array.from(correctUniqueAnswers)); // Debugging statement
 
             // Generate feedback
             const correctCount = correctUniqueAnswers.size;
-            const totalCorrectAnswers = answersArray.length;
-            let tooMany = false
+            const totalCorrectAnswers = processedCorrectAnswers.length;
 
             if (userAnswers.length > totalCorrectAnswers) {
                 resultDiv.innerHTML = '<p style="color: red;">You provided too many solutions.</p>';
-                tooMany = true
             } else if (correctCount === 0) {
                 resultDiv.innerHTML = '<p style="color: red;">No answers were correct.</p>';
-            } 
-            else if (correctCount < totalCorrectAnswers) {
-                if (correctCount ===  1) {
-                    resultDiv.innerHTML = '<p style="color: orange;">1 Correct Answer.</p>';
-                }
-                else {
-                    resultDiv.innerHTML = `<p style="color: orange;">${correctCount} Correct Answers.</p>`;
-                }
-            }
-            else {
+            } else if (correctCount < totalCorrectAnswers) {
+                resultDiv.innerHTML = `<p style="color: orange;">${correctCount} Correct Answer(s).</p>`;
+            } else {
                 resultDiv.innerHTML = `<p style="color: green;">Correct! Nice Job.</p>`;
             }
 
             // Show the correct answer if all unique answers are correct
-            if (correctCount === totalCorrectAnswers && !tooMany) {
+            if (correctCount === totalCorrectAnswers && userAnswers.length <= totalCorrectAnswers) {
                 const solutionDiv = document.getElementById(`solution-${index}`);
                 solutionDiv.style.display = 'block';
             }
         }
+
+        // Helper function to simplify an expression and ensure term order doesn't affect equality
+        function simplifyExpression(expr) {
+            // Simplify the expression using math.simplify
+            const simplifiedExpr = math.simplify(expr);
+
+            // Convert the simplified expression to a string, split into terms, sort them, and join back
+            const sortedExpr = simplifiedExpr
+                .toString()
+                .split(' ')
+                .sort()
+                .join(' ');
+
+            return sortedExpr;
+        }
+
+
+
+
 
 
         function showAnswer(correctAnswers, index) {

@@ -80,6 +80,7 @@ def generate_problems(problem_type, problem_topic): #, num_problems):
     user_msg = f"Please generate {int(num_problems) + 5} unique and new algebra problems. DO NOT REPEAT PROBLEMS. Please make sure the problems have not been used before. The topic is {prob_type} by {prob_topic}. {details}. Please use LaTex formatting."
     print(user_msg)
     GPT_output = GPT_response(system_msg, user_msg)
+    # GPT_output = 'simplify 4x + 3y - 2x + 5y' # test for simplify and Try Again button
     print(prob_type, prob_topic)
     problems = clean_gpt_output(GPT_output, customizations)
     # problems = problems[:int(num_problems)] # temporarily commenting out because want to handle this after finding solution
@@ -104,12 +105,12 @@ def generate_problems(problem_type, problem_topic): #, num_problems):
 
     message = 'None'
     if len(problems) < int(num_problems):
-        if str(len(problems)) == 1:
+        if str(len(problems)) == '1':
             message = f"Sorry, only " + str(len(problems)) + " problem was created. "
         else:
             message = f"Sorry, only " + str(len(problems)) + " problems were created. "
 
-        if str(num_problems) == 1:
+        if str(num_problems) == '1':
             message += "If you want " + str(num_problems) + " problem, please click the Try Again button"
         else:
             message += "If you want " + str(num_problems) + " problems, please click the Try Again button"
