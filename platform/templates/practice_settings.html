@@ -186,6 +186,15 @@
                 inputs.push({ name: "num_decimal_places", value: numDecimalPlaces });
             }
 
+            if (problemType === "Solving_Quadratic_Equations") {
+                const a = document.getElementById('a').value;
+                const b = document.getElementById('b').value;
+                const c = document.getElementById('c').value;
+                const abc = a+b+c
+                console.log('abc', abc)
+                inputs.push({ name: "abc", value: abc });
+            }
+
             inputs.forEach(inputData => {
                 const input = document.createElement("input");
                 input.type = "hidden";

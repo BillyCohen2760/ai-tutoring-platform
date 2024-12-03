@@ -119,6 +119,13 @@ def generate_problems(problem_type, problem_topic): #, num_problems):
         num_decimal_places = int(num_decimal_places)
         print("Number of Decimal Places received (POST):", num_decimal_places)
 
+    if problem_type == "Solving_Quadratic_Equations":
+        abc = request.form.get('abc', '') # Default to 0 if not provided
+        # num_decimal_places = int(num_decimal_places)
+        print("abc", abc)
+        customizations['abc'] = abc
+
+
     prob_type = replace_underscores_with_spaces(problem_type)
     prob_topic = replace_underscores_with_spaces(problem_topic)
 

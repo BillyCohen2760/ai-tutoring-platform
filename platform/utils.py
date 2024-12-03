@@ -75,8 +75,35 @@ def clean(final_equations):
         if eq:
             cleaned_equations.append(eq)
     
-    return cleaned_equations   
+    return cleaned_equations  
 
+# find coefficients and constants in ax^2 + bx + c for validation
+def extract_coefficients(equation):
+    # Remove spaces for consistent processing
+    equation = equation.replace(" ", "")
+    
+    # Remove the "= 0" part, if present
+    if "=" in equation:
+        equation = equation.split("=")[0]
+    
+    # Regular expressions to match coefficients
+    a_match = re.search(r"([+-]?\d*)x\^2", equation)
+    b_match = re.search(r"([+-]?\d*)x(?!\^)", equation)
+    c_match = re.search(r"([+-]?\d+)$", equation)  # Match the constant at the end of the string
+    
+    # Extract and convert coefficients to integers
+    # a coefficient (x^2 term)
+    a = int(a_match.group(1)) if a_match and a_match.group(1) not in ["", "+", "-"] else (1 if "x^2" in equation and (not a_match.group(1) or a_match.group(1) == "+") else -1)
+    
+    # b coefficient (x term)
+    b = int(b_match.group(1)) if b_match and b_match.group(1) not in ["", "+", "-"] else (0 if b_match is None else (1 if b_match.group(1) == "+" else -1))
+    
+    # c coefficient (constant term)
+    c = int(c_match.group(1)) if c_match else 0
+    
+    return a, b, c
+
+# Filter out "BAD" answers according to user customizations
 def find_BAD_answers(problem, solution, customizations):
     temp_solution = str(solution)
     temp_problem = str(problem)
@@ -96,15 +123,32 @@ def find_BAD_answers(problem, solution, customizations):
         if 'i' in temp_solution:
             print("IMAGINARY FOUND!")
             return 'BAD'
-        
-    if temp_solution == '[\'No results found.\']' or temp_solution == '[\'(no solutions exist)\']':
-        return 'BAD'
-    
+            
     if customizations['problem_topic'] == 'Combining_Like_Terms':
         print("CLT")
         if '.' in temp_problem:
             print("DECIMAL FOUND")
             return 'BAD'
+
+    if temp_solution == '[\'No results found.\']' or temp_solution == '[\'(no solutions exist)\']':
+        return 'BAD'
+    
+    if customizations['problem_type'] == 'Solving_Quadratic_Equations':
+        a, b, c = extract_coefficients(temp_problem)
+        print("a, b, c", a, b, c)
+
+        if 'a = 1' in customizations['abc'] and a != 1:
+            return 'BAD'
+        
+        if 'b = 0' in customizations['abc'] and b != 0:
+            return 'BAD'
+        
+        if 'c = 0' in customizations['abc'] and c != 0:
+            return 'BAD'
+
+
+        # if 'let a be any number' in customizations['abc']:
+
 
 
     return solution
@@ -230,13 +274,19 @@ def expand_pm(answer):
     
     # Check if the string contains the '±' symbol
     if '±' in input_str:
+        print("BEFORE", input_str)
         # Split the string into the part before and after the '±'
         before_pm, after_pm = input_str.split('±')
+        print("SPLIT", before_pm, after_pm)
         before_pm = before_pm.strip()
         after_pm = after_pm.strip()
+        print("SPLIT", before_pm, after_pm)
+
         
         # Check if the part before ± is just "x =" or has more
-        if before_pm.endswith('='):
+        if before_pm.endswith('=') or before_pm.endswith('= '):
+            print("OK>>>>>")
+            print([f"{before_pm} {after_pm}", f"{before_pm} -{after_pm}"])
             # If it ends with "=", drop the "+"
             return [f"{before_pm} {after_pm}", f"{before_pm} -{after_pm}"]
         else:
@@ -248,9 +298,6 @@ def expand_pm(answer):
 
 def format_answer(answer, prob_type, num_decimal_places):
     print("Initial answer:", answer)
-
-    if "±" in str(answer):
-        solution =  expand_pm(answer)
     
     if prob_type == "System Of Equations":
         solution = answer_to_coordinates(answer)
@@ -283,6 +330,13 @@ def format_answer(answer, prob_type, num_decimal_places):
         solution = solution[0]
         solution = [solution]
     print("Final solution:", solution)
+
+    # Replace ± with two solutions
+    # Do this +/- search last
+    if "±" in str(solution):
+        print("FOUND")
+        solution =  expand_pm(solution)
+
     return solution
 
 # Create the prompt based on type of problem. Will eb solve or simply type of problem
