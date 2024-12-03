@@ -38,8 +38,10 @@
                         <input type="text" placeholder="Type your answer here" />
                     </div>
                     <button onclick="addAnswerInput({{ i }})">Add Another Answer</button>
-                    <button onclick="checkAnswer('{{ solutions[i]|join(', ') }}', {{ i }})">Submit Answers</button>
-                    
+                    <button onclick="handleCheckAnswer('{{ solutions[i]|join(', ') }}', {{ i }})">Submit Answers</button>
+                    <br>
+                    <div id="checking-message" style="display: none; color: blue;">Checking answer...</div>
+
                     <h4>Solution:
                         <button id="toggle-answer-button-{{ i }}" onclick="toggleAnswer('{{ solutions[i]|join(', ') }}', {{ i }})">Show Answer</button>
                     </h4>
@@ -100,6 +102,21 @@
 
         function normalizeAnswer(answer) {
             return answer.replace(/\s+/g, '').toLowerCase(); // Remove whitespace and convert to lowercase
+        }
+
+
+        async function handleCheckAnswer(correctAnswers, index) {
+            // Show the "Checking answer..." message
+            const checkingMessage = document.getElementById('checking-message');
+            checkingMessage.style.display = 'block';
+
+            try {
+                // Call your `checkAnswer` function
+                await checkAnswer(correctAnswers, index);
+            } finally {
+                // Hide the "Checking answer..." message
+                checkingMessage.style.display = 'none';
+            }
         }
 
         async function checkAnswer(correctAnswers, index) {

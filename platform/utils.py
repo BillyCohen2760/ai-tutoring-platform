@@ -79,6 +79,7 @@ def clean(final_equations):
 
 def find_BAD_answers(problem, solution, customizations):
     temp_solution = str(solution)
+    temp_problem = str(problem)
     print('temp_solution', temp_solution)
 
 
@@ -101,7 +102,7 @@ def find_BAD_answers(problem, solution, customizations):
     
     if customizations['problem_topic'] == 'Combining_Like_Terms':
         print("CLT")
-        if '.' in temp_solution:
+        if '.' in temp_problem:
             print("DECIMAL FOUND")
             return 'BAD'
 
