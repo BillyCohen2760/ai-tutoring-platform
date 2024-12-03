@@ -112,33 +112,38 @@
     <form id="Final" onsubmit="return submitForm()" method="GET">
         <button type="submit">Generate Problems</button>    
     </form>
+    
+    <br>
+    <div id="generating..." style="display: none; color: blue;">Generating...</div>
+
 
     <script>
         function submitForm() {
+            // Show the "Generating..." message
+            const generatingMessage = document.getElementById('generating...');
+            generatingMessage.style.display = 'block';
+
             const numProblems = document.getElementById('num_problems').value;
             const allowSquareRoots = document.getElementById('allow_square_roots').checked;
             const allowImaginaryNumbers = document.getElementById('allow_imaginary_numbers').checked;
-
 
             console.log("Number of Problems:", numProblems);
             console.log("Allow Square Roots:", allowSquareRoots);
             console.log("Allow Imaginary Numbers:", allowImaginaryNumbers);
 
-
             const problemType = "{{ problem_type }}";
             const problemTopic = "{{ problem_topic }}";
 
-            // Only execute logic for 'a', 'b', and 'c' if the problem type is 'Solving Quadratic Equations'
             let details = "In the problem, ";
-
             console.log(problemType);
+
             if (problemType === "Solving_Quadratic_Equations") {
-                const a = document.getElementById('a').value; // Default to an empty string if no value
-                const b = document.getElementById('b').value; // Default to an empty string if no value
-                const c = document.getElementById('c').value; // Default to an empty string if no value
-                details += "the form is ax^2 + bx + c. "
-                details += a + b + c +"."; // Concatenate values
-                details += " The variable should be x. Change the coefficients from last iteration"
+                const a = document.getElementById('a').value;
+                const b = document.getElementById('b').value;
+                const c = document.getElementById('c').value;
+                details += "the form is ax^2 + bx + c. ";
+                details += a + b + c + ".";
+                details += " The variable should be x. Change the coefficients from last iteration.";
             }
             if (problemType === "Solving_Linear_Equations") {
                 details += "there should only be one equation"
@@ -158,7 +163,7 @@
                 // const num_decimal_places = document.getElementById('num_decimal_places').value;
                 const num_terms = document.getElementById('num_terms').value;
                 details += "there should be " + num_terms + " total terms. "
-                details += "The coefficients and constants must be whole numbers. For example, if there are 5 terms, a good problem would be '3x + 5y - 3 - 2x + 4y'. "
+                details += "The coefficients and constants must be whole numbers. For example, if there are 5 terms, a good problem would be '3x + 5y - 3 - 2x + 4y'"
             }
             else if (problemType === "System_Of_Equations") {
                 details += "please separate the two equations with a comma"
@@ -167,24 +172,20 @@
             // Create a form dynamically
             const form = document.createElement("form");
             form.method = "POST";
-            form.action = `/generate_problems/${problemType}/${problemTopic}`; // Action URL without num_problems and details
+            form.action = `/generate_problems/${problemType}/${problemTopic}`;
 
-            // Add hidden inputs to the form
             const inputs = [
-                { name: "details", value: details }, // Include 'details' regardless of whether it's empty or not
-                { name: "num_problems", value: numProblems }, // Send num_problems via POST
-                { name: "allow_square_roots", value: allowSquareRoots }, // Send allowSquareRoots via POST
-                { name: "allow_imaginary_numbers", value: allowImaginaryNumbers } // Send allowImaginaryNumbers via POST
+                { name: "details", value: details },
+                { name: "num_problems", value: numProblems },
+                { name: "allow_square_roots", value: allowSquareRoots },
+                { name: "allow_imaginary_numbers", value: allowImaginaryNumbers }
             ];
 
-            // Conditionally add num_decimal_places for "Evaluating Decimals"
             if (problemType === "Evaluating_Decimals") {
                 const numDecimalPlaces = document.getElementById('num_decimal_places').value;
-                console.log("Number of Decimal Places:", numDecimalPlaces);
                 inputs.push({ name: "num_decimal_places", value: numDecimalPlaces });
             }
 
-            // Add inputs to the form
             inputs.forEach(inputData => {
                 const input = document.createElement("input");
                 input.type = "hidden";
@@ -193,12 +194,20 @@
                 form.appendChild(input);
             });
 
-            // Append the form to the document and submit
             document.body.appendChild(form);
+
+            // Submit the form and let the message persist until the page reloads
             form.submit();
 
-            return false; // Prevent default behavior
+            // Prevent default form submission behavior
+            return false;
         }
+
+        // Listen for the page unload event to ensure the message persists until navigation
+        window.addEventListener('beforeunload', () => {
+            const generatingMessage = document.getElementById('generating...');
+            generatingMessage.style.display = 'block';
+        });
     </script>
     
 {% endblock %}
