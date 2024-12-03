@@ -35,11 +35,22 @@ def simplify_expression():
     result = WA_response(prompt)
     # verdict = equal_or_not(result)
     print('EXPANDED:', result, result[0])
+            # 
 
     # Ensure the response is correctly formatted as JSON
     if result:
         if result[0] == 'No results found.':
-            return jsonify({"result": expr.replace(" ", "")}), 200
+            prompt2 = create_prompt(expr, 'Simplify:')
+            result2 = WA_response(prompt2)
+            if result2:
+                print('SIMPLIFIED', result2, result2[0])
+                if result2[0] == 'No results found.':
+                    return jsonify({"result": expr.replace(" ", "")}), 200
+
+                else: return jsonify({"result": result2[0].replace(" ", "")}), 200
+            else: return jsonify({"result": expanded.replace(" ", "")}), 200
+
+
         else: 
             expanded = result[0]
             prompt2 = create_prompt(expanded, 'Simplify:')
@@ -50,9 +61,9 @@ def simplify_expression():
                 if result2[0] == 'No results found.':
                     print("returning", expanded.replace(" ", ""))
                     return jsonify({"result": expanded.replace(" ", "")}), 200
-                return jsonify({"result": result2[0].replace(" ", "")}), 200
+                else: return jsonify({"result": result2[0].replace(" ", "")}), 200
                 
-            return jsonify({"result": expanded.replace(" ", "")}), 200
+            else: return jsonify({"result": expanded.replace(" ", "")}), 200
     
     else:
         return jsonify({"error": "Failed to simplify the expression"}), 500 
@@ -91,6 +102,9 @@ def practice_settings():
 @app.route('/generate_problems/<problem_type>/<problem_topic>/', methods=['GET', 'POST'])
 # @app.route('/generate_problems/<problem_type>/<problem_topic>/<num_problems>', methods=['GET', 'POST'])
 def generate_problems(problem_type, problem_topic): #, num_problems):
+    prob_type = replace_underscores_with_spaces(problem_type)
+    prob_topic = replace_underscores_with_spaces(problem_topic)
+
     # Retrieve num_problems and details from POST form data
     num_problems = request.form.get('num_problems', '3')  # Default to 3 if not provided
     allow_square_roots = request.form.get('allow_square_roots', '')  # Default to None if not provided
@@ -98,6 +112,7 @@ def generate_problems(problem_type, problem_topic): #, num_problems):
     details = request.form.get('details', '')  # Default to an empty string if not provided
 
     customizations = {}
+    # NEED TO ADD NUMBER OF TERMS CHECK!!
     customizations['problem_type'] = problem_type
     customizations['problem_topic'] = problem_topic
     if allow_square_roots != '':
@@ -119,6 +134,22 @@ def generate_problems(problem_type, problem_topic): #, num_problems):
         num_decimal_places = int(num_decimal_places)
         print("Number of Decimal Places received (POST):", num_decimal_places)
 
+    
+        num_terms = request.form.get('num_terms', '0') # Default to 0 if not provided
+        customizations['num_terms'] = int(num_terms)
+        print("Number of Terms received (POST):", num_terms)
+
+    if problem_type == "Evaluating_Fractions":
+        num_terms = request.form.get('num_terms', '0') # Default to 0 if not provided
+        customizations['num_terms'] = int(num_terms)
+        print("Number of Terms received (POST):", num_terms)
+
+    if problem_topic == "Combining_Like_Terms":
+        num_terms = request.form.get('num_terms', '0') # Default to 0 if not provided
+        customizations['num_terms'] = int(num_terms)
+        print("Number of Terms received (POST):", num_terms)
+
+
     if problem_type == "Solving_Quadratic_Equations":
         abc = request.form.get('abc', '') # Default to 0 if not provided
         # num_decimal_places = int(num_decimal_places)
@@ -126,8 +157,6 @@ def generate_problems(problem_type, problem_topic): #, num_problems):
         customizations['abc'] = abc
 
 
-    prob_type = replace_underscores_with_spaces(problem_type)
-    prob_topic = replace_underscores_with_spaces(problem_topic)
 
     system_msg = "You are a math teacher. You answer the question directly without any extra words or responses."
     user_msg = f"Please generate {int(num_problems) + 5} unique and new algebra problems. DO NOT REPEAT PROBLEMS. Please make sure the problems have not been used before. The topic is {prob_type} by {prob_topic}. {details}. Please use LaTex formatting."

@@ -97,7 +97,7 @@
             <option value="5">5</option>
         </select>
     </form>
-    <br><br>
+    <br>
     <!-- Number of decimal places -->
     <label for="num_decimal_places">To how many decimal places would you like to round the answer?</label>
     <select id="num_decimal_places" name="num_decimal_places" required>
@@ -182,9 +182,18 @@
                 { name: "allow_imaginary_numbers", value: allowImaginaryNumbers }
             ];
 
+
+            if (problemType === "Evaluating_Fractions" || problemTopic ===  "Combining_Like_Terms") {
+                const num_terms = document.getElementById('num_terms').value;
+                inputs.push({ name: "num_terms", value: num_terms });
+            }
+
             if (problemType === "Evaluating_Decimals") {
                 const numDecimalPlaces = document.getElementById('num_decimal_places').value;
+                const num_terms = document.getElementById('num_terms').value;
                 inputs.push({ name: "num_decimal_places", value: numDecimalPlaces });
+                inputs.push({ name: "num_terms", value: num_terms });
+
             }
 
             if (problemType === "Solving_Quadratic_Equations") {

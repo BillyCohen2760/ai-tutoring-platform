@@ -12,3 +12,8 @@ solving_equations = [
     'System of Equations'
 ]
 
+num_terms_problems = [
+    'Evaluating_Fractions',
+    'Evaluating_Decimals',
+    'Combining_Like_Terms'
+]

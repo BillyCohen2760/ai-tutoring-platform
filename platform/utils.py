@@ -103,6 +103,26 @@ def extract_coefficients(equation):
     
     return a, b, c
 
+
+# Count number of terms in problem (to ensure they are as many as specified by the user)
+def count_terms(temp_problem):
+    # Regular expression to match terms in LaTeX expressions.
+    # This includes numbers, fractions, and anything between operators.
+    terms = re.findall(r'(?:[+-]?\d*\.?\d+|\\frac\{[^}]+\}\{[^}]+\}|\{[^}]+\})', temp_problem)
+    
+    # Filter out empty strings that may occur due to malformed LaTeX or extraneous spaces.
+    terms = [term for term in terms if term.strip()]
+
+    print('TERMS:', terms, len(terms))
+    
+    return len(terms)
+
+
+
+
+
+
+
 # Filter out "BAD" answers according to user customizations
 def find_BAD_answers(problem, solution, customizations):
     temp_solution = str(solution)
@@ -163,11 +183,13 @@ def find_BAD_answers(problem, solution, customizations):
             print("EVALUATING FRACTIONS", temp_problem)
             if '-' in temp_problem or 'times' in temp_problem or '+' in temp_problem:
                 return 'BAD'
+            
+    # Check number of terms
+    if customizations['problem_topic'] in num_terms_problems or customizations['problem_type'] in num_terms_problems:
+        print("CHECK NUM TERMS")
+        if count_terms(temp_problem) != customizations['num_terms']:
+            return 'BAD'
 
-
-
-
-        # if 'let a be any number' in customizations['abc']:
 
 
 
