@@ -4,10 +4,12 @@
 
 {% block content %}
     <h2>Customize Problem Settings</h2>
-    <p>You selected {{ prob_type }} by {{prob_topic}}</p>
+    <strong>You selected {{ prob_type }} by {{prob_topic}}</strong>
+    <br><br><hr>
 
+    <p style="color: blue;">Please answer the questions to customize your problems</p>
     <form id="NumProbsForm" onsubmit="return submitForm()" method="GET">
-        <label for="num_problems">Number of Problems:</label>
+        <label for="num_problems">How many problems would you like to practice?</label>
         <select id="num_problems" name="num_problems" required>
             <option value="1">1</option>
             <option value="2">2</option>
@@ -16,20 +18,21 @@
             <option value="5">5</option>
         </select>
         <br><br>
-        <label for="allow_square_roots">Allow Square Roots in Answers:</label>
+        <label for="allow_square_roots">Do you want to allow Square Roots in your answers:</label>
         <input type="checkbox" id="allow_square_roots" name="allow_square_roots" 
         {% if prob_topic == 'Square Roots' %}checked disabled{% endif %} >
 
 
         <br><br>
-        <label for="allow_imaginary_numbers">Allow Imaginary Numbers in Answers:</label>
+        <label for="allow_imaginary_numbers">Do you want to allow Imaginary Numbers in your answers:</label>
         <input type="checkbox" id="allow_imaginary_numbers" name="allow_imaginary_numbers">
         <br>
     </form>
 
     <br>
     {% if prob_type == "Solving Quadratic Equations" %}
-    <p>Special Customizations for {{prob_type}}</p>
+    <hr>
+    <p style="color: blue;">Special Customizations for {{prob_type}}</p>
     <form id="SolvingQuadraticEquationsForm" onsubmit="return submitForm()" method="GET">
         <label for="a">What values of a are allowed?</label>
         <select id="a" name="a" required>
@@ -57,21 +60,23 @@
     {% endif %}
     
     {% if prob_type == "Evaluating Fractions" %}
-    <p>Special Customizations for {{prob_type}}</p>
+    <hr>
+    <p style="color: blue;">Special Customizations for {{prob_type}}</p>
     <form id="SolvingQuadraticEquationsForm" onsubmit="return submitForm()" method="GET">
-        <label for="num_terms">How many terms would you like there to be in each problem?</label>
+        <label for="num_terms">How many terms would you like there to be in each problem? For example, 1 + 2 + 3 has three terms.</label>
         <select id="num_terms" name="num_terms" required>
             <option value="2" selected>2</option>
             <option value="3">3</option>
             <option value="4">4</option>
             <option value="5">5</option>
-        </select>
+        </select> 
     </form>
     <br><br>
     {% endif %}
 
     {% if prob_topic == "Combining Like Terms" %}
-    <p>Special Customizations for {{prob_type}}</p>
+    <hr>
+    <p style="color: blue;">Special Customizations for {{prob_type}}</p>
     <form id="CombiningLikeTermsForm" onsubmit="return submitForm()" method="GET">
         <label for="num_terms">How many terms would you like there to be in each problem?</label>
         <select id="num_terms" name="num_terms" required>
@@ -87,7 +92,8 @@
     {% endif %}
 
     {% if prob_type == "Evaluating Decimals" %}
-    <p>Special Customizations for {{prob_type}}</p>
+    <hr>
+    <p style="color: blue;">Special Customizations for {{prob_type}}</p>
     <form id="SolvingQuadraticEquationsForm" onsubmit="return submitForm()" method="GET">
         <label for="num_terms">How many terms would you like there to be in each problem?</label>
         <select id="num_terms" name="num_terms" required>
@@ -110,6 +116,7 @@
     <br><br>
     {% endif %}
 
+    <br>
     <form id="Final" onsubmit="return submitForm()" method="GET">
         <button type="submit">Generate Problems</button>    
     </form>
