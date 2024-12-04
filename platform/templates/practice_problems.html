@@ -148,10 +148,10 @@
                 );
             } else {
                 // Use raw answers for other problem types
-                processedUserAnswers = userAnswers;
+                processedUserAnswers = userAnswers.map(answer => normalizeAnswer(answer));
                 processedCorrectAnswers = correctAnswers
                     .split(/,(?![^\(]*\))/) // Split by commas outside parentheses
-                    .map(answer => answer.trim());
+                    .map(answer => normalizeAnswer(answer.trim()));
             }
 
             const resultDiv = document.getElementById(`result-${index}`);
