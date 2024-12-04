@@ -1,6 +1,8 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #f0f0f0;
+    font-size: 1.05em; /* Adjust the value as needed, e.g., 1.5em or 120% */
+
 }
 
 h1 {
@@ -113,3 +115,114 @@ ul ul {
     color: blue;
     font-weight: bold;
 }
+
+button {
+    font-size: .85em; /* Adjust font size */
+    padding: 7px 12px; /* Add space around the text */
+    border: 2px solid  #679bf4; /* Border color */
+    background-color: white; /* Button background color */
+    color:  #679bf4; /* Text color */
+    border-radius: 8px; /* Rounded corners */
+    cursor: pointer; /* Change cursor to pointer */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+}
+
+button:hover {
+    border: 2px solid #679bf4; /* Border color */
+    background-color: #679bf4; /* Change background color on hover */
+    color: white; /* Text color */
+    transform: scale(1.05); /* Slightly increase the button size on hover */
+}
+
+button:focus {
+    outline: none; /* Remove default outline */
+    /*box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5); /* Add a glow effect when the button is focused */
+}
+
+select {
+    vertical-align: 1px; /* Moves the checkbox down 3px */
+    font-size: .85em; /* Adjust font size */
+    padding: 3px 3px; /* Add space around the text */
+    border: 2px solid #679bf4; /* Border color */
+    background-color: white; /* Button background color */
+    color: black; /* Text color */
+    border-radius: 8px; /* Rounded corners */
+    cursor: pointer; /* Change cursor to pointer */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+}
+
+select:hover {
+    border: 2px solid #679bf4; /* Border color */
+    background-color: #679bf4; /* Change background color on hover */
+    color: white; /* Text color */
+    transform: scale(1.05); /* Slightly increase the button size on hover */
+}
+
+select:focus {
+    outline: none;
+}
+/* Hide the default checkbox */
+input[type="checkbox"] {
+    display: none; /* Hides the default checkbox */
+}
+
+/* Style the custom checkbox */
+input[type="checkbox"] + label {
+    vertical-align: -7px; /* Moves the checkbox down 3px */
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-color: white; /* Default background color */
+    border: 2px solid #679bf4; /* Border color */
+    border-radius: 4px; /* Optional rounded corners */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    position: relative; /* Needed to position the checkmark */
+}
+
+/* Add checkmark when checked using ::before */
+input[type="checkbox"]:checked + label::before {
+    content: "✔"; /* Unicode checkmark */
+    position: absolute;
+    top: 2px; /* Position it inside the box */
+    left: 4px; /* Adjust to center the checkmark */
+    color: white; /* White checkmark color */
+    font-size: 16px; /* Adjust size of the checkmark */
+}
+
+/* Hover state - background color changes */
+input[type="checkbox"]:hover + label {
+    background-color: #679bf4; /* Hover background color */
+    transform: scale(1.05); /* Slightly increase the size on hover */
+    border-color: #679bf4; /* Border color on hover */
+}
+
+/* Checked state - change background color */
+input[type="checkbox"]:checked + label {
+    background-color: #679bf4; /* Background color when checked */
+    border-color: #679bf4; /* Border color when checked */
+}
+
+/* Hovered and checked state - no background color change, just size */
+input[type="checkbox"]:checked:hover + label {
+    transform: scale(1.05); /* Increase size on hover when checked */
+}
+
+/* Optional: Focus state */
+input[type="checkbox"]:focus + label {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5); /* Add glow effect on focus */
+}
+
+
+
+
+/* Style the label */
+/*label {
+/*    font-size: 1em; /* Change the font size of the label */
+/*    color: #333; /* Change the color of the label */
+/*    margin-left: 8px; /* Add some space between checkbox and label */
+/*}*/
+
+
+

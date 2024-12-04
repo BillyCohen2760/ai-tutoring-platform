@@ -37,11 +37,13 @@
                     <div id="answer-inputs-{{ i }}">
                         <input type="text" placeholder="Type your answer here" />
                     </div>
-                    <button onclick="addAnswerInput({{ i }})">Add Another Answer</button>
+                    <br>
+                    <button onclick="addAnswerInput({{ i }})" style="margin-right: 10px;">Add Another Answer</button>
                     <button onclick="handleCheckAnswer('{{ solutions[i]|join(', ') }}', {{ i }})">Submit Answers</button>
                     <br>
                     <div id="checking-message" style="display: none; color: blue;">Checking answer...</div>
 
+                    <br>
                     <h4>Solution:
                         <button id="toggle-answer-button-{{ i }}" onclick="toggleAnswer('{{ solutions[i]|join(', ') }}', {{ i }})">Show Answer</button>
                     </h4>

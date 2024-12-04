@@ -20,12 +20,14 @@
         <br><br>
         <label for="allow_square_roots">Do you want to allow Square Roots in your answers:</label>
         <input type="checkbox" id="allow_square_roots" name="allow_square_roots" 
-        {% if prob_topic == 'Square Roots' %}checked disabled{% endif %} >
-
+               {% if prob_topic == 'Square Roots' %}checked disabled{% endif %}>
+        <label for="allow_square_roots"></label> <!-- Custom label for styling -->
+        
 
         <br><br>
         <label for="allow_imaginary_numbers">Do you want to allow Imaginary Numbers in your answers:</label>
         <input type="checkbox" id="allow_imaginary_numbers" name="allow_imaginary_numbers">
+        <label for="allow_imaginary_numbers"></label> <!-- Custom label for styling -->
         <br>
     </form>
 
@@ -63,7 +65,7 @@
     <hr>
     <p style="color: blue;">Special Customizations for {{prob_type}}</p>
     <form id="SolvingQuadraticEquationsForm" onsubmit="return submitForm()" method="GET">
-        <label for="num_terms">How many terms would you like there to be in each problem? For example, 1 + 2 + 3 has three terms.</label>
+        <label for="num_terms">How many terms would you like there to be in each problem? (For example, 1 + 2 + 3 has three terms.) </label>
         <select id="num_terms" name="num_terms" required>
             <option value="2" selected>2</option>
             <option value="3">3</option>
@@ -78,7 +80,7 @@
     <hr>
     <p style="color: blue;">Special Customizations for {{prob_type}}</p>
     <form id="CombiningLikeTermsForm" onsubmit="return submitForm()" method="GET">
-        <label for="num_terms">How many terms would you like there to be in each problem?</label>
+        <label for="num_terms">How many terms would you like there to be in each problem? (For example, 1 + 2 + 3 has three terms.) </label>
         <select id="num_terms" name="num_terms" required>
             <option value="4" selected>4</option>
             <option value="5">5</option>
@@ -95,7 +97,7 @@
     <hr>
     <p style="color: blue;">Special Customizations for {{prob_type}}</p>
     <form id="SolvingQuadraticEquationsForm" onsubmit="return submitForm()" method="GET">
-        <label for="num_terms">How many terms would you like there to be in each problem?</label>
+        <label for="num_terms">How many terms would you like there to be in each problem? (For example, 1 + 2 + 3 has three terms.) </label>
         <select id="num_terms" name="num_terms" required>
             <option value="2" selected>2</option>
             <option value="3">3</option>
