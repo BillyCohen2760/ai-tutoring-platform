@@ -45,6 +45,7 @@
                     <h4>Solution:
                         <button id="toggle-answer-button-{{ i }}" onclick="toggleAnswer('{{ solutions[i]|join(', ') }}', {{ i }})">Show Answer</button>
                     </h4>
+                    <div id="result-{{ i }}" style="margin-top: 10px;"></div>
                     
                     <div class="solution" style="display:none;" id="solution-{{ i }}">
                         {% if solutions[i] %}
@@ -61,13 +62,12 @@
                         <button id="toggle-steps-button-{{ i }}" style="display: none;" onclick="toggleSteps({{ i }})">Show Steps</button>
                         <!-- Explanation container -->
                         <div id="explanation-{{ i }}" style="display: none; margin-top: 10px;">
-                            {{ explanation[i] }}
+                            {{ explanation[i] | highlight_steps | safe }}
                         </div>
                     </div>
                     <br>
 
 
-                    <div id="result-{{ i }}" style="margin-top: 10px;"></div>
 
                     {% if i < problems|length - 1 %}
                         <button id="next-button-{{ i }}" onclick="showNextProblem({{ i }})">Next Problem</button>

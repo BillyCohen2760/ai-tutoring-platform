@@ -107,3 +107,9 @@ ul ul {
     /* list-style: disc; Add bullet points for nested lists */
     margin-left: 20px;
 }
+
+
+.step-title {
+    color: blue;
+    font-weight: bold;
+}

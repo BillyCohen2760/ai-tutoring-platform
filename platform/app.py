@@ -15,6 +15,18 @@ load_dotenv()
 app.config['OPEN_AI_KEY'] = os.getenv('OPEN_AI_KEY')
 
 
+@app.template_filter('highlight_steps')
+def highlight_steps(text):
+    # Regular expression to find "### Step x: ______"
+    step_pattern = r"(### Step \d+:)"
+    
+    # Replace the step titles with a styled span
+    styled_text = re.sub(step_pattern, r'<span class="step-title">\1</span>', text)
+    
+    # Return the modified text
+    return styled_text
+
+app.jinja_env.filters['highlight_steps'] = highlight_steps
 
 
 @app.route('/api/simplify_expression', methods=['POST'])

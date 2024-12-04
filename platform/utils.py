@@ -413,7 +413,7 @@ def get_explanations(problems, solutions, prob_topic):
     for problem, solution in zip(problems, solutions):
         
         system_msg = "You are a math teacher. You excel at thoroughly explaining the steps you took to reach the correct answer."
-        user_msg = f"Please walk me through how the answer to the question 'Solve {problem}' is {solution}. Please do this by {prob_topic}. Please use LaTex formatting, add three new lines after each thought (using \\), organize steps in this format: '### Step x: Title. [LaTeX newline] Directions...', and box the final answer (\boxed)"
+        user_msg = f"Please walk me through how the answer to the question 'Solve {problem}' is {solution}. Please do this by {prob_topic}. Please use LaTex formatting. Make sure text inside math formulas are wrapped in '\\text', and organize steps in this format: '### Step x: Title. '\\[  \\] Details...'. Every step should be separated by '\\[ ... \\], which will either contain a step or be blank. In the final step, please box the final answer (\\boxed)"
         print(user_msg)
         GPT_output = GPT_response(system_msg, user_msg)
         print(GPT_output)
@@ -424,27 +424,25 @@ def get_explanations(problems, solutions, prob_topic):
 
 # Clean explanation by fixing some common LaTeX mistakes
 def clean_explanation(explanation):
+    print("INITIAL EXPLANATION", explanation)
     replacements = {
-    "\times": "\\times",
-    "\text": "\\text"
+        "\times": "\\times",
+        "\text": "\\text"
     }
+    newline = "\\[ \\]"
 
+    # Get rid of text before the actual explanation
+    start_index = explanation.find("###")
+    if start_index != -1:
+        explanation = explanation[start_index:]  # Slice from the first occurrence of '###'
 
-    # Get rid of text before actual explanation
-    try:
-        start_index = explanation.find("###")
+    # Replace subsequent occurrences of ### with newline + ###
+    explanation = explanation.replace("###", newline + "###")  
+    explanation = explanation.replace("- \\(", "\\quad - \\(") 
+    explanation = explanation.replace("- \\[", "\\quad - \\[") 
+    # Perform other replacements
+    for target, replacement in replacements.items():
+        explanation = explanation.replace(target, replacement)
 
-        if explanation != -1:
-            explanation = explanation[start_index:]  # Slice from the first occurrence of '###'
-        print(explanation)
-        
-    except:
-        for target, replacement in replacements.items():
-            explanation = explanation.replace(target, replacement)
-
-
+    print("FINAL EXPLANATION", explanation)
     return explanation
-
-
-
-
