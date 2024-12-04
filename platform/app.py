@@ -205,65 +205,66 @@ def generate_problems(problem_type, problem_topic): #, num_problems):
     print('problems', problems)
     print('solutions', solutions)
 
-    explanation = '''
-    Sure! Let's solve the quadratic equation \( x^2 + 4x + 3 = 0 \) using the factoring method step-by-step.
+    explanation = get_explanations(problems, solutions, prob_topic)
+#     explanation = '''
+#     Sure! Let's solve the quadratic equation \( x^2 + 4x + 3 = 0 \) using the factoring method step-by-step.
 
-### Step 1: Write the equation in standard form
-The equation is already in standard form:
-\[
-x^2 + 4x + 3 = 0.
-\]
+# ### Step 1: Write the equation in standard form
+# The equation is already in standard form:
+# \[
+# x^2 + 4x + 3 = 0.
+# \]
 
-### Step 2: Factor the quadratic
-We want to factor the quadratic expression \( x^2 + 4x + 3 \). To do this, we're looking for two numbers that multiply to the constant term (which is 3) and add up to the coefficient of the \( x \) term (which is 4).
+# ### Step 2: Factor the quadratic
+# We want to factor the quadratic expression \( x^2 + 4x + 3 \). To do this, we're looking for two numbers that multiply to the constant term (which is 3) and add up to the coefficient of the \( x \) term (which is 4).
 
-The numbers that fit these criteria are:
-- \( 1 \) and \( 3 \) (since \( 1 \times 3 = 3 \) and \( 1 + 3 = 4 \)).
+# The numbers that fit these criteria are:
+# - \( 1 \) and \( 3 \) (since \( 1 \times 3 = 3 \) and \( 1 + 3 = 4 \)).
 
-### Step 3: Write the factored form
-Using these numbers, we can rewrite the quadratic as:
-\[
-(x + 1)(x + 3) = 0.
-\]
+# ### Step 3: Write the factored form
+# Using these numbers, we can rewrite the quadratic as:
+# \[
+# (x + 1)(x + 3) = 0.
+# \]
 
-### Step 4: Apply the Zero Product Property
-The Zero Product Property states that if the product of two factors equals zero, then at least one of the factors must be equal to zero. Therefore, we can set each factor equal to zero:
-\[
-x + 1 = 0 \quad \\text{or} \quad x + 3 = 0.
-\]
+# ### Step 4: Apply the Zero Product Property
+# The Zero Product Property states that if the product of two factors equals zero, then at least one of the factors must be equal to zero. Therefore, we can set each factor equal to zero:
+# \[
+# x + 1 = 0 \quad \text{or} \quad x + 3 = 0.
+# \]
 
-### Step 5: Solve for \( x \)
-Now we will solve each equation separately.
+# ### Step 5: Solve for \( x \)
+# Now we will solve each equation separately.
 
-1. For the first equation:
-   \[
-   x + 1 = 0
-   \]
-   Subtracting 1 from both sides gives us:
-   \[
-   x = -1.
-   \]
+# 1. For the first equation:
+#    \[
+#    x + 1 = 0
+#    \]
+#    Subtracting 1 from both sides gives us:
+#    \[
+#    x = -1.
+#    \]
 
-2. For the second equation:
-   \[
-   x + 3 = 0
-   \]
-   Subtracting 3 from both sides gives us:
-   \[
-   x = -3.
-   \]
+# 2. For the second equation:
+#    \[
+#    x + 3 = 0
+#    \]
+#    Subtracting 3 from both sides gives us:
+#    \[
+#    x = -3.
+#    \]
 
-### Conclusion
-Therefore, the solutions to the quadratic equation \( x^2 + 4x + 3 = 0 \) are:
-\[
-x = -1 \quad \text{and} \quad x = -3.
-\]
+# ### Conclusion
+# Therefore, the solutions to the quadratic equation \( x^2 + 4x + 3 = 0 \) are:
+# \[
+# x = -1 \quad \text{and} \quad x = -3.
+# \]
 
-We can summarize the answers:
-\[
-\text{The solutions are } x = -1 \text{ and } x = -3.
-\]
-'''
+# We can summarize the answers:
+# \[
+# \text{The solutions are } x = -1 \text{ and } x = -3.
+# \]
+# '''
 
     return render_template(
         'practice_problems.html',

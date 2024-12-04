@@ -2,6 +2,7 @@ import re
 from fractions import Fraction
 from decimal import Decimal, ROUND_HALF_UP
 from categories import *
+from services.gpt_service import GPT_response
 
 
 
@@ -405,6 +406,44 @@ def equal_or_not(result):
     if "true" in result:
         return True
     return False
+
+# Get an explanation for each solution.
+def get_explanations(problems, solutions, prob_topic):
+    explanations = []
+    for problem, solution in zip(problems, solutions):
+        
+        system_msg = "You are a math teacher. You excel at thoroughly explaining the steps you took to reach the correct answer."
+        user_msg = f"Please walk me through how the answer to the question 'Solve {problem}' is {solution}. Please do this by {prob_topic}. Please use LaTex formatting, add three new lines after each thought (using \\), organize steps in this format: '### Step x: Title. [LaTeX newline] Directions...', and box the final answer (\boxed)"
+        print(user_msg)
+        GPT_output = GPT_response(system_msg, user_msg)
+        print(GPT_output)
+        explanation = clean_explanation(GPT_output)
+        explanations.append(explanation)
+
+    return explanations
+
+# Clean explanation by fixing some common LaTeX mistakes
+def clean_explanation(explanation):
+    replacements = {
+    "\times": "\\times",
+    "\text": "\\text"
+    }
+
+
+    # Get rid of text before actual explanation
+    try:
+        start_index = explanation.find("###")
+
+        if explanation != -1:
+            explanation = explanation[start_index:]  # Slice from the first occurrence of '###'
+        print(explanation)
+        
+    except:
+        for target, replacement in replacements.items():
+            explanation = explanation.replace(target, replacement)
+
+
+    return explanation
 
 
 
