@@ -56,6 +56,13 @@
                         {% else %}
                             <p>No solution found.</p>
                         {% endif %}
+                        <br>
+                        <!-- Add Show Steps button -->
+                        <button id="toggle-steps-button-{{ i }}" style="display: none;" onclick="toggleSteps({{ i }})">Show Steps</button>
+                        <!-- Explanation container -->
+                        <div id="explanation-{{ i }}" style="display: none; margin-top: 10px;">
+                            {{ explanation }}
+                        </div>
                     </div>
                     <br>
 
@@ -267,18 +274,35 @@
         function toggleAnswer(correctAnswers, index) {
             const solutionDiv = document.getElementById(`solution-${index}`);
             const button = document.getElementById(`toggle-answer-button-${index}`);
+            const stepsButton = document.getElementById(`toggle-steps-button-${index}`);
             
             if (solutionDiv.style.display === 'none') {
                 solutionDiv.style.display = 'block'; // Show the answer
                 button.innerHTML = 'Hide Answer';    // Change button text to "Hide Answer"
+                stepsButton.style.display = 'inline-block'; // Show "Show Steps" button
             } else {
                 solutionDiv.style.display = 'none';  // Hide the answer
                 button.innerHTML = 'Show Answer';    // Change button text back to "Show Answer"
+                stepsButton.style.display = 'none';  // Hide "Show Steps" button
+                // Also hide the explanation if it's visible
+                const explanationDiv = document.getElementById(`explanation-${index}`);
+                explanationDiv.style.display = 'none';
+                stepsButton.innerHTML = 'Show Steps'; // Reset "Show Steps" button text
             }
         }
 
-
-
+        function toggleSteps(index) {
+            const explanationDiv = document.getElementById(`explanation-${index}`);
+            const stepsButton = document.getElementById(`toggle-steps-button-${index}`);
+            
+            if (explanationDiv.style.display === 'none') {
+                explanationDiv.style.display = 'block'; // Show the explanation
+                stepsButton.innerHTML = 'Hide Steps';  // Change button text to "Hide Steps"
+            } else {
+                explanationDiv.style.display = 'none'; // Hide the explanation
+                stepsButton.innerHTML = 'Show Steps'; // Change button text back to "Show Steps"
+            }
+        }
 
 
     </script>
