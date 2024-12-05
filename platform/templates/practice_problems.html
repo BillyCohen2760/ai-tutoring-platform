@@ -34,9 +34,10 @@
                         <br>
                         Please put a space between every variable.
                     </h5>
-                    <div id="answer-inputs-{{ i }}">
+                    <div id="answer-inputs-{{ i }}" class="answer-inputs">
                         <input type="text" placeholder="Type your answer here" />
                     </div>
+                                        
                     <br>
                     <button onclick="addAnswerInput({{ i }})" style="margin-right: 10px;">Add Another Answer</button>
                     <button onclick="handleCheckAnswer('{{ solutions[i]|join(', ') }}', {{ i }})">Submit Answers</button>

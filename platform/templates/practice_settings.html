@@ -8,7 +8,7 @@
     <br><br><hr>
 
     <p style="color: blue;">Please answer the questions to customize your problems</p>
-    <form id="NumProbsForm" onsubmit="return submitForm()" method="GET">
+    <form id="FormattedForm" onsubmit="return submitForm()" method="GET">
         <label for="num_problems">How many problems would you like to practice?</label>
         <select id="num_problems" name="num_problems" required>
             <option value="1">1</option>
@@ -35,7 +35,7 @@
     {% if prob_type == "Solving Quadratic Equations" %}
     <hr>
     <p style="color: blue;">Special Customizations for {{prob_type}}</p>
-    <form id="SolvingQuadraticEquationsForm" onsubmit="return submitForm()" method="GET">
+    <form id="FormattedForm" onsubmit="return submitForm()" method="GET">
         <label for="a">What values of a are allowed?</label>
         <select id="a" name="a" required>
             <option value="Let a be any number, ">a can be any number</option>
@@ -43,28 +43,29 @@
             <!-- <option value="Let a>=1">a>=1</option> -->
         </select>
         <!-- <button type="submit">Generate Problems</button>     -->
-        <br>
+        <br><br>
         <label for="b">What values of b are allowed?</label>
         <select id="b" name="b" required>
             <option value="let b be any number, ">b can be any number</option>
             <option value="let b = 0, ">b = 0</option>
         </select>
         <!-- <button type="submit">Generate Problems</button>     -->
-        <br>
+        <br><br>
         <label for="c">What values of c are allowed?</label>
         <select id="c" name="c" required>
             <option value="and let c be any number">c can be any number</option>
             <option value="and let c = 0">c=0</option>
         </select>
-        <br><br>
         <!-- <button type="submit">Generate Problems</button>     -->
     </form>
+    <br><br>
+
     {% endif %}
     
     {% if prob_type == "Evaluating Fractions" %}
     <hr>
     <p style="color: blue;">Special Customizations for {{prob_type}}</p>
-    <form id="SolvingQuadraticEquationsForm" onsubmit="return submitForm()" method="GET">
+    <form id="FormattedForm" onsubmit="return submitForm()" method="GET">
         <label for="num_terms">How many terms would you like there to be in each problem? (For example, 1 + 2 + 3 has three terms.) </label>
         <select id="num_terms" name="num_terms" required>
             <option value="2" selected>2</option>
@@ -73,13 +74,12 @@
             <option value="5">5</option>
         </select> 
     </form>
-    <br><br>
     {% endif %}
 
     {% if prob_topic == "Combining Like Terms" %}
     <hr>
     <p style="color: blue;">Special Customizations for {{prob_type}}</p>
-    <form id="CombiningLikeTermsForm" onsubmit="return submitForm()" method="GET">
+    <form id="FormattedForm" onsubmit="return submitForm()" method="GET">
         <label for="num_terms">How many terms would you like there to be in each problem? (For example, 1 + 2 + 3 has three terms.) </label>
         <select id="num_terms" name="num_terms" required>
             <option value="4" selected>4</option>
@@ -90,13 +90,12 @@
             <option value="9">9</option>
         </select>
     </form>
-    <br><br>
     {% endif %}
 
     {% if prob_type == "Evaluating Decimals" %}
     <hr>
     <p style="color: blue;">Special Customizations for {{prob_type}}</p>
-    <form id="SolvingQuadraticEquationsForm" onsubmit="return submitForm()" method="GET">
+    <form id="FormattedForm" onsubmit="return submitForm()" method="GET">
         <label for="num_terms">How many terms would you like there to be in each problem? (For example, 1 + 2 + 3 has three terms.) </label>
         <select id="num_terms" name="num_terms" required>
             <option value="2" selected>2</option>
@@ -104,7 +103,7 @@
             <option value="4">4</option>
             <option value="5">5</option>
         </select>
-    </form>
+    
     <br>
     <!-- Number of decimal places -->
     <label for="num_decimal_places">To how many decimal places would you like to round the answer?</label>
@@ -115,15 +114,13 @@
         <option value="3">3</option>
         <option value="4">4</option>
     </select>
-    <br><br>
+    </form>
     {% endif %}
 
-    <br>
     <form id="Final" onsubmit="return submitForm()" method="GET">
         <button type="submit">Generate Problems</button>    
     </form>
     
-    <br>
     <div id="generating..." style="display: none; color: blue;">Generating...</div>
 
 
