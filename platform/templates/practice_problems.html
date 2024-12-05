@@ -28,12 +28,27 @@
                     <p>Solve \( {{ problems[i] }} \) by <span class="problem-topic">{{ prob_topic }}</span></p>
                     
                     <!-- <h4>Your Answer(s):</h4> -->
-                    <h5>Note: each answer should be in the form: <span class="problem-topic">x = ___</span>
+                    <!-- <h5>Note: each answer should be in the form: <span class="problem-topic">x = ___</span>
                         <br>
                         If there are multiple answers, click "Add Another Answer" below.
                         <br>
                         Please put a space between every variable.
-                    </h5>
+                    </h5> -->
+
+
+
+                    {% if prob_type == "Solving Linear Equations" or prob_type == "Solving Quadratic Equations" %}
+                    <h5 style="text-align: center;">Note: each answer should be in the form: <span class="problem-topic">x = ___</span></h5>
+                    {% endif %}
+
+                    {% if prob_type == "System Of Equations" %}
+                    <h5 style="text-align: center;">Note: each answer should be in the form: <span class="problem-topic">(x, y)</span></h5>
+                    {% endif %}
+
+                    {% if allow_square_roots %}
+                    <h5 style="text-align: center;">To use a square root, write: <span class="problem-topic">sqrt()</span></h5>
+                    {% endif %}
+
                     <div id="answer-inputs-{{ i }}" class="answer-inputs">
                         <input type="text" placeholder="Type your answer here" />
                     </div>
@@ -41,8 +56,7 @@
                         <button onclick="addAnswerInput({{ i }})" style="margin-right: 10px;">Add Another Answer</button>
                         <button onclick="handleCheckAnswer('{{ solutions[i]|join(', ') }}', {{ i }})">Submit Answers</button>
                     </div>
-                    <br>
-                    <div id="checking-message" style="display: none; color: blue;">Checking answer...</div>
+                    <div id="checking-message" style="display: none; color: #679bf4; text-align: center;">Checking answer...</div>
 
                     <!-- <h4>Solution:</h4> -->
                     <button id="toggle-answer-button-{{ i }}" onclick="toggleAnswer('{{ solutions[i]|join(', ') }}', {{ i }})">Show Answer</button>
@@ -110,7 +124,11 @@
         }
 
         function normalizeAnswer(answer) {
-            return answer.replace(/\s+/g, '').toLowerCase(); // Remove whitespace and convert to lowercase
+            console.log("BEFORE SQRT FIX", answer);
+            let ans = answer.replace(/\s+/g, '').toLowerCase(); // Remove whitespace and convert to lowercase
+            ans = ans.replace(/(\d)sqrt/g, '$1 sqrt'); // Add space before "sqrt" when preceded by a digit
+            console.log("AFTER SQRT FIX", ans);
+            return ans;            
         }
 
 

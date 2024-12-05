@@ -283,10 +283,12 @@ def generate_problems(problem_type, problem_topic): #, num_problems):
         problems=problems,
         solutions=solutions,
         prob_topic=prob_topic,
+        prob_type=prob_type,
         problem_type=problem_type,
         problem_topic=problem_topic,
         message = message,
-        explanation = explanation
+        explanation = explanation,
+        allow_square_roots = allow_square_roots
     )
 
 if __name__ == '__main__':
