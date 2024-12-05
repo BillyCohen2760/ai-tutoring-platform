@@ -4,7 +4,7 @@
 
 {% block content %}
     <h2>Customize Problem Settings</h2>
-    <h4 style="font-weight: normal;">You selected <strong>{{ prob_type }}</strong> by <strong>{{ prob_topic }}</strong></h4>
+    <p style="font-weight: normal;">You selected <strong style="color: #679bf4">{{ prob_type }}</strong> by <strong style="color: #679bf4">{{ prob_topic }}</strong></p>
     <br><hr>
 
     <p>Please answer the questions to customize your problems</p>
@@ -36,6 +36,8 @@
     <hr>
     <p>Special Customizations for {{prob_type}}</p>
     <form id="FormattedForm" onsubmit="return submitForm()" method="GET">
+        <p>\(\text{In the quadratic equation} \quad \bf{ax^2 + bx + c}\)</strong></p>
+        <br>
         <label for="a">What values of a are allowed?</label>
         <select id="a" name="a" required>
             <option value="Let a be any number, ">a can be any number</option>
@@ -66,7 +68,9 @@
     <hr>
     <p>Special Customizations for {{prob_type}}</p>
     <form id="FormattedForm" onsubmit="return submitForm()" method="GET">
-        <label for="num_terms">How many terms would you like there to be in each problem? (For example, 1 + 2 + 3 has three terms.) </label>
+        <label for="num_terms">How many terms would you like there to be in each problem? 
+            <br>
+            (For example, 1 + 2 + 3 has three terms.) </label>
         <select id="num_terms" name="num_terms" required>
             <option value="2" selected>2</option>
             <option value="3">3</option>
@@ -80,7 +84,9 @@
     <hr>
     <p>Special Customizations for {{prob_type}}</p>
     <form id="FormattedForm" onsubmit="return submitForm()" method="GET">
-        <label for="num_terms">How many terms would you like there to be in each problem? (For example, 1 + 2 + 3 has three terms.) </label>
+        <label for="num_terms">How many terms would you like there to be in each problem? 
+            <br>
+            (For example, 1 + 2 + 3 has three terms.) </label>
         <select id="num_terms" name="num_terms" required>
             <option value="4" selected>4</option>
             <option value="5">5</option>
@@ -96,7 +102,9 @@
     <hr>
     <p>Special Customizations for {{prob_type}}</p>
     <form id="FormattedForm" onsubmit="return submitForm()" method="GET">
-        <label for="num_terms">How many terms would you like there to be in each problem? (For example, 1 + 2 + 3 has three terms.) </label>
+        <label for="num_terms">How many terms would you like there to be in each problem? 
+            <br>
+            (For example, 1 + 2 + 3 has three terms.) </label>
         <select id="num_terms" name="num_terms" required>
             <option value="2" selected>2</option>
             <option value="3">3</option>
