@@ -217,7 +217,7 @@ def generate_problems(problem_type, problem_topic): #, num_problems):
     print('problems', problems)
     print('solutions', solutions)
 
-    explanation = get_explanations(problems, solutions, prob_topic)
+    explanation = get_explanations(problems, solutions, prob_topic, prob_type, num_decimal_places)
 #     explanation = '''
 #     Sure! Let's solve the quadratic equation \( x^2 + 4x + 3 = 0 \) using the factoring method step-by-step.
 
@@ -288,7 +288,8 @@ def generate_problems(problem_type, problem_topic): #, num_problems):
         problem_topic=problem_topic,
         message = message,
         explanation = explanation,
-        allow_square_roots = allow_square_roots
+        allow_square_roots = allow_square_roots,
+        num_decimal_places = num_decimal_places
     )
 
 if __name__ == '__main__':

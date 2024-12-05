@@ -25,8 +25,11 @@
             {% for i in range(problems|length) %}
                 <div class="problem" style="display: {% if i == 0 %}block{% else %}none{% endif %};">
                     <h3>Problem {{ i + 1 }}:</h3>
+                    {% if prob_type == "Simplifying Expressions" %}
+                    <p>Simplify \( {{ problems[i] }} \) by <span class="problem-topic">{{ prob_topic }}</span></p>
+                    {% else %}
                     <p>Solve \( {{ problems[i] }} \) by <span class="problem-topic">{{ prob_topic }}</span></p>
-                    
+                    {% endif %}
                     <!-- <h4>Your Answer(s):</h4> -->
                     <!-- <h5>Note: each answer should be in the form: <span class="problem-topic">x = ___</span>
                         <br>
@@ -35,7 +38,19 @@
                         Please put a space between every variable.
                     </h5> -->
 
+                    {% if prob_type == "Evaluating Fractions" %}
+                    <h5 style="text-align: center;">Please leave your answer as an improper fraction</h5>
+                    {% endif %}
 
+                    {% if prob_type == "Evaluating Decimals" %}
+
+                        {% if num_decimal_places == 1 %}
+                        <h5 style="text-align: center;">Please round your answer to <span class="problem-topic">{{ num_decimal_places }} decimal place</span></h5>
+                        {% else %}
+                        <h5 style="text-align: center;">Please round your answer to <span class="problem-topic">{{ num_decimal_places }} decimal places</span></h5>
+                        {% endif %}
+                        
+                    {% endif %}
 
                     {% if prob_type == "Solving Linear Equations" or prob_type == "Solving Quadratic Equations" %}
                     <h5 style="text-align: center;">Note: each answer should be in the form: <span class="problem-topic">x = ___</span></h5>
@@ -45,7 +60,7 @@
                     <h5 style="text-align: center;">Note: each answer should be in the form: <span class="problem-topic">(x, y)</span></h5>
                     {% endif %}
 
-                    {% if allow_square_roots %}
+                    {% if allow_square_roots == "true"%}
                     <h5 style="text-align: center;">To use a square root, write: <span class="problem-topic">sqrt()</span></h5>
                     {% endif %}
 
@@ -213,7 +228,7 @@
 
         // Helper function to simplify an expression and ensure term order doesn't affect equality
         async function simplifyExpression(expr) {
-            console.log("Expr to sinplify", expr)
+            console.log("Expr to simplify", expr)
 
             try {
                 // Send a POST request to the Flask API

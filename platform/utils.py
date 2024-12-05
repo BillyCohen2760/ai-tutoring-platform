@@ -408,12 +408,20 @@ def equal_or_not(result):
     return False
 
 # Get an explanation for each solution.
-def get_explanations(problems, solutions, prob_topic):
+def get_explanations(problems, solutions, prob_topic, prob_type, num_decimal_places):
+    details = ""
+    if prob_type == "Evaluating Decimals":
+        if num_decimal_places == 1:
+            details += f"Please round the solution to {num_decimal_places} decimal place"
+        else:
+            details += f"Please round the solution to {num_decimal_places} decimal places"
+
+
     explanations = []
     for problem, solution in zip(problems, solutions):
         
         system_msg = "You are a math teacher. You excel at thoroughly explaining the steps you took to reach the correct answer."
-        user_msg = f"Please walk me through how the answer to the question 'Solve {problem}' is {solution}. Please do this by {prob_topic}. Please use LaTex formatting. Make sure text inside math formulas are wrapped in '\\text', and organize steps in this format: '### Step x: Title. '\\[  \\] Details...'. Every step should be separated by '\\[ ... \\], which will either contain a step or be blank. In the final step, please box the final answer (\\boxed)"
+        user_msg = f"Please walk me through how the answer to the question 'Solve {problem}' is {solution}. Please do this by {prob_topic}. {details}. Please use LaTex formatting. Make sure text inside math formulas are wrapped in '\\text', and organize steps in this format: '### Step x: Title. '\\[  \\] Details...'. Every step should be separated by '\\[ ... \\], which will either contain a step or be blank. In the final step, please box the final answer (\\boxed)"
         print(user_msg)
         GPT_output = GPT_response(system_msg, user_msg)
         print(GPT_output)
