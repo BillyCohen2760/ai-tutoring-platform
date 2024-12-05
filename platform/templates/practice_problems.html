@@ -71,7 +71,7 @@
                         <button onclick="addAnswerInput({{ i }})" style="margin-right: 10px;">Add Another Answer</button>
                         <button onclick="handleCheckAnswer('{{ solutions[i]|join(', ') }}', {{ i }})">Submit Answers</button>
                     </div>
-                    <div id="checking-message" style="display: none; color: #679bf4; text-align: center;">Checking answer...</div>
+                    <div id="checking-message" style="display: none; color: rgb(72, 132, 243); text-align: center;">Checking answer...</div>
 
                     <!-- <h4>Solution:</h4> -->
                     <button id="toggle-answer-button-{{ i }}" onclick="toggleAnswer('{{ solutions[i]|join(', ') }}', {{ i }})">Show Answer</button>

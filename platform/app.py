@@ -17,8 +17,8 @@ app.config['OPEN_AI_KEY'] = os.getenv('OPEN_AI_KEY')
 
 @app.template_filter('highlight_steps')
 def highlight_steps(text):
-    # Regular expression to find "### Step x: ______"
-    step_pattern = r"(### Step \d+:)"
+    # Regular expression to find "### Step x: ______" and "### Final Step: ______"
+    step_pattern = r"(### (Step \d+:|Final Step:))"
     
     # Replace the step titles with a styled span
     styled_text = re.sub(step_pattern, r'<span class="step-title">\1</span>', text)
