@@ -5,7 +5,7 @@
 {% block content %}
     <h2 style="margin-bottom: 10px;">Practice Problems</h2>
     <p style="margin-top: 10px; line-height: 1;">
-        Below is an AI-generated algebra problem. Please type your answers in the input boxes below. You can add more boxes for additional answers.
+        Below is an AI-generated algebra problem. Please type your answers in the area provided below. If there is more than one solution, please click Add Another Answer.
     </p>
     {% if message != 'None'%}
     <p style="margin-top: 10px; line-height: 1;">
@@ -27,7 +27,7 @@
                     <h3>Problem {{ i + 1 }}:</h3>
                     <p>Solve \( {{ problems[i] }} \) by <span class="problem-topic">{{ prob_topic }}</span></p>
                     
-                    <h4>Your Answer(s):</h4>
+                    <!-- <h4>Your Answer(s):</h4> -->
                     <h5>Note: each answer should be in the form: <span class="problem-topic">x = ___</span>
                         <br>
                         If there are multiple answers, click "Add Another Answer" below.
@@ -37,17 +37,16 @@
                     <div id="answer-inputs-{{ i }}" class="answer-inputs">
                         <input type="text" placeholder="Type your answer here" />
                     </div>
-                                        
-                    <br>
-                    <button onclick="addAnswerInput({{ i }})" style="margin-right: 10px;">Add Another Answer</button>
-                    <button onclick="handleCheckAnswer('{{ solutions[i]|join(', ') }}', {{ i }})">Submit Answers</button>
+                    <div class="button-container">
+                        <button onclick="addAnswerInput({{ i }})" style="margin-right: 10px;">Add Another Answer</button>
+                        <button onclick="handleCheckAnswer('{{ solutions[i]|join(', ') }}', {{ i }})">Submit Answers</button>
+                    </div>
                     <br>
                     <div id="checking-message" style="display: none; color: blue;">Checking answer...</div>
 
-                    <br>
-                    <h4>Solution:
-                        <button id="toggle-answer-button-{{ i }}" onclick="toggleAnswer('{{ solutions[i]|join(', ') }}', {{ i }})">Show Answer</button>
-                    </h4>
+                    <!-- <h4>Solution:</h4> -->
+                    <button id="toggle-answer-button-{{ i }}" onclick="toggleAnswer('{{ solutions[i]|join(', ') }}', {{ i }})">Show Answer</button>
+
                     <div id="result-{{ i }}" style="margin-top: 10px;"></div>
                     
                     <div class="solution" style="display:none;" id="solution-{{ i }}">
@@ -60,7 +59,6 @@
                         {% else %}
                             <p>No solution found.</p>
                         {% endif %}
-                        <br>
                         <!-- Add Show Steps button -->
                         <button id="toggle-steps-button-{{ i }}" style="display: none;" onclick="toggleSteps({{ i }})">Show Steps</button>
                         <!-- Explanation container -->
@@ -78,6 +76,7 @@
                         <!-- Display new problems button only if there are no more problems -->
                         <button id="new-problems-button" onclick="generateNewProblems('{{ problem_type }}', '{{ problem_topic }}')">Generate New Problems</button>
                     {% endif %}
+                    <br><br>
                 </div>
             {% endfor %}
         </div>

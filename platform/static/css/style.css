@@ -6,7 +6,7 @@ body {
 }
 
 h1 {
-    color: #333;
+    color: white;
 }
 
 .logo-image {
@@ -60,23 +60,15 @@ main {
     color: rgb(237, 71, 71);  /* You can change this to any color you'd like */
 }
 
+/* No bullets in list */
 ul {
     list-style: none;
-    padding: 0;
-    margin: 0;
 }
 
-ul ul {
-    padding-left: 20px; /* Indent nested lists */
-}
 
-li {
-    margin: 0;
-    padding: 0;
-}
-
+/* Space between buttons on landing page */
 li li {
-    margin: 10px;
+    margin: 5px;
     padding: 0;
 }
 
@@ -89,9 +81,9 @@ li li {
 
 .column {
     flex: 1; /* Allows columns to take up equal width */
-    margin: 10px;
+    margin: 3px;
     padding: 10px;
-    border: 1px solid #ccc; /* Optional: adds borders around columns */
+    border: 2px solid #679bf4; /* Border color */
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: adds shadow for better visibility */
 }
@@ -102,13 +94,14 @@ h3 {
 
 ul {
     list-style: none; /* Remove bullet points */
+    margin-left: 20px;
     padding: 0;
-}
+} 
 
 ul ul {
     /* list-style: disc; Add bullet points for nested lists */
-    margin-left: 20px;
-}
+    margin-left: 0px;
+} 
 
 
 .step-title {
@@ -119,7 +112,7 @@ ul ul {
 
 
 button {
-    font-size: .85em; /* Adjust font size */
+    font-size: 1em; /* Adjust font size */
     padding: 7px 12px; /* Add space around the text */
     border: 2px solid  #679bf4; /* Border color */
     background-color: white; /* Button background color */
@@ -163,6 +156,7 @@ select:hover {
 select:focus {
     outline: none;
 }
+
 /* Hide the default checkbox */
 input[type="checkbox"] {
     display: none; /* Hides the default checkbox */
@@ -170,8 +164,10 @@ input[type="checkbox"] {
 
 /* Style the custom checkbox */
 input[type="checkbox"] + label {
-    vertical-align: -7px; /* Moves the checkbox down 3px */
-    display: inline-block;
+    vertical-align: middle; /* Centers the checkbox vertically */
+    display: inline-flex; /* Use flexbox for alignment */
+    justify-content: center; /* Centers horizontally */
+    align-items: center; /* Centers vertically */
     width: 20px;
     height: 20px;
     background-color: white; /* Default background color */
@@ -179,15 +175,12 @@ input[type="checkbox"] + label {
     border-radius: 4px; /* Optional rounded corners */
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
-    position: relative; /* Needed to position the checkmark */
+    position: relative;
 }
 
 /* Add checkmark when checked using ::before */
 input[type="checkbox"]:checked + label::before {
     content: "✔"; /* Unicode checkmark */
-    position: absolute;
-    top: 2px; /* Position it inside the box */
-    left: 4px; /* Adjust to center the checkmark */
     color: white; /* White checkmark color */
     font-size: 16px; /* Adjust size of the checkmark */
 }
@@ -256,6 +249,13 @@ input[type="checkbox"]:focus + label {
     /* box-shadow: 0 0 5px rgba(52, 103, 204, 0.5); /* Add a subtle glow effect */
 }
 
+.button-container {
+    display: flex;
+    justify-content: center; /* Centers the buttons horizontally */
+    text-align: center; /* Center-align content inside the container */
+    /* align-items: center; Centers the buttons vertically (if needed) */
+    gap: 10px; /* Adds space between the buttons */
+}
 
 
 
@@ -264,7 +264,7 @@ body {
     font-family: 'Arial', sans-serif; /* Use a clean, modern font */
     line-height: 1.6; /* Improve readability with appropriate spacing */
     color: #333; /* Neutral text color for good contrast */
-    background-color: #f9f9f9; /* Light background to reduce eye strain */
+    background-color: #f9f9f9; /* Light background to reduce eye strain */ /* MAKE A DIFF COLOR??? */
     margin: 0; /* Remove default margins */
     padding: 0; /* Remove default padding */
 }
@@ -278,9 +278,7 @@ h2, h3, h4, h5, h6 {
 }
 
 /* Specific heading adjustments */
-h1 {
-    color: #444
-}
+
 
 
 /* Paragraphs */
@@ -290,13 +288,9 @@ p {
     color: #444; /* Slightly lighter text for less contrast than headings */
 }
 
-/* Lists */
-ul, ol {
-    margin: 10px 0;
-    padding-left: 20px; /* Indent list items */
-}
+
 li {
-    font-size: 1.1em; /* Match paragraph text size */
+    font-size: 1em; /* Match paragraph text size */
 }
 
 /* Inputs and buttons (to maintain consistency) */
@@ -336,6 +330,7 @@ form {
     background-color: white;
 }
 
+
 /* Optional: Center content and form alignment */
 .container {
     width: 90%;
@@ -346,8 +341,34 @@ form {
 
 
 
+a.button-link {
+    display: inline-block; /* Makes it behave like a button */
+    padding: 6px 12px; /* Add space around the text */
+    font-size: 1em; /* Adjust font size */
+    text-align: center; /* Center the text */
+    border: 2px solid #679bf4; /* Border color */
+    background-color: white; /* Button background color */
+    color: #679bf4; /* Text color */
+    border-radius: 8px; /* Rounded corners */
+    cursor: pointer; /* Change cursor to pointer */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+    text-decoration: none; /* Remove underline */
+}
 
+/* Hover effect */
+a.button-link:hover {
+    border: 2px solid #679bf4; /* Border color */
+    background-color: #679bf4; /* Change background color on hover */
+    color: white; /* Text color */
+    transform: scale(1.05); /* Slightly increase the button size on hover */
+    text-decoration: none; /* Ensure no underline appears on hover */
+}
 
+/* Active/clicked effect */
+a.button-link:active {
+    outline: none; /* Remove default outline */
+    text-decoration: none; /* Ensure no underline appears when clicked */
+}
 
 
 
