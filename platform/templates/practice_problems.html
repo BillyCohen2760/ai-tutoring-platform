@@ -212,17 +212,24 @@
             if (userAnswers.length > totalCorrectAnswers) {
                 resultDiv.innerHTML = '<p style="color: red;">You provided too many solutions.</p>';
             } else if (correctCount === 0) {
-                resultDiv.innerHTML = '<p style="color: red;">No answers were correct.</p>';
+                resultDiv.innerHTML = '<p style="color: red;">Incorrect.</p>';
             } else if (correctCount < totalCorrectAnswers) {
-                resultDiv.innerHTML = `<p style="color: orange;">${correctCount} Correct Answer(s).</p>`;
+                if (correctCount ===  1) {
+                    resultDiv.innerHTML = '<p style="color: orange;">1 Correct Answer. There is at least one more solution.</p>';
+                }
+                else {
+                    resultDiv.innerHTML = '<p style="color: orange;">${correctCount} Correct Answers. There is at least one more solution.</p>';
+                }
             } else {
                 resultDiv.innerHTML = `<p style="color: green;">Correct! Nice Job.</p>`;
             }
 
             // Show the correct answer if all unique answers are correct
             if (correctCount === totalCorrectAnswers && userAnswers.length <= totalCorrectAnswers) {
-                const solutionDiv = document.getElementById(`solution-${index}`);
-                solutionDiv.style.display = 'block';
+                // const solutionDiv = document.getElementById(`solution-${index}`);
+                // solutionDiv.style.display = 'block';
+                toggleAnswer(correctAnswers, index);
+
             }
         }
 
