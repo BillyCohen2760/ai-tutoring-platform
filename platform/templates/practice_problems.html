@@ -26,10 +26,21 @@
                 <div class="problem" style="display: {% if i == 0 %}block{% else %}none{% endif %};">
                     <h3>Problem {{ i + 1 }}:</h3>
                     {% if prob_type == "Simplifying Expressions" %}
-                    <p>Simplify \( {{ problems[i] }} \) by <span class="problem-topic">{{ prob_topic }}</span></p>
+                        {% if prob_topic == "Using Square Roots" %}
+                            <p>Simplify  <span class="math-problem">\( {{ problems[i] }} \)</span></p>
+                        {% else %}
+                            <p>Simplify <span class="math-problem">\( {{ problems[i] }} \)</span> by <span class="problem-topic">{{ prob_topic }}</span></p>
+                        {% endif %}
+                    {% elif prob_type == "Solving Linear Equations" %}
+                        <p>Solve <span class="math-problem">\( {{ problems[i] }} \)</span></p>
+                    
+                    {% elif "Evaluating" in prob_type %}
+                        <p>What is <span class="math-problem">\( {{ problems[i] }} \)</span></p>
+
                     {% else %}
-                    <p>Solve \( {{ problems[i] }} \) by <span class="problem-topic">{{ prob_topic }}</span></p>
+                         <p>Solve <span class="math-problem"><span class="math-problem">\( {{ problems[i] }} \)</span></span> by <span class="problem-topic">{{ prob_topic }}</span></p>
                     {% endif %}
+
                     <!-- <h4>Your Answer(s):</h4> -->
                     <!-- <h5>Note: each answer should be in the form: <span class="problem-topic">x = ___</span>
                         <br>

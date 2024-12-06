@@ -291,7 +291,9 @@ h5 {
 }
 /* Specific heading adjustments */
 
-
+.math-problem {
+    font-size: 1em; /* Slightly larger for readability */
+}
 
 /* Paragraphs */
 p {

@@ -40,6 +40,13 @@
                                 <a href="#" class="button-link" onclick="this.closest('form').submit(); return false;">Division</a>
                             </form>
                         </li>
+                        <li>
+                            <form action="{{ url_for('practice_settings') }}" method="POST" style="display:inline;">
+                                <input type="hidden" name="problem_type" value="Evaluating_Fractions">
+                                <input type="hidden" name="problem_topic" value="Using_a_Combination_of_Operations">
+                                <a href="#" class="button-link" onclick="this.closest('form').submit(); return false;">Combination</a>
+                            </form>
+                        </li>
                     </ul>
                 </li>
                 <li> Evaluating Decimals
@@ -70,6 +77,13 @@
                                 <input type="hidden" name="problem_type" value="Evaluating_Decimals">
                                 <input type="hidden" name="problem_topic" value="Using_Division">
                                 <a href="#" class="button-link" onclick="this.closest('form').submit(); return false;">Division</a>
+                            </form>
+                        </li>
+                        <li>
+                            <form action="{{ url_for('practice_settings') }}" method="POST" style="display:inline;">
+                                <input type="hidden" name="problem_type" value="Evaluating_Decimals">
+                                <input type="hidden" name="problem_topic" value="Using_a_Combination_of_Operations">
+                                <a href="#" class="button-link" onclick="this.closest('form').submit(); return false;">Combination</a>
                             </form>
                         </li>
                     </ul>
@@ -189,6 +203,7 @@
                                 <a href="#" class="button-link" onclick="this.closest('form').submit(); return false;">Quadratic Formula</a>
                             </form>
                         </li>
+                        
                     </ul>
                 </li>
                 <li> System of Equations
