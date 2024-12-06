@@ -57,7 +57,7 @@ main {
 }
 
 .problem-topic {
-    color: rgb(237, 71, 71);  /* You can change this to any color you'd like */
+    color: red;  /* You can change this to any color you'd like */
 }
 
 /* No bullets in list */
@@ -270,13 +270,25 @@ body {
 }
 
 /* Headings */
-h2, h3, h4, h5, h6 {
+h2, h3, h4, h6 {
     color: rgb(72, 132, 243); /* Use the same primary color for headings */
     margin-bottom: 10px; /* Add spacing below headings */
     font-weight: bold; /* Make headings bold for emphasis */
     line-height: 1.3; /* Compact line spacing for headings */
 }
 
+h5 {
+    color: #444; /* Use the same primary color for headings */
+    margin-bottom: 10px; /* Add spacing below headings */
+    font-weight: bold; /* Make headings bold for emphasis */
+    line-height: 1.3; /* Compact line spacing for headings */
+}
+
+.directions-above-answer {
+    text-align: center;
+    margin: 1px 0; /* Adjust spacing as needed */
+    margin-bottom: -2px; /* Add spacing below headings */
+}
 /* Specific heading adjustments */
 
 

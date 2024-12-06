@@ -18,7 +18,7 @@ app.config['OPEN_AI_KEY'] = os.getenv('OPEN_AI_KEY')
 @app.template_filter('highlight_steps')
 def highlight_steps(text):
     # Regular expression to find "### Step x: ______" and "### Final Step: ______"
-    step_pattern = r"(### (Step \d+:|Final Step:))"
+    step_pattern = r"(### (Step \d+:|Final Step: | Final Answer:))"
     
     # Replace the step titles with a styled span
     styled_text = re.sub(step_pattern, r'<span class="step-title">\1</span>', text)
@@ -289,6 +289,7 @@ def generate_problems(problem_type, problem_topic): #, num_problems):
         message = message,
         explanation = explanation,
         allow_square_roots = allow_square_roots,
+        allow_imaginary_numbers = allow_imaginary_numbers,
         num_decimal_places = num_decimal_places
     )
 

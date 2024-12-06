@@ -5,7 +5,7 @@
 {% block content %}
     <h2 style="margin-bottom: 10px;">Practice Problems</h2>
     <p style="margin-top: 10px; line-height: 1;">
-        Below is an AI-generated algebra problem. Please type your answers in the area provided below. If there is more than one solution, please click Add Another Answer.
+        Below is an AI-generated algebra problem. Please type your answers in the area provided below.
     </p>
     {% if message != 'None'%}
     <p style="margin-top: 10px; line-height: 1;">
@@ -37,32 +37,41 @@
                         <br>
                         Please put a space between every variable.
                     </h5> -->
+                    <!-- <h5 class="directions-above-answer", style="letter-spacing: 20px; color: red;">* * * * * * * *</h5> -->
+                    <h5 class="directions-above-answer"> If there is more than one solution, please click <span style="color: red;">Add Another Answer</span></h5>
+                    
+                    {% if allow_square_roots == "true"%}
+                    <h5 class="directions-above-answer">To use a square root, write: <span style="color: red;">sqrt()</span></h5>
+                    {% endif %}
+
+                    {% if allow_imaginary_numbers == "true"%}
+                    <h5 class="directions-above-answer">To use an imaginary number, use: <span style="color: red;">i</span></h5>
+                    {% endif %}
 
                     {% if prob_type == "Evaluating Fractions" %}
-                    <h5 style="text-align: center;">Please leave your answer as an improper fraction</h5>
+                    <h5 class="directions-above-answer">Please leave your answer as an improper fraction</h5>
                     {% endif %}
 
                     {% if prob_type == "Evaluating Decimals" %}
 
                         {% if num_decimal_places == 1 %}
-                        <h5 style="text-align: center;">Please round your answer to <span class="problem-topic">{{ num_decimal_places }} decimal place</span></h5>
+                        <h5 class="directions-above-answer">Please round your answer to <span style="color: red;">{{ num_decimal_places }} decimal place</span></h5>
                         {% else %}
-                        <h5 style="text-align: center;">Please round your answer to <span class="problem-topic">{{ num_decimal_places }} decimal places</span></h5>
+                        <h5 class="directions-above-answer">Please round your answer to <span style="color: red;">{{ num_decimal_places }} decimal places</span></h5>
                         {% endif %}
                         
                     {% endif %}
 
                     {% if prob_type == "Solving Linear Equations" or prob_type == "Solving Quadratic Equations" %}
-                    <h5 style="text-align: center;">Note: each answer should be in the form: <span class="problem-topic">x = ___</span></h5>
+                    <h5 class="directions-above-answer">Note: each answer should be in the form: <span style="color: red;">x = ___</span></h5>
                     {% endif %}
 
                     {% if prob_type == "System Of Equations" %}
-                    <h5 style="text-align: center;">Note: each answer should be in the form: <span class="problem-topic">(x, y)</span></h5>
+                    <h5 class="directions-above-answer">Note: each answer should be in the form: <span style="color: red;">(x, y)</span></h5>
                     {% endif %}
 
-                    {% if allow_square_roots == "true"%}
-                    <h5 style="text-align: center;">To use a square root, write: <span class="problem-topic">sqrt()</span></h5>
-                    {% endif %}
+                    <!-- <h5 class="directions-above-answer", style="letter-spacing: 20px; color: red;">* * * * * * * *</h5> -->
+                    
 
                     <div id="answer-inputs-{{ i }}" class="answer-inputs">
                         <input type="text" placeholder="Type your answer here" />
@@ -212,7 +221,7 @@
             if (userAnswers.length > totalCorrectAnswers) {
                 resultDiv.innerHTML = '<p style="color: red;">You provided too many solutions.</p>';
             } else if (correctCount === 0) {
-                resultDiv.innerHTML = '<p style="color: red;">Incorrect.</p>';
+                resultDiv.innerHTML = '<p style="color: red;">Incorrect. Please try again.</p>';
             } else if (correctCount < totalCorrectAnswers) {
                 if (correctCount ===  1) {
                     resultDiv.innerHTML = '<p style="color: orange;">1 Correct Answer. There is at least one more solution.</p>';
