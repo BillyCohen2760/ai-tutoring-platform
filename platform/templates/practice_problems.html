@@ -56,11 +56,15 @@
                     {% endif %}
 
                     {% if allow_imaginary_numbers == "true"%}
-                    <h5 class="directions-above-answer">To use an imaginary number, use: <span style="color: red;">i</span></h5>
+                    <h5 class="directions-above-answer">To use an imaginary number, write: <span style="color: red;">i</span></h5>
+                    {% endif %}
+
+                    {% if prob_type == "Solving Quadratic Equations" %}
+                    <h5 class="directions-above-answer">To use a power, write: <span style="color: red;">i</span></h5>
                     {% endif %}
 
                     {% if prob_type == "Evaluating Fractions" %}
-                    <h5 class="directions-above-answer">Please leave your answer as an improper fraction</h5>
+                    <h5 class="directions-above-answer">Please leave your answer as an <span style="color: red;">improper fraction</span> in <span style="color: red;">simplest form</span></h5>
                     {% endif %}
 
                     {% if prob_type == "Evaluating Decimals" %}

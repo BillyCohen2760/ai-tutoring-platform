@@ -432,7 +432,7 @@ def get_explanations(problems, solutions, prob_topic, prob_type, num_decimal_pla
 
 # Clean explanation by fixing some common LaTeX mistakes
 def clean_explanation(explanation):
-    print("INITIAL EXPLANATION", explanation)
+    # print("INITIAL EXPLANATION", explanation)
     replacements = {
         "\times": "\\times",
         "\text": "\\text"
@@ -452,5 +452,5 @@ def clean_explanation(explanation):
     for target, replacement in replacements.items():
         explanation = explanation.replace(target, replacement)
 
-    print("FINAL EXPLANATION", explanation)
+    # print("FINAL EXPLANATION", explanation)
     return explanation
