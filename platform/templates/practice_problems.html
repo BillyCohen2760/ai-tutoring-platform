@@ -197,10 +197,8 @@
                 .map(input => input.value.trim()) // Trim whitespace
                 .filter(answer => answer !== ''); // Filter out empty answers
 
-            // SIMPLIFY ANSWERS FOR CERTAIN TYPES OF PROBLEMS ONLY (e.g. yes for expressions, no for fractions)
             let processedUserAnswers, processedCorrectAnswers;
             if (problemType === "Simplifying_Expressions") {
-                // Use math.simplify for specific problem types
                 processedUserAnswers = await Promise.all(userAnswers.map(answer => simplifyExpression(answer)));
                 processedCorrectAnswers = await Promise.all(
                     correctAnswers
@@ -208,7 +206,6 @@
                         .map(answer => simplifyExpression(answer.trim()))
                 );
             } else {
-                // Use raw answers for other problem types
                 processedUserAnswers = userAnswers.map(answer => normalizeAnswer(answer));
                 processedCorrectAnswers = correctAnswers
                     .split(/,(?![^\(]*\))/) // Split by commas outside parentheses
@@ -220,36 +217,65 @@
             console.log("User Answers (Processed):", processedUserAnswers); // Debugging statement
             console.log("Correct Answers (Processed):", processedCorrectAnswers); // Debugging statement
 
-            // Check which user answers are correct
+            let plausibleSuggestion = null;
+
+            if (problemType === "Solving_Linear_Equations") {
+                // Check for missing variable prefix
+                processedUserAnswers.forEach(userAnswer => {
+                    processedCorrectAnswers.forEach(correctAnswer => {
+                        const correctWithoutVariable = correctAnswer.replace(/^\w+=/, ''); // Remove variable prefix (e.g., 'x=')
+                        if (userAnswer === correctWithoutVariable) {
+                            plausibleSuggestion = 'Did you mean ' + correctAnswer + '?'; // Suggest the full correct answer (e.g., 'x=15')
+                        }
+                    });
+                });
+
+
+                // Check for wrong variable usage
+                const correctVariable = /^[a-zA-Z]+/.exec(correctAnswers)?.[0]; // Extract the correct variable (e.g., 'z' from 'z=15')
+                processedUserAnswers.forEach(userAnswer => {
+                    const userVariable = /^[a-zA-Z]+/.exec(userAnswer)?.[0]; // Extract the user's variable
+                    if (userVariable && correctVariable && userVariable !== correctVariable) {
+                        plausibleSuggestion = `Make sure you use the correct variable (${correctVariable}).`;
+                    }
+                });
+
+            } else if (problemType === "Evaluating_Fractions") {
+                // Check for unsimplified fractions
+                processedUserAnswers.forEach(userAnswer => {
+                    processedCorrectAnswers.forEach(correctAnswer => {
+                        if (isFraction(userAnswer) && isFraction(correctAnswer)) {
+                            const simplifiedUserAnswer = simplifyFraction(userAnswer);
+                            const simplifiedCorrectAnswer = simplifyFraction(correctAnswer);
+                            if (simplifiedUserAnswer === simplifiedCorrectAnswer && userAnswer !== correctAnswer) {
+                                plausibleSuggestion = 'Your answer is correct! Just put it in simplest form.'; // Suggest the simplified correct answer
+                            }
+                        }
+                    });
+                });
+            }
+
+            if (plausibleSuggestion) {
+                resultDiv.innerHTML = `<p style="color: orange;">${plausibleSuggestion}</p>`;
+                return;
+            }
+
             const correctUniqueAnswers = new Set(
                 processedUserAnswers.filter(userAnswer => processedCorrectAnswers.includes(userAnswer))
             );
 
-            const providedAnswers = new Set(processedUserAnswers);
-            console.log("providedAnswers", providedAnswers); // Debugging statement
-
-            // Debugging statement for correct unique answers
-            console.log("Correct Unique Answers:", Array.from(correctUniqueAnswers)); // Debugging statement
-
-            // Generate feedback
             const correctCount = correctUniqueAnswers.size;
             const totalCorrectAnswers = processedCorrectAnswers.length;
 
-            // Array of incorrect feedback messages
             const incorrectMessages = [
                 "Not quite right, try again!",
                 "Incorrect answer. Give it another shot.",
                 "Oops! Not quite. Try again!",
                 "Whoops wrong answer. Try it again!",
                 "Not quite. Give it another try!",
-                // "Don't worry, you'll get it next time!",
                 "Hmm, that's not correct. Try again!",
-                // "So close! Keep going!",
                 "Give it another shot, you're almost there!",
-                // "Not the answer we're looking for. Try once more!",
                 "Take another look and give it a go!",
-                // "It's okay to make mistakes—try again!",
-                // "A little off. Keep trying!",
                 "Wrong answer, but don't give up!",
                 "Try again, you got this!",
                 "Hmm, not correct. Check your work and try again!",
@@ -258,13 +284,12 @@
             if (userAnswers.length > totalCorrectAnswers) {
                 resultDiv.innerHTML = '<p style="color: red;">You provided too many solutions.</p>';
             } else if (correctCount === 0) {
-                // Ensure no repeated messages
                 let randomIndex;
                 do {
                     randomIndex = Math.floor(Math.random() * incorrectMessages.length);
                 } while (randomIndex === lastIncorrectMessageIndex);
 
-                lastIncorrectMessageIndex = randomIndex; // Update last used index
+                lastIncorrectMessageIndex = randomIndex;
                 const randomMessage = incorrectMessages[randomIndex];
                 resultDiv.innerHTML = `<p style="color: red;">${randomMessage}</p>`;
             } else if (correctCount < totalCorrectAnswers) {
@@ -277,11 +302,25 @@
                 resultDiv.innerHTML = `<p style="color: green;">Correct! Nice Job.</p>`;
             }
 
-            // Show the correct answer if all unique answers are correct
             if (correctCount === totalCorrectAnswers && userAnswers.length <= totalCorrectAnswers) {
                 toggleAnswer(correctAnswers, index);
             }
         }
+
+        // Utility to check if a string represents a fraction
+        function isFraction(answer) {
+            return /^\d+\/\d+$/.test(answer); // Matches strings like "2/4"
+        }
+
+        // Simplify a fraction
+        function simplifyFraction(fraction) {
+            const [numerator, denominator] = fraction.split('/').map(Number);
+            const gcd = (a, b) => (b === 0 ? a : gcd(b, a % b));
+            const divisor = gcd(numerator, denominator);
+            return `${numerator / divisor}/${denominator / divisor}`;
+        }
+
+
 
 
         // Helper function to simplify an expression and ensure term order doesn't affect equality
