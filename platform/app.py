@@ -47,7 +47,6 @@ def simplify_expression():
     result = WA_response(prompt)
     # verdict = equal_or_not(result)
     print('EXPANDED:', result, result[0])
-            # 
 
     # Ensure the response is correctly formatted as JSON
     if result:
