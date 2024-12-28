@@ -185,6 +185,8 @@
             }
         }
 
+        let lastIncorrectMessageIndex = -1; // Store the last used index
+
         async function checkAnswer(correctAnswers, index) {
             const answerInputs = document
                 .getElementById(`answer-inputs-${index}`)
@@ -233,16 +235,43 @@
             const correctCount = correctUniqueAnswers.size;
             const totalCorrectAnswers = processedCorrectAnswers.length;
 
+            // Array of incorrect feedback messages
+            const incorrectMessages = [
+                "Not quite right, try again!",
+                "Incorrect answer. Give it another shot.",
+                "Oops! Not quite. Try again!",
+                "Whoops wrong answer. Try it again!",
+                "Not quite. Give it another try!",
+                // "Don't worry, you'll get it next time!",
+                "Hmm, that's not correct. Try again!",
+                // "So close! Keep going!",
+                "Give it another shot, you're almost there!",
+                // "Not the answer we're looking for. Try once more!",
+                "Take another look and give it a go!",
+                // "It's okay to make mistakes—try again!",
+                // "A little off. Keep trying!",
+                "Wrong answer, but don't give up!",
+                "Try again, you got this!",
+                "Hmm, not correct. Check your work and try again!",
+            ];
+
             if (userAnswers.length > totalCorrectAnswers) {
                 resultDiv.innerHTML = '<p style="color: red;">You provided too many solutions.</p>';
             } else if (correctCount === 0) {
-                resultDiv.innerHTML = '<p style="color: red;">Incorrect. Please try again.</p>';
+                // Ensure no repeated messages
+                let randomIndex;
+                do {
+                    randomIndex = Math.floor(Math.random() * incorrectMessages.length);
+                } while (randomIndex === lastIncorrectMessageIndex);
+
+                lastIncorrectMessageIndex = randomIndex; // Update last used index
+                const randomMessage = incorrectMessages[randomIndex];
+                resultDiv.innerHTML = `<p style="color: red;">${randomMessage}</p>`;
             } else if (correctCount < totalCorrectAnswers) {
-                if (correctCount ===  1) {
+                if (correctCount === 1) {
                     resultDiv.innerHTML = '<p style="color: orange;">1 Correct Answer. There is at least one more solution.</p>';
-                }
-                else {
-                    resultDiv.innerHTML = '<p style="color: orange;">${correctCount} Correct Answers. There is at least one more solution.</p>';
+                } else {
+                    resultDiv.innerHTML = `<p style="color: orange;">${correctCount} Correct Answers. There is at least one more solution.</p>`;
                 }
             } else {
                 resultDiv.innerHTML = `<p style="color: green;">Correct! Nice Job.</p>`;
@@ -250,12 +279,10 @@
 
             // Show the correct answer if all unique answers are correct
             if (correctCount === totalCorrectAnswers && userAnswers.length <= totalCorrectAnswers) {
-                // const solutionDiv = document.getElementById(`solution-${index}`);
-                // solutionDiv.style.display = 'block';
                 toggleAnswer(correctAnswers, index);
-
             }
         }
+
 
         // Helper function to simplify an expression and ensure term order doesn't affect equality
         async function simplifyExpression(expr) {
