@@ -198,6 +198,7 @@
                 .filter(answer => answer !== ''); // Filter out empty answers
 
             let processedUserAnswers, processedCorrectAnswers;
+            // CHECK FOR MATHEMATICAL EQUIVALENCE
             if (problemType === "Simplifying_Expressions") {
                 processedUserAnswers = await Promise.all(userAnswers.map(answer => simplifyExpression(answer)));
                 processedCorrectAnswers = await Promise.all(
@@ -205,6 +206,7 @@
                         .split(/,(?![^\(]*\))/) // Split by commas outside parentheses
                         .map(answer => simplifyExpression(answer.trim()))
                 );
+            // DONT CHECK FOR MATHEMATICAL EQUIVALENCE
             } else {
                 processedUserAnswers = userAnswers.map(answer => normalizeAnswer(answer));
                 processedCorrectAnswers = correctAnswers
@@ -219,7 +221,27 @@
 
             let plausibleSuggestion = null;
 
-            if (problemType === "Solving_Linear_Equations") {
+            
+            const arithmetic_problems = [
+                "Evaluating_Fractions",
+                "Evaluating_Decimals",
+            ];
+
+            const simplifying_expressions = [
+                "Simplifying_Expressions",
+                "Equations_Of_A_Line",
+            ];
+
+            const solving_equations = [
+                "Solving_Linear_Equations",
+                "Solving_Quadratic_Equations",
+                "System_Of_Equations",
+            ];
+
+
+
+            // plausible answer check for EQUATIONS USING VARIABLES
+            if (solving_equations.includes(problemType)) {
                 // Check for missing variable prefix
                 processedUserAnswers.forEach(userAnswer => {
                     processedCorrectAnswers.forEach(correctAnswer => {
@@ -246,26 +268,59 @@
                         const userNumeric = parseFloat(userAnswer.replace(/[^\d.-]/g, '')); // Extract numeric value
                         const correctNumeric = parseFloat(correctAnswer.replace(/[^\d.-]/g, ''));
 
-                        if (userNumeric === -correctNumeric) { // Check if answers differ by sign
-                            plausibleSuggestion = "You're close! Double check the sign of your answer.";
+                        // Check if answers differ by sign
+                        if (Math.abs(userNumeric) === Math.abs(correctNumeric) && userNumeric !== correctNumeric) {
+                            plausibleSuggestion = "So close! Double check the sign of your answer.";
                         }
                     });
                 });
 
-            } else if (problemType === "Evaluating_Fractions") {
-                // Check for unsimplified fractions
+
+            // plausible answer check for ARITHMETIC
+            } else if (arithmetic_problems.includes(problemType)) {
+                console.log("Starting arithmetic plausible checks");
+
+                // Check for unsimplified fractions or fractions that should be whole numbers
                 processedUserAnswers.forEach(userAnswer => {
                     processedCorrectAnswers.forEach(correctAnswer => {
-                        if (isFraction(userAnswer) && isFraction(correctAnswer)) {
-                            const simplifiedUserAnswer = simplifyFraction(userAnswer);
-                            const simplifiedCorrectAnswer = simplifyFraction(correctAnswer);
-                            if (simplifiedUserAnswer === simplifiedCorrectAnswer && userAnswer !== correctAnswer) {
-                                plausibleSuggestion = 'Your answer is correct! Just put it in simplest form.'; // Suggest the simplified correct answer
+                        if (isFraction(userAnswer)) {
+                            console.log(`Checking fractions: User=${userAnswer}, Correct=${correctAnswer}`);
+
+                            const simplifiedUserAnswer = simplifyFractionWithSign(userAnswer);
+                            const correctNumeric = parseFloat(correctAnswer); // Convert correctAnswer to a numeric value
+
+                            console.log(`Simplified: User=${simplifiedUserAnswer}, Correct=${correctNumeric}`);
+
+                            if (simplifiedUserAnswer === correctAnswer && userAnswer !== correctAnswer) {
+                                plausibleSuggestion = 'Almost there! Just put your answer in simplest form.';
+                            } else if (
+                                simplifiedUserAnswer.split('/')[1] === '1' && // Check if denominator is 1 after simplification
+                                parseFloat(simplifiedUserAnswer.split('/')[0]) === correctNumeric
+                            ) {
+                                plausibleSuggestion = 'Almost there! Just put your answer in simplest form. Hint: can this be written as a whole number?';
                             }
                         }
                     });
                 });
-            }
+
+
+                // Check for sign errors
+                processedUserAnswers.forEach(userAnswer => {
+                    processedCorrectAnswers.forEach(correctAnswer => {
+                        const userNumeric = parseFloat(userAnswer.replace(/[^\d.-]/g, '')); // Extract numeric value
+                        const correctNumeric = parseFloat(correctAnswer.replace(/[^\d.-]/g, ''));
+
+                        console.log(`Checking sign: User=${userNumeric}, Correct=${correctNumeric}`);
+
+                        if (Math.abs(userNumeric) === Math.abs(correctNumeric) && userNumeric !== correctNumeric) {
+                            plausibleSuggestion = "So close! Double check the sign of your answer.";
+                        }
+                    });
+                });
+
+                console.log("Finished arithmetic plausible checks");
+                }
+
 
             if (plausibleSuggestion) {
                 resultDiv.innerHTML = `<p style="color: orange;">${plausibleSuggestion}</p>`;
@@ -354,13 +409,34 @@
             return /^\d+\/\d+$/.test(answer); // Matches strings like "2/4"
         }
 
-        // Simplify a fraction
-        function simplifyFraction(fraction) {
-            const [numerator, denominator] = fraction.split('/').map(Number);
-            const gcd = (a, b) => (b === 0 ? a : gcd(b, a % b));
-            const divisor = gcd(numerator, denominator);
-            return `${numerator / divisor}/${denominator / divisor}`;
+        function isFraction(input) {
+            const fractionRegex = /^-?\d+\/-?\d+$/; // Matches fractions like -2/5, 3/4, -4/-8
+            return fractionRegex.test(input.trim());
         }
+
+
+        // Simplify a fraction
+        function simplifyFractionWithSign(fraction) {
+            const [numerator, denominator] = fraction.split('/').map(Number);
+            if (!numerator || !denominator) return fraction; // Return as-is if not a valid fraction
+
+            // Calculate greatest common divisor (GCD)
+            const gcd = (a, b) => (b === 0 ? a : gcd(b, a % b));
+            const divisor = gcd(Math.abs(numerator), Math.abs(denominator));
+
+            // Simplify the fraction
+            let simplifiedNumerator = numerator / divisor;
+            let simplifiedDenominator = denominator / divisor;
+
+            // Ensure the negative sign is only on the numerator
+            if (simplifiedDenominator < 0) {
+                simplifiedNumerator *= -1;
+                simplifiedDenominator *= -1;
+            }
+
+            return `${simplifiedNumerator}/${simplifiedDenominator}`;
+        }
+
 
 
 
