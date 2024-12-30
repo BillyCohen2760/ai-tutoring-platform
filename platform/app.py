@@ -120,6 +120,7 @@ def generate_problems(problem_type, problem_topic): #, num_problems):
     num_problems = request.form.get('num_problems', '3')  # Default to 3 if not provided
     allow_square_roots = request.form.get('allow_square_roots', '')  # Default to None if not provided
     allow_imaginary_numbers = request.form.get('allow_imaginary_numbers', '')  # Default to None if not provided
+    allow_negative_answers = request.form.get('allow_negative_answers', '')  # Default to None if not provided
     details = request.form.get('details', '')  # Default to an empty string if not provided
 
     customizations = {}
@@ -130,6 +131,8 @@ def generate_problems(problem_type, problem_topic): #, num_problems):
         customizations['sqrt'] = allow_square_roots
     if allow_imaginary_numbers != '':
         customizations['i'] = allow_imaginary_numbers
+    if allow_negative_answers != '':
+        customizations['negative'] = allow_negative_answers
 
 
     # Log received values
@@ -137,6 +140,7 @@ def generate_problems(problem_type, problem_topic): #, num_problems):
     print("Number of problems received (POST):", num_problems)
     print("Allow Square Roots received (POST):", allow_square_roots)
     print("Allow Imaginary Numbers received (POST):", allow_imaginary_numbers)
+    print("Allow Negative Numbers received (POST):", allow_negative_answers)
 
     print(problem_type, problem_topic)
     num_decimal_places = 0
@@ -217,7 +221,7 @@ def generate_problems(problem_type, problem_topic): #, num_problems):
     print('solutions', solutions)
 
     explanation = get_explanations(problems, solutions, prob_topic, prob_type, num_decimal_places)
-#     explanation = '''
+#     explanation = ['''
 #     Sure! Let's solve the quadratic equation \( x^2 + 4x + 3 = 0 \) using the factoring method step-by-step.
 
 # ### Step 1: Write the equation in standard form
@@ -275,7 +279,7 @@ def generate_problems(problem_type, problem_topic): #, num_problems):
 # \[
 # \text{The solutions are } x = -1 \text{ and } x = -3.
 # \]
-# '''
+# ''']
 
     return render_template(
         'practice_problems.html',
@@ -289,6 +293,7 @@ def generate_problems(problem_type, problem_topic): #, num_problems):
         explanation = explanation,
         allow_square_roots = allow_square_roots,
         allow_imaginary_numbers = allow_imaginary_numbers,
+        allow_negative_answers = allow_negative_answers,
         num_decimal_places = num_decimal_places
     )
 

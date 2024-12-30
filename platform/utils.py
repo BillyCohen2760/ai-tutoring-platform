@@ -144,7 +144,12 @@ def find_BAD_answers(problem, solution, customizations):
         if 'i' in temp_solution:
             print("IMAGINARY FOUND!")
             return 'BAD'
-            
+        
+    if customizations['negative'] == 'false':
+        if '-' in temp_solution: 
+            print("NEGATIVE FOUND!")
+            return 'BAD'
+        
     if customizations['problem_topic'] == 'Combining_Like_Terms':
         print("CLT")
         if '.' in temp_problem:
@@ -421,7 +426,7 @@ def get_explanations(problems, solutions, prob_topic, prob_type, num_decimal_pla
     for problem, solution in zip(problems, solutions):
         
         system_msg = "You are a math teacher. You excel at thoroughly explaining the steps you took to reach the correct answer."
-        user_msg = f"Please walk me through how the answer to the question 'Solve {problem}' is {solution}. Please do this by {prob_topic}. {details}. Please use LaTex formatting. Make sure text inside math formulas are wrapped in '\\text', and organize steps in this format: '### Step x: Title. '\\[  \\] Details...'. Every step should be separated by '\\[ ... \\], which will either contain a step or be blank. In the final step, please box the final answer (\\boxed)"
+        user_msg = f"Please walk me through how the answer to the question 'Solve {problem}' is {solution}. Please do this by {prob_topic}. {details}. Please use LaTex formatting. Make sure text inside math formulas are wrapped in '\\text', and organize steps in this format: '### Step x: Title. '\\[  \\] Details...'. Every step should be separated by '\\[ ... \\]', which will either contain a step or be blank. In the final step, please box the final answer (\\boxed)"
         print(user_msg)
         GPT_output = GPT_response(system_msg, user_msg)
         print(GPT_output)
