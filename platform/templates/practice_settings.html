@@ -17,6 +17,13 @@
             <option value="4">4</option>
             <option value="5">5</option>
         </select>
+        <br><br> <!-- DETERMINE WHICH PROBLEM SHOULD AUTOMATICALLY ALLOW NEGATIVE ANSWERS-->
+        <label for="allow_negative_answers">Do you want to allow Negative Numbers in your answers:</label>
+        <input type="checkbox" id="allow_negative_answers" name="allow_negative_answers"
+        {% if prob_type== 'Solving Quadratic Equations' %}checked{% endif %}>
+        <label for="allow_negative_answers"></label> <!-- Custom label for styling -->
+
+        
         <br><br>
         <label for="allow_square_roots">Do you want to allow Square Roots in your answers:</label>
         <input type="checkbox" id="allow_square_roots" name="allow_square_roots" 
@@ -28,6 +35,7 @@
         <label for="allow_imaginary_numbers">Do you want to allow Imaginary Numbers in your answers:</label>
         <input type="checkbox" id="allow_imaginary_numbers" name="allow_imaginary_numbers">
         <label for="allow_imaginary_numbers"></label> <!-- Custom label for styling -->
+
         <br>
     </form>
 
@@ -142,10 +150,12 @@
             const numProblems = document.getElementById('num_problems').value;
             const allowSquareRoots = document.getElementById('allow_square_roots').checked;
             const allowImaginaryNumbers = document.getElementById('allow_imaginary_numbers').checked;
+            const allowNegativeAnswers = document.getElementById('allow_negative_answers').checked;
 
             console.log("Number of Problems:", numProblems);
             console.log("Allow Square Roots:", allowSquareRoots);
             console.log("Allow Imaginary Numbers:", allowImaginaryNumbers);
+            console.log("Allow Negative Answers:", allowNegativeAnswers);
 
             const problemType = "{{ problem_type }}";
             const problemTopic = "{{ problem_topic }}";
@@ -168,7 +178,14 @@
             else if (problemType === "Evaluating_Fractions") {
                 const num_terms = document.getElementById('num_terms').value;
                 details += "there should be " + num_terms + " total terms. "
+
+                if (allowNegativeAnswers) {
+                    details += "Create problems that have both positive and negative answers. "
+                } else {
+                    details += "The answers can ONLY be positive. "
+                }
                 details += "Also, there should be no variables, only fractions that have numbers"
+
             }
             else if (problemType === "Evaluating_Decimals") {
                 // const num_decimal_places = document.getElementById('num_decimal_places').value;
@@ -195,7 +212,8 @@
                 { name: "details", value: details },
                 { name: "num_problems", value: numProblems },
                 { name: "allow_square_roots", value: allowSquareRoots },
-                { name: "allow_imaginary_numbers", value: allowImaginaryNumbers }
+                { name: "allow_imaginary_numbers", value: allowImaginaryNumbers },
+                { name: "allow_negative_answers", value: allowNegativeAnswers }
             ];
 
 
