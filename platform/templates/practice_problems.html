@@ -281,6 +281,25 @@
                 "Hmm, not correct. Check your work and try again!",
             ];
 
+            const partiallyCorrectMessages = [
+                "There is at least one more solution",
+                "Keep going! There is at least one more answer.",
+                "You're almost there! You've found one solution, but at least one more.",
+                "Keep trying! There's still at least one more answer.",
+            ];
+
+            const fullyCorrectMessages = [
+                "Correct! Nice job.",
+                "Excellent work! You nailed it.",
+                "Fantastic! You got everything correct.",
+                "Great job!",
+                "You crushed it! Well done.",
+                "Amazing! You got all the solutions.",
+                "Nailed it!",
+                "Nice! Good work.",
+            ];
+
+
             if (userAnswers.length > totalCorrectAnswers) {
                 resultDiv.innerHTML = '<p style="color: red;">You provided too many solutions.</p>';
             } else if (correctCount === 0) {
@@ -288,22 +307,33 @@
                 do {
                     randomIndex = Math.floor(Math.random() * incorrectMessages.length);
                 } while (randomIndex === lastIncorrectMessageIndex);
-
                 lastIncorrectMessageIndex = randomIndex;
                 const randomMessage = incorrectMessages[randomIndex];
                 resultDiv.innerHTML = `<p style="color: red;">${randomMessage}</p>`;
             } else if (correctCount < totalCorrectAnswers) {
+                let randomIndex;
+                    do {
+                        randomIndex = Math.floor(Math.random() * partiallyCorrectMessages.length);
+                    } while (randomIndex === lastIncorrectMessageIndex);
+                lastIncorrectMessageIndex = randomIndex;
+                const randomMessage = partiallyCorrectMessages[randomIndex];
                 if (correctCount === 1) {
-                    resultDiv.innerHTML = '<p style="color: orange;">1 Correct Answer. There is at least one more solution.</p>';
+                    resultDiv.innerHTML = `<p style="color: orange;">1 Correct Answer. ${randomMessage}</p>`;
                 } else {
-                    resultDiv.innerHTML = `<p style="color: orange;">${correctCount} Correct Answers. There is at least one more solution.</p>`;
+                    resultDiv.innerHTML = `<p style="color: orange;">${correctCount} Correct Answers. ${randomMessage}</p>`;
                 }
             } else {
-                resultDiv.innerHTML = `<p style="color: green;">Correct! Nice Job.</p>`;
+                let randomIndex;
+                    do {
+                        randomIndex = Math.floor(Math.random() * fullyCorrectMessages.length);
+                    } while (randomIndex === lastIncorrectMessageIndex);
+                lastIncorrectMessageIndex = randomIndex;
+                const randomMessage = fullyCorrectMessages[randomIndex];
+                resultDiv.innerHTML = `<p style="color: green;">${randomMessage}</p>`;
             }
 
             if (correctCount === totalCorrectAnswers && userAnswers.length <= totalCorrectAnswers) {
-                toggleAnswer(correctAnswers, index);
+                showAnswer(correctAnswers, index);
             }
         }
 
@@ -402,6 +432,18 @@
             document.body.appendChild(form);
             form.submit();
         }
+
+
+        function showAnswer(correctAnswers, index) {
+            const solutionDiv = document.getElementById(`solution-${index}`);
+            const button = document.getElementById(`toggle-answer-button-${index}`);
+            const stepsButton = document.getElementById(`toggle-steps-button-${index}`);
+            
+            solutionDiv.style.display = 'block'; // Show the answer
+            button.innerHTML = 'Hide Answer';    // Change button text to "Hide Answer"
+            stepsButton.style.display = 'inline-block'; // Show "Show Steps" button
+        }
+
 
         function toggleAnswer(correctAnswers, index) {
             const solutionDiv = document.getElementById(`solution-${index}`);
