@@ -240,6 +240,18 @@
                     }
                 });
 
+                // Check for sign errors
+                processedUserAnswers.forEach(userAnswer => {
+                    processedCorrectAnswers.forEach(correctAnswer => {
+                        const userNumeric = parseFloat(userAnswer.replace(/[^\d.-]/g, '')); // Extract numeric value
+                        const correctNumeric = parseFloat(correctAnswer.replace(/[^\d.-]/g, ''));
+
+                        if (userNumeric === -correctNumeric) { // Check if answers differ by sign
+                            plausibleSuggestion = "You're close! Double check the sign of your answer.";
+                        }
+                    });
+                });
+
             } else if (problemType === "Evaluating_Fractions") {
                 // Check for unsimplified fractions
                 processedUserAnswers.forEach(userAnswer => {
@@ -294,7 +306,7 @@
                 "Fantastic! You got everything correct.",
                 "Great job!",
                 "You crushed it! Well done.",
-                "Amazing! You got all the solutions.",
+                "Amazing!",
                 "Nailed it!",
                 "Nice! Good work.",
             ];
