@@ -52,15 +52,15 @@
                     <h5 class="directions-above-answer"> If there is more than one solution, please click <span style="color: red;">Add Another Answer</span></h5>
                     
                     {% if allow_square_roots == "true"%}
-                    <h5 class="directions-above-answer">To use a square root, write: <span style="color: red;">sqrt()</span></h5>
+                    <h5 class="directions-above-answer">To use a square root, write: <span style="color: red;">sqrt() (for example, sqrt(25) = 5)</span></h5>
                     {% endif %}
 
                     {% if allow_imaginary_numbers == "true"%}
-                    <h5 class="directions-above-answer">To use an imaginary number, write: <span style="color: red;">i</span></h5>
+                    <h5 class="directions-above-answer">To use an imaginary number, write: <span style="color: red;">i (for example, 3i)</span></h5>
                     {% endif %}
 
                     {% if prob_type == "Solving Quadratic Equations" %}
-                    <h5 class="directions-above-answer">To use a power, write: <span style="color: red;">i</span></h5>
+                    <h5 class="directions-above-answer">To use a power, write: <span style="color: red;">^ (for example, x^2)</span></h5>
                     {% endif %}
 
                     {% if prob_type == "Evaluating Fractions" %}
@@ -78,7 +78,11 @@
                     {% endif %}
 
                     {% if prob_type == "Solving Linear Equations" or prob_type == "Solving Quadratic Equations" %}
-                    <h5 class="directions-above-answer">Note: each answer should be in the form: <span style="color: red;">x = ___</span></h5>
+
+                    {% set correct_variable = solutions[i][0].split('=')[0].strip() if '=' in solutions[i][0] else 'variable' %}
+                    <h5 class="directions-above-answer">
+                        Note: each answer should be in the form: <span style="color: red;">{{ correct_variable }} = ___</span>
+                    </h5>
                     {% endif %}
 
                     {% if prob_type == "System Of Equations" %}
@@ -255,6 +259,15 @@
 
                 // Check for wrong variable usage
                 const correctVariable = /^[a-zA-Z]+/.exec(correctAnswers)?.[0]; // Extract the correct variable (e.g., 'z' from 'z=15')
+                
+                // // make sure the correct variable is displayed in the directions line above answer.
+                // if (correctVariable) {
+                //     // Update the directions to use the correct variable
+                //     document.getElementById('variable-placeholder').textContent = `${correctVariable} = ___`;
+                // }
+                            
+                
+                
                 processedUserAnswers.forEach(userAnswer => {
                     const userVariable = /^[a-zA-Z]+/.exec(userAnswer)?.[0]; // Extract the user's variable
                     if (userVariable && correctVariable && userVariable !== correctVariable) {
