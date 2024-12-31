@@ -18,21 +18,21 @@
             <option value="5">5</option>
         </select>
         <br><br> <!-- DETERMINE WHICH PROBLEM SHOULD AUTOMATICALLY ALLOW NEGATIVE ANSWERS-->
-        <label for="allow_negative_answers">Do you want to allow Negative Numbers in your answers:</label>
+        <label for="allow_negative_answers">Allow Negative Numbers in Answers?</label>
         <input type="checkbox" id="allow_negative_answers" name="allow_negative_answers"
         {% if prob_type== 'Solving Quadratic Equations' %}checked{% endif %}>
         <label for="allow_negative_answers"></label> <!-- Custom label for styling -->
 
         
         <br><br>
-        <label for="allow_square_roots">Do you want to allow Square Roots in your answers:</label>
+        <label for="allow_square_roots">Allow Square Roots in Answers?</label>
         <input type="checkbox" id="allow_square_roots" name="allow_square_roots" 
                {% if prob_topic == 'Using Square Roots' %}checked disabled{% endif %}>
         <label for="allow_square_roots"></label> <!-- Custom label for styling -->
         
 
         <br><br>
-        <label for="allow_imaginary_numbers">Do you want to allow Imaginary Numbers in your answers:</label>
+        <label for="allow_imaginary_numbers">Allow Imaginary Numbers in Answers?</label>
         <input type="checkbox" id="allow_imaginary_numbers" name="allow_imaginary_numbers">
         <label for="allow_imaginary_numbers"></label> <!-- Custom label for styling -->
 
@@ -76,8 +76,7 @@
     <hr>
     <p>Special Customizations for {{prob_type}}</p>
     <form id="FormattedForm" onsubmit="return submitForm()" method="GET">
-        <label for="num_terms">How many terms would you like there to be in each problem? 
-            <br>
+        <label for="num_terms">How many terms in each problem? 
             (For example, 1 + 2 + 3 has three terms.) </label>
         <select id="num_terms" name="num_terms" required>
             <option value="2" selected>2</option>
@@ -92,8 +91,7 @@
     <hr>
     <p>Special Customizations for {{prob_type}}</p>
     <form id="FormattedForm" onsubmit="return submitForm()" method="GET">
-        <label for="num_terms">How many terms would you like there to be in each problem? 
-            <br>
+        <label for="num_terms">How many terms in each problem? 
             (For example, 1 + 2 + 3 has three terms.) </label>
         <select id="num_terms" name="num_terms" required>
             <option value="4" selected>4</option>
