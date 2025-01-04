@@ -218,8 +218,8 @@ def generate_problems(problem_type, problem_topic): #, num_problems):
 
 
     # only save num_problems number of problems
-    problems = problems[:int(num_problems) + 1]
-    solutions = solutions[:int(num_problems) + 1]
+    problems = problems[:int(num_problems) + 1] # plus 1 for Practice One More Functionality
+    solutions = solutions[:int(num_problems) + 1] # plus 1 for Practice One More Functionality
     print('problems', problems)
     print('solutions', solutions)
 
