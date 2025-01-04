@@ -78,6 +78,83 @@ def clean(final_equations):
     
     return cleaned_equations  
 
+
+
+# Filter out "BAD" problems according to user customizations
+def find_BAD_problems(problem, customizations):
+    temp_problem = str(problem)
+    print('temp_problem', temp_problem)
+
+        
+    # if customizations['problem_topic'] == 'Combining_Like_Terms':
+    #     print("CLT")
+    #     if '.' in temp_problem:
+    #         print("DECIMAL FOUND")
+    #         return 'BAD'
+    
+    # Make sure a, b, c, values are correct.
+    if customizations['problem_type'] == 'Solving_Quadratic_Equations':
+        a, b, c = extract_coefficients(temp_problem)
+        print("a, b, c", a, b, c)
+
+        if 'a = 1' in customizations['abc'] and a != 1:
+            return 'BAD'
+        
+        if 'b = 0' in customizations['abc'] and b != 0:
+            return 'BAD'
+        
+        if 'c = 0' in customizations['abc'] and c != 0:
+            return 'BAD'
+        
+    # Make sure the signs of the problems match the name (i.e. no division in multiplciation problems)
+    if customizations['problem_type'] == 'Evaluating_Fractions' or customizations['problem_type'] == 'Evaluating_Decimals':
+        if customizations['problem_topic'] == 'Using_Addition':
+            print("EVALUATING FRACTIONS", temp_problem)
+            if '-' in temp_problem or 'times' in temp_problem or 'div' in temp_problem:
+                return 'BAD'
+        if customizations['problem_topic'] == 'Using_Subtraction':
+            print("EVALUATING FRACTIONS", temp_problem)
+            if '+' in temp_problem or 'times' in temp_problem or 'div' in temp_problem:
+                return 'BAD'
+        if customizations['problem_topic'] == 'Using_Multiplication':
+            print("EVALUATING FRACTIONS", temp_problem)
+            if '-' in temp_problem or '+' in temp_problem or 'div' in temp_problem:
+                return 'BAD'
+        if customizations['problem_topic'] == 'Using_Division':
+            print("EVALUATING FRACTIONS", temp_problem)
+            if '-' in temp_problem or 'times' in temp_problem or '+' in temp_problem:
+                return 'BAD'
+            
+    # Check number of terms
+    if customizations['problem_topic'] in num_terms_problems or customizations['problem_type'] in num_terms_problems:
+        print("CHECK NUM TERMS")
+        if count_terms(temp_problem) != customizations['num_terms']:
+            return 'BAD'
+        
+    # if all good, then return the problem.
+    return problem
+
+
+def validate_problems(problems, customizations):
+    problems_filtered = []
+    problems.append('''\\frac{4}{10} - \\frac{3}{10}''')
+    for problem in problems:
+        print("PROBLEM", problem)
+        problem = find_BAD_problems(problem, customizations)
+        print("PROBLEM:", problem)
+        if problem != 'BAD':
+            problems_filtered.append(problem)
+    
+    # problems_filtered = [problem for problem in problems if problem != 'BAD']
+    print("FILTERED PROBLEMS:", problems_filtered)
+    return problems_filtered
+
+
+
+
+
+
+
 # find coefficients and constants in ax^2 + bx + c for validation
 def extract_coefficients(equation):
     # Remove spaces for consistent processing
@@ -201,7 +278,8 @@ def find_BAD_answers(problem, solution, customizations):
 
     return solution
 
-def validate(problems, solutions, customizations):
+# solution validation
+def validate_solutions(problems, solutions, customizations):
     for i, (problem, solution) in enumerate(zip(problems, solutions)):
         solutions[i] = find_BAD_answers(problem, solution, customizations)
         
@@ -387,7 +465,7 @@ def format_answer(answer, prob_type, num_decimal_places):
 
     return solution
 
-# Create the prompt based on type of problem. Will eb solve or simply type of problem
+# Create the prompt based on type of problem. Will be solve, simplify, or expand based on type of problem
 def create_prompt(problem, prob_type):
    
 

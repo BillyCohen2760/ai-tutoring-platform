@@ -181,6 +181,9 @@ def generate_problems(problem_type, problem_topic): #, num_problems):
     print(prob_type, prob_topic)
     problems = clean_gpt_output(GPT_output, customizations)
     # problems = problems[:int(num_problems)] # temporarily commenting out because want to handle this after finding solution
+    # problems
+    # Ensure problems adhere to user customizations
+    problems = validate_problems(problems, customizations)
     print(problems)
 
     solutions = []
@@ -196,7 +199,7 @@ def generate_problems(problem_type, problem_topic): #, num_problems):
     print('problems', problems)
     print('solutions', solutions)
 
-    problems, solutions = validate(problems, solutions, customizations)
+    problems, solutions = validate_solutions(problems, solutions, customizations)
     # print('problems', problems)
     # print('solutions', solutions)
 
