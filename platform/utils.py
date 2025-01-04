@@ -110,7 +110,7 @@ def find_BAD_problems(problem, customizations):
     if customizations['problem_type'] == 'Evaluating_Fractions' or customizations['problem_type'] == 'Evaluating_Decimals':
         if customizations['problem_topic'] == 'Using_Addition':
             print("EVALUATING FRACTIONS", temp_problem)
-            if '-' in temp_problem or 'times' in temp_problem or 'div' in temp_problem:
+            if (' - ' in temp_problem and '(-' not in temp_problem) or 'times' in temp_problem or 'div' in temp_problem:
                 return 'BAD'
         if customizations['problem_topic'] == 'Using_Subtraction':
             print("EVALUATING FRACTIONS", temp_problem)
@@ -118,11 +118,11 @@ def find_BAD_problems(problem, customizations):
                 return 'BAD'
         if customizations['problem_topic'] == 'Using_Multiplication':
             print("EVALUATING FRACTIONS", temp_problem)
-            if '-' in temp_problem or '+' in temp_problem or 'div' in temp_problem:
+            if (' - ' in temp_problem and '(-' not in temp_problem) or '+' in temp_problem or 'div' in temp_problem:
                 return 'BAD'
         if customizations['problem_topic'] == 'Using_Division':
             print("EVALUATING FRACTIONS", temp_problem)
-            if '-' in temp_problem or 'times' in temp_problem or '+' in temp_problem:
+            if (' - ' in temp_problem and '(-' not in temp_problem) or 'times' in temp_problem or '+' in temp_problem:
                 return 'BAD'
             
     # Check number of terms
@@ -137,7 +137,7 @@ def find_BAD_problems(problem, customizations):
 
 def validate_problems(problems, customizations):
     problems_filtered = []
-    problems.append('''\\frac{4}{10} - \\frac{3}{10}''')
+    # problems.append('''\\frac{4}{10} - \\frac{3}{10}''') TEST!!!!
     for problem in problems:
         print("PROBLEM", problem)
         problem = find_BAD_problems(problem, customizations)
@@ -249,23 +249,23 @@ def find_BAD_answers(problem, solution, customizations):
         if 'c = 0' in customizations['abc'] and c != 0:
             return 'BAD'
         
-    if customizations['problem_type'] == 'Evaluating_Fractions' or customizations['problem_type'] == 'Evaluating_Decimals':
-        if customizations['problem_topic'] == 'Using_Addition':
-            print("EVALUATING FRACTIONS", temp_problem)
-            if '-' in temp_problem or 'times' in temp_problem or 'div' in temp_problem:
-                return 'BAD'
-        if customizations['problem_topic'] == 'Using_Subtraction':
-            print("EVALUATING FRACTIONS", temp_problem)
-            if '+' in temp_problem or 'times' in temp_problem or 'div' in temp_problem:
-                return 'BAD'
-        if customizations['problem_topic'] == 'Using_Multiplication':
-            print("EVALUATING FRACTIONS", temp_problem)
-            if '-' in temp_problem or '+' in temp_problem or 'div' in temp_problem:
-                return 'BAD'
-        if customizations['problem_topic'] == 'Using_Division':
-            print("EVALUATING FRACTIONS", temp_problem)
-            if '-' in temp_problem or 'times' in temp_problem or '+' in temp_problem:
-                return 'BAD'
+    # if customizations['problem_type'] == 'Evaluating_Fractions' or customizations['problem_type'] == 'Evaluating_Decimals':
+    #     if customizations['problem_topic'] == 'Using_Addition':
+    #         print("EVALUATING FRACTIONS", temp_problem)
+    #         if '-' in temp_problem or 'times' in temp_problem or 'div' in temp_problem:
+    #             return 'BAD'
+    #     if customizations['problem_topic'] == 'Using_Subtraction':
+    #         print("EVALUATING FRACTIONS", temp_problem)
+    #         if '+' in temp_problem or 'times' in temp_problem or 'div' in temp_problem:
+    #             return 'BAD'
+    #     if customizations['problem_topic'] == 'Using_Multiplication':
+    #         print("EVALUATING FRACTIONS", temp_problem)
+    #         if '-' in temp_problem or '+' in temp_problem or 'div' in temp_problem:
+    #             return 'BAD'
+    #     if customizations['problem_topic'] == 'Using_Division':
+    #         print("EVALUATING FRACTIONS", temp_problem)
+    #         if '-' in temp_problem or 'times' in temp_problem or '+' in temp_problem:
+    #             return 'BAD'
             
     # Check number of terms
     if customizations['problem_topic'] in num_terms_problems or customizations['problem_type'] in num_terms_problems:
@@ -275,7 +275,7 @@ def find_BAD_answers(problem, solution, customizations):
 
 
 
-
+    print('final_solution', solution)
     return solution
 
 # solution validation
