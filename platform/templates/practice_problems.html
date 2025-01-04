@@ -127,10 +127,13 @@
 
 
 
-                    {% if i < problems|length - 1 %}
+                    {% if i < problems|length - 2 %}
                         <button id="next-button-{{ i }}" onclick="showNextProblem({{ i }})">Next Problem</button>
                     {% else %}
-                        <!-- Display new problems button only if there are no more problems -->
+                        {% if i < problems|length - 1%}
+                        <button id="next-button-{{ i }}" onclick="showNextProblem({{ i }})">Practice One More</button>
+                        {% endif %}
+                        <!-- Display new problems button if seen number of problems the user requested-->
                         <button id="new-problems-button" onclick="generateNewProblems('{{ problem_type }}', '{{ problem_topic }}')">Generate New Problems</button>
                     {% endif %}
                     <br><br>
