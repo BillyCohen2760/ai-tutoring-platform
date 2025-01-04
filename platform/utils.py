@@ -219,7 +219,7 @@ def validate(problems, solutions, customizations):
 
     return problems_filtered, solutions_filtered
 
-# cleans gpt output to take away brackets, enumerations, etc.
+# cleans gpt output to take away words, brackets, enumerations, etc.
 def clean_gpt_output(gpt_output, customizations):
     all_outputs = []
     output_list = [line.strip() for line in gpt_output.split('\n') if line.strip() != '']
