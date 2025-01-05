@@ -162,6 +162,26 @@ input[type="checkbox"] {
     display: none; /* Hides the default checkbox */
 }
 
+/* Disabled checkmark */
+input[type="checkbox"]:checked:disabled + label {
+    content: "✔"; /* Unicode checkmark */
+    background-color: grey; /* Default background color */
+    border: 2px solid grey; /* Border color */
+    /* color: black; White checkmark color */
+    font-size: 16px; /* Adjust size of the checkmark */
+    width: 20px;
+    height: 20px;
+    vertical-align: middle; /* Centers the checkbox vertically */
+    display: inline-flex; /* Use flexbox for alignment */
+    justify-content: center; /* Centers horizontally */
+    align-items: center; /* Centers vertically */
+    border-radius: 4px; /* Optional rounded corners */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    position: relative;
+}
+
+
 /* Style the custom checkbox */
 input[type="checkbox"] + label {
     vertical-align: middle; /* Centers the checkbox vertically */
@@ -184,6 +204,8 @@ input[type="checkbox"]:checked + label::before {
     color: white; /* White checkmark color */
     font-size: 16px; /* Adjust size of the checkmark */
 }
+
+
 
 /* Hover state - background color changes */
 input[type="checkbox"]:hover + label {
