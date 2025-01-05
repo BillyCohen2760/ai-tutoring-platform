@@ -184,6 +184,7 @@ def generate_problems(problem_type, problem_topic): #, num_problems):
     # problems
     # Ensure problems adhere to user customizations
     problems = validate_problems(problems, customizations)
+    # problems = ['x^2 - 5x - 14 = 0']
     print(problems)
 
     solutions = []
