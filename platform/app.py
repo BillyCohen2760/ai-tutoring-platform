@@ -34,14 +34,22 @@ def simplify_expression():
     # Get the expression from the request
     data = request.get_json()
     expr = data.get('expression', '')
+    prob_topic = data.get('probTopic', '')
 
     print("data", data)
     print("expr", expr)
+    print("probTopic", prob_topic)
 
     if expr.isnumeric():
         return expr
    
-    prompt = create_prompt(expr, 'Expand:') # MIGHT WANT TO DO EXPAND...
+    if prob_topic == 'Slope_Intercept_Form':
+        prompt = create_prompt(expr, 'Slope Intercept Form')
+    elif prob_topic == 'Standard_Form':
+        prompt = create_prompt(expr, 'Standard Form')
+    
+    else: 
+        prompt = create_prompt(expr, 'Expand:') # MIGHT WANT TO DO EXPAND...
 
     # Use the WA_response function to simplify the expression
     result = WA_response(prompt)
@@ -189,7 +197,10 @@ def generate_problems(problem_type, problem_topic): #, num_problems):
 
     solutions = []
     for problem in problems:
-        prompt = create_prompt(problem, prob_type)
+        if prob_type == 'Equations Of A Line':
+            prompt = create_prompt(problem, prob_topic)
+        else:
+            prompt = create_prompt(problem, prob_type)
         print("WA Prompt", prompt)
         WA_output = WA_response(prompt)
         print(WA_output)

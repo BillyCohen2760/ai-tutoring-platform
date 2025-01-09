@@ -160,6 +160,12 @@
             console.log(problemType);
             console.log(problemTopic);
 
+            if(problemTopic === "Slope_Intercept_Form") {
+                details += "please provide an equation of a line in standard form (Ax + By = C)"
+            }
+            if(problemTopic === "Standard_Form") {
+                details += "please provide an equation of a line in slope-intercept form (y = mx + b)"
+            }
             if (problemType === "Solving_Quadratic_Equations") {
                 const a = document.getElementById('a').value;
                 const b = document.getElementById('b').value;

@@ -155,6 +155,7 @@
 
     <script>
         const problemType = "{{ problem_type }}"; // Dynamically injected from Flask
+        const problemTopic = "{{ problem_topic }}"; // Dynamically injected from Flask
         
         let currentProblemIndex = 0;
         function addAnswerInput(index) {
@@ -209,12 +210,12 @@
 
             let processedUserAnswers, processedCorrectAnswers;
             // CHECK FOR MATHEMATICAL EQUIVALENCE
-            if (problemType === "Simplifying_Expressions") {
-                processedUserAnswers = await Promise.all(userAnswers.map(answer => simplifyExpression(answer)));
+            if (problemType === "Simplifying_Expressions" || problemTopic === "Slope_Intercept_Form" || problemTopic === "Standard_Form") {
+                processedUserAnswers = await Promise.all(userAnswers.map(answer => simplifyExpression(answer, problemTopic)));
                 processedCorrectAnswers = await Promise.all(
                     correctAnswers
                         .split(/,(?![^\(]*\))/) // Split by commas outside parentheses
-                        .map(answer => simplifyExpression(answer.trim()))
+                        .map(answer => simplifyExpression(answer.trim(), problemTopic))
                 );
             // DONT CHECK FOR MATHEMATICAL EQUIVALENCE
             } else {
@@ -355,22 +356,22 @@
 
             const incorrectMessages = [
                 "Not quite right, try again!",
-                "Incorrect answer. Give it another shot.",
+                "Give it another shot.",
                 "Oops! Not quite. Try again!",
                 "Whoops wrong answer. Try it again!",
-                "Not quite. Give it another try!",
-                "Hmm, that's not correct. Try again!",
+                "Close, but not quite. Give it another try!",
+                "Hmm, not there yet. Try again!",
                 "Give it another shot, you're almost there!",
                 "Take another look and give it a go!",
-                "Wrong answer, but don't give up!",
+                "Not there yet, but don't give up!",
                 "Try again, you got this!",
-                "Hmm, not correct. Check your work and try again!",
+                "Hmm, not quite. Check your work and try again!",
             ];
 
             const partiallyCorrectMessages = [
                 "There is at least one more solution",
                 "Keep going! There is at least one more answer.",
-                "You're almost there! You've found one solution, but at least one more.",
+                "You're almost there! You've found one solution, but at least one more exists.",
                 "Keep trying! There's still at least one more answer.",
             ];
 
@@ -387,7 +388,7 @@
 
 
             if (userAnswers.length > totalCorrectAnswers) {
-                resultDiv.innerHTML = '<p style="color: red;">You provided too many solutions.</p>';
+                resultDiv.innerHTML = '<p style="color: red;">You provided too many solutions. Please try again. </p>';
             } else if (correctCount === 0) {
                 let randomIndex;
                 do {
@@ -461,7 +462,7 @@
 
 
         // Helper function to simplify an expression and ensure term order doesn't affect equality
-        async function simplifyExpression(expr) {
+        async function simplifyExpression(expr, problemTopic2) {
             console.log("Expr to simplify", expr)
 
             try {
@@ -471,7 +472,7 @@
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ expression: expr }),
+                    body: JSON.stringify({ expression: expr, probTopic: problemTopic2 }),
                 });
 
                 // Parse the JSON response

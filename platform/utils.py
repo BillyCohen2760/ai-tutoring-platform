@@ -468,8 +468,13 @@ def format_answer(answer, prob_type, num_decimal_places):
 # Create the prompt based on type of problem. Will be solve, simplify, or expand based on type of problem
 def create_prompt(problem, prob_type):
    
+    if prob_type == 'Slope Intercept Form':
+        prompt = f"Slope Intercept Form {problem}"
 
-    if prob_type in simplifying_expressions or prob_type == 'Simplify:':
+    elif prob_type == 'Standard Form':
+        prompt = f"Convert {problem} to Standard Form"
+
+    elif prob_type in simplifying_expressions or prob_type == 'Simplify:':
         prompt = f"Simplify {problem}"
         print(prompt)
 
