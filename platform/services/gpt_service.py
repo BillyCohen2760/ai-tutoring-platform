@@ -1,4 +1,5 @@
 # services/gpt_service.py
+# This code was developed with the help of Open AI Documentation (https://platform.openai.com/docs/quickstart). 
 from openai import OpenAI
 from dotenv import load_dotenv
 import os

@@ -1,4 +1,5 @@
 # services/wolfram_service.py
+# This code was developed with the help of WolframAlpha documentation (https://products.wolframalpha.com/api/documentation). 
 import xml.etree.ElementTree as ET
 import requests
 import os

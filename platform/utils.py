@@ -1,20 +1,15 @@
-import re
+import re # Regular Expressions Documentation used (https://www.w3schools.com/python/python_regex.asp)
 from fractions import Fraction
 from decimal import Decimal, ROUND_HALF_UP
 from categories import *
 from services.gpt_service import GPT_response
 
 
-
+# For clarity in code
 def replace_underscores_with_spaces(input_string):
     return input_string.replace('_', ' ')
 
-# Example usage:
-# input_str = "This_is_an_example_string"
-# output_str = replace_underscores_with_spaces(input_str)
-# print(output_str)  # Output: "This is an example string"
-
-# helper for clean_gpt_output
+# helper for clean_gpt_output, used for testing
 def categorize_output(output_list):
     categories = {
         "Equations Only": [],
@@ -134,7 +129,7 @@ def find_BAD_problems(problem, customizations):
     # if all good, then return the problem.
     return problem
 
-
+# Validate problems to ensure they don't violate user customizations. If they do, they are discarded
 def validate_problems(problems, customizations):
     problems_filtered = []
     # problems.append('''\\frac{4}{10} - \\frac{3}{10}''') TEST!!!!
@@ -278,7 +273,7 @@ def find_BAD_answers(problem, solution, customizations):
     print('final_solution', solution)
     return solution
 
-# solution validation
+# Validate solution to ensure they don't violate user customizations. If they do, both the problems and solutions are discarded
 def validate_solutions(problems, solutions, customizations):
     for i, (problem, solution) in enumerate(zip(problems, solutions)):
         solutions[i] = find_BAD_answers(problem, solution, customizations)
@@ -357,12 +352,8 @@ def clean_gpt_output(gpt_output, customizations):
     print(list(set(final_equations)))
     return list(set(final_equations))
 
+# For slope problems
 def answer_to_coordinates(answer):
-    """
-    Extracts numerical values for x and y from a list containing a string in the format 
-    'x = <value> and y = <value>', where <value> can be an integer or a fraction, 
-    and returns a list with the coordinates as a string "(x, y)".
-    """
     # Initialize an empty list to store the results
     result_list = []
     
@@ -385,16 +376,8 @@ def answer_to_coordinates(answer):
 def string_to_normal(solution):
     return tuple(solution)
 
+# Convert ± into separate positive and negative values
 def expand_pm(answer):
-    """
-    Expands expressions with '±' into separate positive and negative values.
-    
-    Parameters:
-        expression (list): A list containing a string with a '±' symbol.
-        
-    Returns:
-        list: A list of strings with separate positive and negative values.
-    """
     # Extract the string from the list
     input_str = answer[0]
     
@@ -410,7 +393,7 @@ def expand_pm(answer):
 
         
         # Check if the part before ± is just "x =" or has more
-        if before_pm.endswith('=') or before_pm.endswith('= '):
+        if before_pm.endswith('=') or before_pm.endswith('= '): # endswith() was a neat trick Chat GPT recommended
             print("OK>>>>>")
             print([f"{before_pm} {after_pm}", f"{before_pm} -{after_pm}"])
             # If it ends with "=", drop the "+"
@@ -422,6 +405,7 @@ def expand_pm(answer):
         # If no '±', return the input as-is
         return answer
 
+# Format answers according to decimal rounding or coordinates
 def format_answer(answer, prob_type, num_decimal_places):
     print("Initial answer:", answer)
     
@@ -442,10 +426,10 @@ def format_answer(answer, prob_type, num_decimal_places):
                 precision = Decimal('1.' + '0' * num_decimal_places)
                 
                 # Round the value and append to the result
-                rounded_numbers.append(str(decimal_value.quantize(precision, rounding=ROUND_HALF_UP)))
+                rounded_numbers.append(str(decimal_value.quantize(precision, rounding=ROUND_HALF_UP))) # quantize() was a Chat GPT recommendation
             except Exception as e:
                 # Handle any conversion errors
-                print(f"Error processing '{num}': {e}")
+                print(f"Error processing '{num}': {e}") # ChatGPT error handling recommendation
                 rounded_numbers.append('Invalid number')
         solution = rounded_numbers
 

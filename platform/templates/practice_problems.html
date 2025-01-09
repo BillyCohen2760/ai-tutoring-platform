@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Practice - WillPower Tutoring{% endblock %}
+{% block title %}Practice - WillPowered Tutoring{% endblock %}
 
 {% block content %}
     <h2 style="margin-bottom: 10px;">Practice Problems</h2>
@@ -154,6 +154,8 @@
 
 
     <script>
+        // Regular Expressions Documentation used (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions)
+
         const problemType = "{{ problem_type }}"; // Dynamically injected from Flask
         const problemTopic = "{{ problem_topic }}"; // Dynamically injected from Flask
         
@@ -209,7 +211,7 @@
                 .filter(answer => answer !== ''); // Filter out empty answers
 
             let processedUserAnswers, processedCorrectAnswers;
-            // CHECK FOR MATHEMATICAL EQUIVALENCE
+            // CHECK FOR MATHEMATICAL EQUIVALENCE (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/await)
             if (problemType === "Simplifying_Expressions" || problemTopic === "Slope_Intercept_Form" || problemTopic === "Standard_Form") {
                 processedUserAnswers = await Promise.all(userAnswers.map(answer => simplifyExpression(answer, problemTopic)));
                 processedCorrectAnswers = await Promise.all(
@@ -480,7 +482,7 @@
                 const simplifiedExpression = data.result;
                 console.log('simplifiedExpression', simplifiedExpression)
                 return simplifiedExpression
-                // Handle errors from the server
+                // Handle errors from the server, recommended by ChatGPT
                 if (!response.ok) {
                     alert(data.error || "An error occurred while simplifying the expression.");
                     return;
@@ -548,7 +550,7 @@
             const stepsButton = document.getElementById(`toggle-steps-button-${index}`);
             
             solutionDiv.style.display = 'block'; // Show the answer
-            button.innerHTML = 'Hide Answer';    // Change button text to "Hide Answer"
+            button.innerHTML = 'Hide Answer';    // Change button text to "Hide Answer", recommended by ChatGPT
             stepsButton.style.display = 'inline-block'; // Show "Show Steps" button
         }
 
@@ -560,11 +562,11 @@
             
             if (solutionDiv.style.display === 'none') {
                 solutionDiv.style.display = 'block'; // Show the answer
-                button.innerHTML = 'Hide Answer';    // Change button text to "Hide Answer"
+                button.innerHTML = 'Hide Answer';    // Change button text to "Hide Answer", recommended by ChatGPT
                 stepsButton.style.display = 'inline-block'; // Show "Show Steps" button
             } else {
                 solutionDiv.style.display = 'none';  // Hide the answer
-                button.innerHTML = 'Show Answer';    // Change button text back to "Show Answer"
+                button.innerHTML = 'Show Answer';    // Change button text back to "Show Answer", recommended by ChatGPT
                 stepsButton.style.display = 'none';  // Hide "Show Steps" button
                 // Also hide the explanation if it's visible
                 const explanationDiv = document.getElementById(`explanation-${index}`);
@@ -579,10 +581,10 @@
             
             if (explanationDiv.style.display === 'none') {
                 explanationDiv.style.display = 'block'; // Show the explanation
-                stepsButton.innerHTML = 'Hide Steps';  // Change button text to "Hide Steps"
+                stepsButton.innerHTML = 'Hide Steps';  // Change button text to "Hide Steps", recommended by ChatGPT
             } else {
                 explanationDiv.style.display = 'none'; // Hide the explanation
-                stepsButton.innerHTML = 'Show Steps'; // Change button text back to "Show Steps"
+                stepsButton.innerHTML = 'Show Steps'; // Change button text back to "Show Steps", recommended by ChatGPT
             }
         }
 

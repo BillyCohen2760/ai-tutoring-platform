@@ -14,7 +14,7 @@ app = Flask(__name__)
 load_dotenv()
 app.config['OPEN_AI_KEY'] = os.getenv('OPEN_AI_KEY')
 
-
+# Highlight steps in Walkthrough
 @app.template_filter('highlight_steps')
 def highlight_steps(text):
     # Regular expression to find "### Step x: ______" and "### Final Step: ______"
@@ -29,6 +29,7 @@ def highlight_steps(text):
 app.jinja_env.filters['highlight_steps'] = highlight_steps
 
 
+# Mathematical Equivalence Check
 @app.route('/api/simplify_expression', methods=['POST'])
 def simplify_expression():
     # Get the expression from the request
@@ -64,10 +65,10 @@ def simplify_expression():
             if result2:
                 print('SIMPLIFIED', result2, result2[0])
                 if result2[0] == 'No results found.':
-                    return jsonify({"result": expr.replace(" ", "")}), 200
+                    return jsonify({"result": expr.replace(" ", "")}), 200 # error handling logic recommended by ChatGPT
 
-                else: return jsonify({"result": result2[0].replace(" ", "")}), 200
-            else: return jsonify({"result": expanded.replace(" ", "")}), 200
+                else: return jsonify({"result": result2[0].replace(" ", "")}), 200 # error handling logic recommended by ChatGPT
+            else: return jsonify({"result": expanded.replace(" ", "")}), 200 # error handling logic recommended by ChatGPT
 
 
         else: 
@@ -103,12 +104,14 @@ def contact():
 def schedule():
     return render_template('schedule.html') 
 
+# Choose Problem Type and Solving Method
 @app.route('/practice_landing')
 def practice_landing():
     return render_template('practice_landing.html')
 
 # Create a generic settings page -- can specify further down the line
 
+# Make Additional Problem and Solution Customizations
 @app.route('/practice_settings', methods=['POST'])
 def practice_settings():
     problem_type = request.form.get('problem_type')  # Get problem type from form data
@@ -118,6 +121,7 @@ def practice_settings():
 
     return render_template('practice_settings.html', problem_type=problem_type, prob_type=prob_type, prob_topic=prob_topic, problem_topic=problem_topic)
 
+# Generate problems receives the problem settings and generates problems, solutions, walkthroughs
 @app.route('/generate_problems/<problem_type>/<problem_topic>/', methods=['GET', 'POST'])
 # @app.route('/generate_problems/<problem_type>/<problem_topic>/<num_problems>', methods=['GET', 'POST'])
 def generate_problems(problem_type, problem_topic): #, num_problems):
@@ -236,6 +240,7 @@ def generate_problems(problem_type, problem_topic): #, num_problems):
     print('solutions', solutions)
 
     explanation = get_explanations(problems, solutions, prob_topic, prob_type, num_decimal_places)
+# Test Explanation
 #     explanation = ['''
 #     Sure! Let's solve the quadratic equation \( x^2 + 4x + 3 = 0 \) using the factoring method step-by-step.
 

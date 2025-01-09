@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Problem Settings - WillPower Tutoring{% endblock %}
+{% block title %}Problem Settings - WillPowered Tutoring{% endblock %}
 
 {% block content %}
     <h2>Customize Problem Settings</h2>
@@ -259,7 +259,7 @@
             return false;
         }
 
-        // Listen for the page unload event to ensure the message persists until navigation
+        // Listen for the page unload event to ensure the message persists until navigation, recommended by ChatGPT
         window.addEventListener('beforeunload', () => {
             const generatingMessage = document.getElementById('generating...');
             generatingMessage.style.display = 'block';
