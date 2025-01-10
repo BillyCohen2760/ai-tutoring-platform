@@ -1,3 +1,5 @@
+/* Website styling */
+/* This code was developed with the assistance of ChatGPT */
 body {
     font-family: Arial, sans-serif;
     background-color: #f0f0f0;
@@ -23,7 +25,7 @@ header {
     font-family: Arial, sans-serif;
 }
 
-/* Style for the navigation links */
+/* Style for the navigation links, ChatGPT recommended */
 header nav ul {
     list-style-type: none;      /* Remove bullet points */
     padding: 0;                 /* Remove padding */
@@ -127,7 +129,7 @@ button:hover {
     background-color: rgb(72, 132, 243); /* Change background color on hover */
     color: white; /* Text color */
     transform: scale(1.05); /* Slightly increase the button size on hover */
-}
+} /* The hover feature was a Chat GPT recommendation*/
 
 button:focus {
     outline: none; /* Remove default outline */
@@ -151,7 +153,8 @@ select:hover {
     background-color: rgb(72, 132, 243); /* Change background color on hover */
     color: white; /* Text color */
     transform: scale(1.05); /* Slightly increase the button size on hover */
-}
+} /* The hover feature was a Chat GPT recommendation*/
+
 
 select:focus {
     outline: none;
@@ -207,14 +210,14 @@ input[type="checkbox"]:checked + label::before {
 
 
 
-/* Hover state - background color changes */
+/* Hover state - background color changes, GPT recommended */
 input[type="checkbox"]:hover + label {
     background-color: rgb(72, 132, 243); /* Hover background color */
     transform: scale(1.05); /* Slightly increase the size on hover */
     border-color: rgb(72, 132, 243); /* Border color on hover */
 }
 
-/* Checked state - change background color */
+/* Checked state - change background color, GPT recommended */
 input[type="checkbox"]:checked + label {
     background-color: rgb(72, 132, 243); /* Background color when checked */
     border-color: rgb(72, 132, 243); /* Border color when checked */
@@ -259,13 +262,13 @@ input[type="checkbox"]:focus + label {
     transition: box-shadow 0.3s ease, border-color 0.3s ease; /* Smooth transition effects */
 }
 
-/* Add hover effect for the text box */
+/* Add hover effect for the text box, GPT recommended */
 .answer-inputs input[type="text"]:hover {
     transform: scale(1.05); /* Slightly increase the button size on hover */
     border-color: rgb(72, 132, 243); /* Change border color on hover */
 }
 
-/* Add focus effect for the text box */
+/* Add focus effect for the text box, GPT recommended */
 .answer-inputs input[type="text"]:focus {
     border-color: rgb(72, 132, 243); /* Change border color on focus */
     /* box-shadow: 0 0 5px rgba(52, 103, 204, 0.5); /* Add a subtle glow effect */
@@ -376,7 +379,7 @@ form {
 }
 
 
-
+/* GPT recommended */
 a.button-link {
     display: inline-block; /* Makes it behave like a button */
     padding: 6px 12px; /* Add space around the text */
